@@ -147,13 +147,13 @@ StartArticleListScreen.navigationOptions ={
         backgroundColor: 'darkgreen',
     },
     headerRight: (
-       <MaterialIcons name='my-location' size={25} color={"#fff"} style={{paddingRight: 10}}/>
+       <MaterialIcons name='my-location' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => alert('This is a button!')}/>
     ),
     headerLeft: (
         <View style={{flexDirection: 'row', paddingLeft: 10}}>
             <MaterialIcons name='search' size={25} color={"#fff"} style={{paddingRight: 10}}/>
 
-            <MaterialCommunityIcons name='weather-partlycloudy' size={25} color={"#fff"} style={{paddingRight: 10}}/>
+            <MaterialCommunityIcons name='weather-partlycloudy' size={25} color={"#fff"} style={{paddingRight: 10}} />
         </View>
     ),
     headerTintColor: '#fff',

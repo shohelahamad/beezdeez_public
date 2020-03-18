@@ -7,6 +7,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -53,29 +54,29 @@ const ArticleViewStack = createStackNavigator({
   }
 });
 const CityTabNavigator = createBottomTabNavigator({
-    Start: {screen: ArticleViewStack, navigationOptions:{
+    Events: {screen: ArticleViewStack, navigationOptions:{
         tabBarIcon: (tabinfo) => {
-            return <Ionicons name='ios-home' size={25} color={tabinfo.tintColor} />
+            return <MaterialCommunityIcons name='calendar-blank' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Entdecken: {screen: DiscoverScreen, navigationOptions:{
+    Todos: {screen: DiscoverScreen, navigationOptions:{
         tabBarIcon: (tabinfo) => {
-            return <MaterialIcons name='location-on' size={25} color={tabinfo.tintColor} />
+            return <Ionicons name='ios-checkbox-outline' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Events: {screen: EventsScreen, navigationOptions:{
+    Notes: {screen: EventsScreen, navigationOptions:{
         tabBarIcon: (tabinfo) => {
-            return <MaterialIcons name='event' size={25} color={tabinfo.tintColor} />
+            return <FontAwesome name='sticky-note-o' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Verwaltung: {screen:EventsScreen, navigationOptions:{
+    Contacts: {screen:EventsScreen, navigationOptions:{
         headertitle: 'Security',
         tabBarIcon: (tabinfo) => {
-            return <MaterialCommunityIcons name='security' size={25} color={tabinfo.tintColor} />
+            return <AntDesign name='contacts' size={25} color={tabinfo.tintColor} />
         }
     }},
     Menu: {screen:EventsScreen, navigationOptions:{
-        tabBarLabel: 'Menü',
+        tabBarLabel: 'Menu',
         tabBarIcon: (tabinfo) => {
             return <MaterialIcons name='menu' size={25} color={tabinfo.tintColor} />
         }
