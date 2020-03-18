@@ -96,13 +96,14 @@ class AuthScreen extends Component {
         response.data.idToken ?
         this.props.onAuthSetToken(response.data.idToken,response.data.localId): false
         response.data.idToken ?        
-        his.props.navigation.navigate('StartArticleList'): false
+        this.props.navigation.navigate('StartArticleList'): false
         
         // dispatch(authSuccess(response.data.idToken, response.data.localId));
         // dispatch(checkAuthTimeout(response.data.expiresIn));
     })
     .catch(err => {
-      console.log(err.response.data.error);
+      alert("Something went wrong");
+      // console.log(err.response.data.error);
     });
   }
   onLoginFail() {
