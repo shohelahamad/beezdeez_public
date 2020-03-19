@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity} from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -15,6 +15,8 @@ class TodoInput extends Component {
     dueDate: '',
     eventId: [],
     isDateTimePickerVisible: false,
+    date: new Date(1598051730000),
+    data: "data"
   }
   onSelectedEventChange = eventId => {
     this.setState({ eventId });
@@ -58,6 +60,7 @@ class TodoInput extends Component {
       dueDate: moment(date).format('MMMM Do YYYY')
     })
   };
+
   render() {
     const { eventId } = this.state;
     let priorityData = [{
@@ -68,9 +71,6 @@ class TodoInput extends Component {
       value: 'Less Important'
     }];
     return (
-
-
-
 
       <View style={styles.inputContainer}>
 
@@ -97,12 +97,21 @@ class TodoInput extends Component {
           placeholder={"Choose Due Date"}
         />
         <View >
-          <DateTimePicker
+        {/* <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={this.state.data}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          onChange={() => { alert("I am changed")}}
+        /> */}
+          {/* <DateTimePicker
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
             onCancel={this._hideDateTimePicker}
             mode={'date'}
-          />
+          /> */}
         </View>
         <Text style={{ marginBottom: -25 }}>Priority</Text>
         <Dropdown

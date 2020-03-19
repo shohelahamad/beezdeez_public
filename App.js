@@ -29,8 +29,8 @@ const rootReducer = combineReducers({
   startContent: startContentReducer,
   ui: uiReducer,
   auth: authReducer,
-  // events: eventsReducer,
-  // todos: todosReducer,
+  events: eventsReducer,
+  todos: todosReducer,
   // notes: notesReducer,
   // labels: labelsReducer,
   userContacts: contactReducer

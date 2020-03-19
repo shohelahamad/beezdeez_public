@@ -13,6 +13,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
+
+import InputToDoScreen from '../screens/TodoScreens/InputToDoScreen';
+import ShowToDoScreen from '../screens/TodoScreens/ShowToDoScreen';
+import ToDosScreen from '../screens/TodoScreens/ToDosScreen';
+
+
 import MenueScreen from '../screens/Menu';
 import AuthScreen from '../screens/StartScreens/AuthScreen';
 import CitiesScreen from '../screens/CityScreens/CitiesScreen';
@@ -39,6 +45,35 @@ const ArticleViewStack = createStackNavigator({
   StartArticleDetail: {
     screen: StartArticleDetailScreen,
     navigationOptions: {
+      headerRight: (
+        <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
+     )
+    }
+  },
+  StartEventDetail:{
+    screen: StartEventDetailScreen,
+    navigationOptions: {
+    //   headerRight: (
+    //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
+    //  )
+    }
+  }
+});
+
+
+const TodoStack = createStackNavigator({
+  StartArticleList: {
+    screen: ToDosScreen
+  },
+  InputToDo: {
+    screen: InputToDoScreen
+  },
+  TodoDetailsScreen: {
+    screen: ShowToDoScreen
+  },
+  StartArticleDetail: {
+    screen: StartArticleDetailScreen,
+    navigationOptions: {
     //   headerRight: (
     //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
     //  )
@@ -53,8 +88,11 @@ const ArticleViewStack = createStackNavigator({
     }
   }
 });
+
+
+
 const CityTabNavigator = createBottomTabNavigator({
-    Events: {screen: ArticleViewStack, navigationOptions:{
+    Events: {screen: TodoStack, navigationOptions:{
         tabBarIcon: (tabinfo) => {
             return <MaterialCommunityIcons name='calendar-blank' size={25} color={tabinfo.tintColor} />
         }

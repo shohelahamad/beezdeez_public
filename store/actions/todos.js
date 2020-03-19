@@ -1,10 +1,11 @@
 import {ADD_TODO,SET_TODOS, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY} from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
-export const addTodo = (todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId,token) =>{
+export const addTodo = (placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId) =>{
+    console.log("Add user form todo"+ userId);
    
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+".json?auth="+ token, {
+        fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+".json?", {
             method: 'POST',
             body: JSON.stringify({ 
             todoTitle: todoTitle,
@@ -23,14 +24,15 @@ export const addTodo = (todoTitle,todoDescribtion,priority,dueDate,eventId,isDon
             .then(res => res.json())
             .then(parsedRes => {
                 console.log(parsedRes);
-                dispatch(getTodos(userId,token));
+                dispatch(getTodos(userId));
                 dispatch(uiStopLoading());
             });
         };
 };
-export const getTodos = (userId,token) => {
+export const getTodos = (userId) => {
     return dispatch => {
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?auth="+ token)
+        // fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?auth="+ token)
+        fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?")
         .catch(err => {
             alert("Something went wrong, sorry :/");
             console.log(err);
