@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, TextInput, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
 import TodoList from '../../components/TodoList/TodoList';
+import { Header } from 'react-navigation-stack';
 import { doneTodo } from "../../store/actions/index";
 import { getTodos } from "../../store/actions/index";
 import { getLabels } from "../../store/actions/index";
@@ -68,12 +70,14 @@ const styles = StyleSheet.create({
   },
   container:{
     flex: 1,
-    backgroundColor: "#E5EBE7"
+    backgroundColor: "#ffffff"
   },
   headerContainer: {
+    width: "95%",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10
+    marginBottom: 10,
+    marginLeft: "2.5%"
     
   }
 });
@@ -92,5 +96,20 @@ const mapDispatchToProps = dispatch => {
     // onLoadLabels: () => dispatch(getLabels()),
     // onLoadEvents: () => dispatch(getEvents())
   };
+};
+const GradientHeader = props => (
+  <View style={{ backgroundColor: '#eee' }}>
+      <LinearGradient
+        colors={['red', 'blue']}
+        style={[StyleSheet.absoluteFill, { height: Header.HEIGHT }]}
+      >
+      </LinearGradient>
+    </View>
+  )
+ToDosScreen.navigationOptions ={
+  header: props => <GradientHeader {...props} />,
+  headerStyle: {
+    backgroundColor: 'transparent',
+  },
 };
 export default connect(mapStateToProps,mapDispatchToProps)(ToDosScreen);

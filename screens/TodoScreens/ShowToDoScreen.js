@@ -16,21 +16,24 @@ import { updateDueDate } from "../../store/actions/index";
 import { updatePriority } from "../../store/actions/index";
 
 class ShowToDoScreen extends Component {
-  
+  itemKey = this.props.navigation.getParam('itemKey');
+  selTodo = this.props.todos.find(todo => {
+    return todo.key === this.itemKey;
+  });
   placeDeletedHandler = () => {
-    this.props.onDeletePlace(this.props.selectedPlace.key);
+    this.props.onDeletePlace(this.selTodo.key);
     this.props.navigator.pop();
   };
   doneSelectedHandler = () => {
-    this.props.onDdoneTodo(this.props.selectedPlace.key);
-    this.props.selectedPlace.isDone = !this.props.selectedPlace.isDone;
+    this.props.onDdoneTodo(this.selTodo.key);
+    this.selTodo.isDone = !this.selTodo.isDone;
   };
   updateToDoDueDate = (newDueDate) => {
-    this.props.onNewDate(this.props.selectedPlace.key, newDueDate);
-    this.props.selectedPlace.dueDate = newDueDate;
+    this.props.onNewDate(this.selTodo.key, newDueDate);
+    this.selTodo.dueDate = newDueDate;
   };
   updateToDoPriority = (newPriority) => {
-    this.props.onNewPriority(this.props.selectedPlace.key, newPriority);    
+    this.props.onNewPriority(this.selTodo.key, newPriority);    
   };
   _handleDatePicked = (date) => {
     this.setState({
@@ -43,7 +46,7 @@ class ShowToDoScreen extends Component {
 //     return this.state.selectedPlace.priority.map(() => {
 //       return (
 //         <View style={{ width: 35, marginRight: 8 }}>
-//             <Icon style={{ marginTop: 10 }} size={25} name={this.props.selectedPlace.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.props.selectedPlace.priority === "Less Important" ? "green" : this.props.selectedPlace.priority === "Medium" ? "#ffc107" : "red"} />
+//             <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
 //           </View>
 //       )
 //     })
@@ -54,12 +57,12 @@ class ShowToDoScreen extends Component {
     //  this.state.selectedPlace.priority.map(() => {
     //     return (
     //       <View style={{ width: 35, marginRight: 8 }}>
-    //           <Icon style={{ marginTop: 10 }} size={25} name={this.props.selectedPlace.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.props.selectedPlace.priority === "Less Important" ? "green" : this.props.selectedPlace.priority === "Medium" ? "#ffc107" : "red"} />
+    //           <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
     //         </View>
     //     )
     //   })
     //   // <View style={{ width: 35, marginRight: 8 }}>
-    //   //       <Icon style={{ marginTop: 10 }} size={25} name={this.props.selectedPlace.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.props.selectedPlace.priority === "Less Important" ? "green" : this.props.selectedPlace.priority === "Medium" ? "#ffc107" : "red"} />
+    //   //       <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
     //   //   </View>
     // );
     let priorityData = [{
@@ -75,11 +78,11 @@ class ShowToDoScreen extends Component {
 
           <CheckBox style={{ width: "10%" }}
             onClick={this.doneSelectedHandler}
-            isChecked={this.props.selectedPlace.isDone}
+            isChecked={this.selTodo.isDone}
             checkedImage={<Icon style={{}} size={30} name="check-square" color="#0641A7" />}
             unCheckedImage={<Iconfa style={{}} size={30} name="square" color="#969696" />}
           />
-          <Text style={styles.placeName}>{this.props.selectedPlace.todoTitle}</Text>
+          <Text style={styles.placeName}>{this.selTodo.todoTitle}</Text>
         </View>
         <View
           style={{
@@ -89,7 +92,7 @@ class ShowToDoScreen extends Component {
           }}
         />
         <Text style={{ marginTop: 10, marginBottom: 5, color: "#969696", fontSize: 15 }}>Description</Text>
-        <Text style={{}}>{this.props.selectedPlace.todoDescribtion}</Text>
+        <Text style={{}}>{this.selTodo.todoDescribtion}</Text>
         <View
           style={{
             borderBottomColor: '#efefef',
@@ -101,9 +104,9 @@ class ShowToDoScreen extends Component {
         <View style={styles.row}>
           <View style={{ width: "93%", flexDirection: "row" }}>
             <Iconfa style={{ marginTop: 10 }} size={30} name="calendar" color="red" />
-            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "red", fontSize: 20 }}>{this.props.selectedPlace.dueDate}</Text>
+            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "red", fontSize: 20 }}>{this.selTodo.dueDate}</Text>
           </View>
-          <TouchableOpacity onPress={ () => {this.props.selectedPlace.dueDate != "" ? this.updateToDoDueDate("") : null }} style={{ width: "7%" }} >
+          <TouchableOpacity onPress={ () => {this.selTodo.dueDate != "" ? this.updateToDoDueDate("") : null }} style={{ width: "7%" }} >
               <Icon style={{ marginTop: 10 }} size={25} name="times" color="#969696" />
           </TouchableOpacity>
 
@@ -118,13 +121,13 @@ class ShowToDoScreen extends Component {
         <Text style={{ marginTop: 10, marginBottom: 5, color: "#969696", fontSize: 15 }}>Priority</Text>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ width: 35, marginRight: 8 }}>
-            <Icon style={{ marginTop: 10 }} size={25} name={this.props.selectedPlace.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.props.selectedPlace.priority === "Less Important" ? "green" : this.props.selectedPlace.priority === "Medium" ? "#ffc107" : "red"} />
+            <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
           </View>
           <View style={{ flex: 1, marginTop: -15 }}>
             <Dropdown
               fontSize={20}
               style={{ paddingBottom: 10, height: 30 }}
-              value={this.props.selectedPlace.priority}
+              value={this.selTodo.priority}
               onChangeText={this.updateToDoPriority}
               data={priorityData}
               // pickerStyle={{width: 20, height: 20}}
@@ -145,7 +148,7 @@ class ShowToDoScreen extends Component {
 
             <Iconfa style={{ marginTop: 10 }} size={30} name="calendar" color="#0641A7" />
 
-            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "#000000", fontSize: 20 }}>{this.props.selectedPlace.eventId}</Text>
+            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "#000000", fontSize: 20 }}>{this.selTodo.eventId}</Text>
           </View>
           <View style={{ width: "7%" }}>
             <Icon style={{ marginTop: 10 }} size={25} name="times" color="#969696" />
@@ -165,11 +168,11 @@ class ShowToDoScreen extends Component {
             </View>
           </TouchableOpacity>
         </View> */}
-        {/* <Text style={styles.placeName}>{this.props.selectedPlace.todoTitle}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.todoDescribtion}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.priority}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.dueDate}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.eventId}</Text> */}
+        {/* <Text style={styles.placeName}>{this.selTodo.todoTitle}</Text>
+          <Text style={styles.placeName}>{this.selTodo.todoDescribtion}</Text>
+          <Text style={styles.placeName}>{this.selTodo.priority}</Text>
+          <Text style={styles.placeName}>{this.selTodo.dueDate}</Text>
+          <Text style={styles.placeName}>{this.selTodo.eventId}</Text> */}
       </ScrollView>
     );
   }
@@ -209,6 +212,29 @@ const mapDispatchToProps = dispatch => {
     onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
     onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
   };
+};
+ShowToDoScreen.navigationOptions = navData => {
+  return {
+    // headerTitle: navData.navigation.getParam('productTitle')
+  };
+};
+ShowToDoScreen.navigationOptions ={
+    // headerTitle: (
+    //     <Image
+    //       style={{
+    //         alignSelf: 'stretch',
+    //         width: 40,
+    //         height: 40,
+    //       }}
+    //       resizeMode="contain"
+    //       source={require('../../assets/DEU_Memmelsdorf.png')}
+    //     />
+    // ),
+    headerStyle: {
+        backgroundColor: 'darkgreen',
+    },
+    headerTintColor: '#fff',
+    stateBar: '#ffffff'
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowToDoScreen);

@@ -12,10 +12,8 @@ import { addTodo } from '../../store/actions/index';
 
 class InputToDoScreen extends Component {
   todoAddedHandler = (placeName, todoTitle, todoDescribtion,priority,dueDate,eventId,isDone)=> {
-    console.log("on Add Todo"+ this.props.userId);
       this.props.onAddTodo(placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,this.props.userId);
       // Navigation.pop(this.props.componentId);
-      console.log("on Add Todo"+ this.props.userId);
   }
 
   render () {
