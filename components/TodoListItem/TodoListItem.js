@@ -56,11 +56,10 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         flexDirection: 'column',
         alignItems: 'center',
-        shadowColor: 'gray',
+        shadowColor: '#b2b2b2',
         marginTop: 10,
-        shadowColor: '#969696',
         shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
+        shadowOpacity: 0.5,
         shadowRadius: 5,
     },
     // listItem: {
