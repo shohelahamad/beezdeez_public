@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput, Text, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, Button} from 'react-native';
+import DateTimePicker from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -50,6 +50,18 @@ class TodoInput extends Component {
       this.state.isDone
       )
   };
+  showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+ 
+   hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+ 
+   handleConfirm = date => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
@@ -95,6 +107,15 @@ class TodoInput extends Component {
           style={styles.inputField}
           onFocus={this._showDateTimePicker}
           placeholder={"Choose Due Date"}
+        />
+        <View>
+        <Button onPress={this._showDateTimePicker} title="Show time picker!" />
+      </View>
+        <DateTimePicker
+        isVisible={this.state.isDateTimePickerVisible}
+        mode="date"
+        onConfirm={this.handleConfirm}
+        onCancel={this.hideDatePicker}
         />
         <View >
         {/* <DateTimePicker
