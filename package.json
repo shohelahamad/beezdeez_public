@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
-    "@react-native-community/datetimepicker": "^2.2.3",
+    "@react-native-community/datetimepicker": "^2.3.0",
     "axios": "^0.18.0",
     "btoa": "^1.2.1",
     "expo": "^35.0.0",

@@ -4,6 +4,7 @@ const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
+import { Dropdown } from 'react-native-material-dropdown';
 import TodoList from '../../components/TodoList/TodoList';
 import { doneTodo } from "../../store/actions/index";
 import { getTodos } from "../../store/actions/index";
@@ -18,7 +19,7 @@ class ToDosScreen extends Component {
     this.props.onLoadTodos(this.props.userId, this.props.token);
     // this.props.onLoadLabels();
     // this.props.onLoadEvents();
-    console.log(Header.HEIGHT);
+    // console.log(Header.HEIGHT);
   }
   doneSelectedHandler = key => {
     const selTodo = this.props.todos.find(todo => {
@@ -37,12 +38,28 @@ class ToDosScreen extends Component {
   };
 
   render() {
+    let priorityData = [{
+      value: 'Important'
+    }, {
+      value: 'Medium'
+    }, {
+      value: 'Less Important'
+    }];
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.headerContainer}>
           <IconFa style={{ marginTop: 5, marginLeft: 5 }} name={"check-square"} color={"#0641A7"} size={30} />
-          <Text style={{ fontSize: 20, marginTop: 5, fontWeight: "bold" }}> Today </Text>
+          <Dropdown
+          pickerStyle={{marginTop: Header.HEIGHT}}
+          fontSize={25}
+          baseColor={"#fff"}
+          containerStyle={{ width: "80%", marginLeft: "2.5%", borderBottomColor: "#ffffff", marginTop: "-7.5%"}}
+          placeholder='Prioritize your ToDo'
+          value={"All"}
+          data={priorityData}
+          onChangeText={this.priorityDataHandelar}
+        />
           <Icon style={{ marginTop: 5, marginRight: 5 }} name={"caret-down"} color={"#000000"} size={30} />
         </View>
         <TodoList
@@ -89,7 +106,6 @@ const styles = StyleSheet.create({
     width: "95%",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
     marginLeft: "2.5%"
 
   }

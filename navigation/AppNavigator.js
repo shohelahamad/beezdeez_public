@@ -121,7 +121,7 @@ const CityTabNavigator = createBottomTabNavigator({
     }},
 },{
     tabBarOptions:{
-        activeTintColor: 'darkgreen'
+        activeTintColor: "#0641A7"
     }
 });
 
