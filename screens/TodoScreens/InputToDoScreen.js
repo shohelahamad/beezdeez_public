@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import { addTodo } from '../../store/actions/index';
 
 class InputToDoScreen extends Component {
-  todoAddedHandler = (placeName, todoTitle, todoDescribtion,priority,dueDate,eventId,isDone)=> {
-      this.props.onAddTodo(placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,this.props.userId);
+  todoAddedHandler = (todoTitle,todoDescribtion,priority,dueDate,eventId,isDone)=> {
+      this.props.onAddTodo(todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,this.props.userId);
       // Navigation.pop(this.props.componentId);
   }
 
@@ -29,8 +29,8 @@ class InputToDoScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onAddTodo: (placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId) => 
-      dispatch(addTodo(placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId))
+      onAddTodo: (todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId) => 
+      dispatch(addTodo(todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId))
   };
 };
 const mapStateToProps = state => {

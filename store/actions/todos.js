@@ -1,6 +1,6 @@
 import {ADD_TODO,SET_TODOS, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY} from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
-export const addTodo = (placeName,todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId) =>{
+export const addTodo = (todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,userId) =>{
     console.log("Add user form todo"+ userId);
    
     return dispatch => {

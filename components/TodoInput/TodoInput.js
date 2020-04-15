@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, Button} from 'react-native';
-import DateTimePicker from "react-native-modal-datetime-picker";
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, Button } from 'react-native';
+import DatePicker from 'react-native-datepicker'
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -14,9 +14,6 @@ class TodoInput extends Component {
     priority: '',
     dueDate: '',
     eventId: [],
-    isDateTimePickerVisible: false,
-    date: new Date(1598051730000),
-    data: "data"
   }
   onSelectedEventChange = eventId => {
     this.setState({ eventId });
@@ -42,34 +39,18 @@ class TodoInput extends Component {
       return;
     }
     this.props.onTodoAdded(
-      this.state.todoTitle, 
-      this.state.todoDescribtion, 
+      this.state.todoTitle,
+      this.state.todoDescribtion,
       this.state.priority,
       this.state.dueDate,
       this.state.eventId,
       this.state.isDone
-      )
+    )
   };
-  showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
- 
-   hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
- 
-   handleConfirm = date => {
-    console.warn("A date has been picked: ", date);
-    hideDatePicker();
-  };
-  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
-
-  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
-
   _handleDatePicked = (date) => {
+    console.log(moment(date));
     this.setState({
-      isDateTimePickerVisible: false,
-      dueDate: moment(date).format('MMMM Do YYYY')
+      dueDate: moment(date).format('YYYY-MM-DD HH:mm')
     })
   };
 
@@ -87,7 +68,7 @@ class TodoInput extends Component {
       <View style={styles.inputContainer}>
 
 
-        <Icon name={"check-square"} color={"#000000"} size={30} style={{marginBottom: -30}}/>
+        <Icon name={"check-square"} color={"#000000"} size={30} style={{ marginBottom: -30 }} />
         <TextInput value={this.state.todoTitle}
           onChangeText={this.titleCahgnehandelar}
           style={styles.titleText} placeholder={"New ToDo"} />
@@ -98,41 +79,42 @@ class TodoInput extends Component {
           multiline={true}
           numberOfLines={20}
           style={styles.emailField} placeholder={"Your Description"} />
-
-
-
-
         <Text>Due Date</Text>
-        <TextInput value={this.state.dueDate}
-          style={styles.inputField}
-          onFocus={this._showDateTimePicker}
-          placeholder={"Choose Due Date"}
+        <DatePicker
+          style={{ width: "100%" }}
+          date={this.state.dueDate}
+          placeholder="Chose Due Date"
+          mode="datetime"
+          format="YYYY-MM-DD HH:mm"
+          // minDate="2016-05-01"
+          // maxDate="2016-06-01"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+              , borderBottomWidth: 1,
+              borderBottomColor: "#efefef",
+              marginBottom: 15, borderColor: '#ffffff',
+            },
+            placeholderText: {
+              // marginLeft: 0
+            }
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(datetime) => { this._handleDatePicked(datetime) }}
+        // onDateChange={(date) => {this.setState({dueDate: date})}}
         />
         <View>
-        <Button onPress={this._showDateTimePicker} title="Show time picker!" />
-      </View>
-        <DateTimePicker
-        isVisible={this.state.isDateTimePickerVisible}
-        mode="date"
-        onConfirm={this.handleConfirm}
-        onCancel={this.hideDatePicker}
-        />
+        </View>
+
         <View >
-        {/* <DateTimePicker
-          testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
-          value={this.state.data}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          onChange={() => { alert("I am changed")}}
-        /> */}
-          {/* <DateTimePicker
-            isVisible={this.state.isDateTimePickerVisible}
-            onConfirm={this._handleDatePicked}
-            onCancel={this._hideDateTimePicker}
-            mode={'date'}
-          /> */}
         </View>
         <Text style={{ marginBottom: -25 }}>Priority</Text>
         <Dropdown
@@ -151,7 +133,7 @@ class TodoInput extends Component {
           selectedItems={eventId}
           selectText="Link to an event"
           searchInputPlaceholderText="Search Event..."
-          onChangeInput={ (text)=> console.log(text)}
+          onChangeInput={(text) => console.log(text)}
           tagRemoveIconColor="#0641A7"
           tagBorderColor="#0641A7"
           tagTextColor="#0641A7"
@@ -164,8 +146,8 @@ class TodoInput extends Component {
           submitButtonText="Done Select"
         />
         <View>
-            {/* { this.multiselect ? this.multiSelect.getSelectedItemsExt(selectedItems): null } */}
-            {this.multiSelectEvent && this.multiSelectEvent.getSelectedItemsExt(eventId)}
+          {/* { this.multiselect ? this.multiSelect.getSelectedItemsExt(selectedItems): null } */}
+          {this.multiSelectEvent && this.multiSelectEvent.getSelectedItemsExt(eventId)}
         </View>
         <View>
           <TouchableOpacity onPress={(this.todoSubmithandelar)}>
