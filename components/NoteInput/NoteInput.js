@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity} from 'react-native';
-import {Navigation} from 'react-native-navigation';
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import MultiSelect from 'react-native-multiple-select';
 
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-    labels: state.labels.labels,
+    // labels: state.labels.labels,
     events: state.events.events
   };
 };

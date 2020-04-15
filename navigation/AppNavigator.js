@@ -18,6 +18,10 @@ import InputToDoScreen from '../screens/TodoScreens/InputToDoScreen';
 import ShowToDoScreen from '../screens/TodoScreens/ShowToDoScreen';
 import ToDosScreen from '../screens/TodoScreens/ToDosScreen';
 
+import InputNoteScreen from '../screens/NoteScreens/InputNoteScreen';
+import ShowNoteScreen from '../screens/NoteScreens/ShowNoteScreen';
+import NotesScreen from '../screens/NoteScreens/NotesScreen';
+
 
 import MenueScreen from '../screens/Menu';
 import AuthScreen from '../screens/StartScreens/AuthScreen';
@@ -60,6 +64,17 @@ const ArticleViewStack = createStackNavigator({
   }
 });
 
+const EventStack = createStackNavigator({
+  eventList: {
+    screen: EventsScreen
+  },
+  InputEvent: {
+    screen: InputToDoScreen
+  },
+  EventDetailsScreen: {
+    screen: ShowToDoScreen
+  }
+});
 
 const TodoStack = createStackNavigator({
   StartArticleList: {
@@ -70,39 +85,35 @@ const TodoStack = createStackNavigator({
   },
   TodoDetailsScreen: {
     screen: ShowToDoScreen
+  }
+});
+
+const NoteStack = createStackNavigator({
+  notetList: {
+    screen: NotesScreen
   },
-  StartArticleDetail: {
-    screen: StartArticleDetailScreen,
-    navigationOptions: {
-    //   headerRight: (
-    //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
-    //  )
-    }
+  InputNote: {
+    screen: InputNoteScreen
   },
-  StartEventDetail:{
-    screen: StartEventDetailScreen,
-    navigationOptions: {
-    //   headerRight: (
-    //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
-    //  )
-    }
+  NoteDetailsScreen: {
+    screen: ShowNoteScreen
   }
 });
 
 
 
 const CityTabNavigator = createBottomTabNavigator({
-    Events: {screen: TodoStack, navigationOptions:{
+    Events: {screen: EventStack, navigationOptions:{
         tabBarIcon: (tabinfo) => {
             return <MaterialCommunityIcons name='calendar-blank' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Todos: {screen: DiscoverScreen, navigationOptions:{
+    Todos: {screen: TodoStack, navigationOptions:{
         tabBarIcon: (tabinfo) => {
             return <Ionicons name='ios-checkbox-outline' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Notes: {screen: EventsScreen, navigationOptions:{
+    Notes: {screen: NoteStack, navigationOptions:{
         tabBarIcon: (tabinfo) => {
             return <FontAwesome name='sticky-note-o' size={25} color={tabinfo.tintColor} />
         }

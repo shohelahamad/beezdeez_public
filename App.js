@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   events: eventsReducer,
   todos: todosReducer,
-  // notes: notesReducer,
+  notes: notesReducer,
   // labels: labelsReducer,
   userContacts: contactReducer
 });
