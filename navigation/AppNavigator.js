@@ -22,6 +22,8 @@ import InputNoteScreen from '../screens/NoteScreens/InputNoteScreen';
 import ShowNoteScreen from '../screens/NoteScreens/ShowNoteScreen';
 import NotesScreen from '../screens/NoteScreens/NotesScreen';
 
+import ContactsScreen from '../screens/ContactScreens/UserContacts';
+
 
 import MenueScreen from '../screens/Menu';
 import AuthScreen from '../screens/StartScreens/AuthScreen';
@@ -99,6 +101,17 @@ const NoteStack = createStackNavigator({
     screen: ShowNoteScreen
   }
 });
+const ContactsStack = createStackNavigator({
+  contacstList: {
+    screen: ContactsScreen
+  },
+  InputContact: {
+    screen: InputNoteScreen
+  },
+  ContactDetailsScreen: {
+    screen: ShowNoteScreen
+  }
+});
 
 
 
@@ -118,7 +131,7 @@ const CityTabNavigator = createBottomTabNavigator({
             return <FontAwesome name='sticky-note-o' size={25} color={tabinfo.tintColor} />
         }
     }},
-    Contacts: {screen:EventsScreen, navigationOptions:{
+    Contacts: {screen: ContactsStack, navigationOptions:{
         headertitle: 'Security',
         tabBarIcon: (tabinfo) => {
             return <AntDesign name='contacts' size={25} color={tabinfo.tintColor} />
