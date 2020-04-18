@@ -1,48 +1,32 @@
-import _ from 'lodash'; // For Filtering
+import {LOAD_CONTACTS} from './actionTypes';
 
 
-export function loadContacts(contacts) {
+export const setUserContact = (userContacts,userId) =>{
+  return dispatch => {
+      // dispatch(uiStartLoading());
+      console.log("I am trying to set constacts"+ userContacts);
+      fetch("https://beezdeez-791a4.firebaseio.com/usercontacts/"+userId+".json?", {
+          method: 'POST',
+          body: JSON.stringify({ 
+            userContacts: userContacts
+          }),
+          })
+          .catch(err => {
+              console.log(err);
+              alert("Something went wrong, please try again!");
+              // dispatch(uiStopLoading());
+          })
+          .then(res => res.json())
+          .then(parsedRes => {
+              console.log(parsedRes);
+              dispatch(loadContacts(userContacts));
+              // dispatch(uiStopLoading());
+          });
+      };
+};
+export const loadContacts = userContacts => {
   return {
-    type: 'LOAD_CONTACTS',
-    contacts: readContacts(contacts)
+      type: LOAD_CONTACTS,
+      userContacts: userContacts
   };
-}
-
-export function selectContact(id) {
-  return {
-    type: 'SELECT_CONTACTS',
-    contactId: id
-  };
-}
-
-export function hideSelected() {
-  return {
-    type: 'HIDE_SELECTED',
-  };
-}
-
-export function addContact(first, last, number) {
-  var newContact = {
-    phoneNumbers: [{
-      label: "mobile",
-      number: number,
-    }],
-    familyName: last,
-    givenName: first,
-  }
-
-  Contacts.addContact(newContact, (err) => { /* error */ })
-
-  return {
-    type: 'ADD_CONTACT',
-    firstName: first,
-    lastName: last,
-    phoneNumber: number
-  };
-}
-
-export function toggleShowHidden() {
-  return {
-    type: 'TOGGLE_SHOW_HIDDEN'
-  };
-}
+};

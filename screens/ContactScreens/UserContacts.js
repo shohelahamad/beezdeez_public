@@ -40,7 +40,7 @@ import { connect } from 'react-redux';
 import * as Contacts from 'expo-contacts';
 import * as Permissions from "expo-permissions";
 import ContactList from '../../components/ContactList/ContactList';
-import { loadContacts, selectContact, hideSelected, addContact, toggleShowHidden } from '../../store/actions/userContacts';
+import { setUserContact } from '../../store/actions/userContacts';
 
 
 
@@ -62,7 +62,7 @@ class UserContacts extends Component {
         });
 
         if (data.length > 0) {
-          // this.props.loadContacts(data);
+          this.props.setContacts(data,this.props.userId);
           console.log(data);
         }
       }
@@ -153,14 +153,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
   }
 });
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    loadContacts: contacts => dispatch(loadContacts(contacts)),
+    setContacts: (contacts,userId) => dispatch(setUserContact(contacts,userId))
   };
-}
+};
 const mapStateToProps = state => {
   return {
-    userContacts: state.userContacts.contacts
+    userContacts: state.userContacts.contacts,
+    userId: state.auth.userId,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserContacts);

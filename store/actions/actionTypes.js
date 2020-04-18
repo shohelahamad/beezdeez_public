@@ -34,6 +34,7 @@ export const UPDATE_TODO_PRIORITY = 'UPDATE_TODO_PRIORITY';
 
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const DELETE_CONTACT = 'DELETE_CONTACT';
+export const LOAD_CONTACTS = 'LOAD_CONTACTS';
 
 export const ADD_LABEL = 'ADD_LABEL';
 export const SET_LABELS = 'SET_LABELS';
