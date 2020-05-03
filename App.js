@@ -8,7 +8,7 @@ import StartNavigator from './navigation/StartNavigator';
 import AppNavigator from './navigation/AppNavigator';
 import ShopNavigator from './navigation/ShopNavigator';
 
-import { createStore,combineReducers, compose, applyMiddleware } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import productsReducer from './store/reducers/products';
@@ -23,7 +23,8 @@ import todosReducer from "./store/reducers/todos";
 import notesReducer from "./store/reducers/notes";
 import labelsReducer from "./store/reducers/labels";
 import contactReducer from "./store/reducers/userContacts";
-
+import { Button, ThemeProvider } from 'react-native-elements';
+import themstyle from './assets/style/theme';
 const rootReducer = combineReducers({
   products: productsReducer,
   startContent: startContentReducer,
@@ -42,7 +43,7 @@ const store = createStore(
   rootReducer,
   composeEnhancer(applyMiddleware(thunk)),
 );
-const fetchFonts = () =>{
+const fetchFonts = () => {
   Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
@@ -51,17 +52,18 @@ const fetchFonts = () =>{
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  if(!fontLoaded){
+  if (!fontLoaded) {
     return <AppLoading
-    startAsync={fetchFonts}
-    onFinish={() => setFontLoaded(true)}
+      startAsync={fetchFonts}
+      onFinish={() => setFontLoaded(true)}
     />
   }
   return (
-    <Provider store={store}>
-      <AppNavigator/>
-    </Provider>
-
+    <ThemeProvider theme={themstyle}>
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    </ThemeProvider>
   );
 }
 

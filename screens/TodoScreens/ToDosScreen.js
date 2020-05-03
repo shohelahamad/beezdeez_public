@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar, TextInput, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, StatusBar, Platform, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-native-material-dropdown';
 import TodoList from '../../components/TodoList/TodoList';
-import { doneTodo } from "../../store/actions/index";
-import { getTodos } from "../../store/actions/index";
+import { doneTodo } from "../../store/actions/todos";
+import { getTodos } from "../../store/actions/todos";
 import { getLabels } from "../../store/actions/index";
 import { getEvents } from "../../store/actions/index";
+import { Ionicons } from '@expo/vector-icons';
 
 import { Header } from 'react-navigation-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -51,15 +52,15 @@ class ToDosScreen extends Component {
         <View style={styles.headerContainer}>
           <IconFa style={{ marginTop: 5, marginLeft: 5 }} name={"check-square"} color={"#0641A7"} size={30} />
           <Dropdown
-          pickerStyle={{marginTop: Header.HEIGHT}}
-          fontSize={25}
-          baseColor={"#fff"}
-          containerStyle={{ width: "80%", marginLeft: "2.5%", borderBottomColor: "#ffffff", marginTop: "-7.5%"}}
-          placeholder='Prioritize your ToDo'
-          value={"All"}
-          data={priorityData}
-          onChangeText={this.priorityDataHandelar}
-        />
+            pickerStyle={{ marginTop: Header.HEIGHT }}
+            fontSize={25}
+            baseColor={"#fff"}
+            containerStyle={{ width: "80%", marginLeft: "2.5%", borderBottomColor: "#ffffff", marginTop: "-7.5%" }}
+            placeholder='Prioritize your ToDo'
+            value={"All"}
+            data={priorityData}
+            onChangeText={this.priorityDataHandelar}
+          />
           <Icon style={{ marginTop: 5, marginRight: 5 }} name={"caret-down"} color={"#000000"} size={30} />
         </View>
         <TodoList
@@ -126,15 +127,36 @@ const mapDispatchToProps = dispatch => {
     // onLoadEvents: () => dispatch(getEvents())
   };
 };
-ToDosScreen.navigationOptions = {
-  headerBackground: (
-    <LinearGradient
-      colors={['#0637a5', '#0fadd5']}
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-    />
-  ),
-  headerTitleStyle: { color: '#fff' },
-};
+ToDosScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Todos",
+    headerTintColor: 'white',
+    headerBackground: (
+      <LinearGradient
+        colors={['#0637a5', '#0fadd5']}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+      />
+    ),
+    ...Platform.select({
+      android: {
+        headerForceInset: { top: 'never', bottom: 'never' },
+        headerStyle: {
+          height: 90
+        },
+      },
+      ios: {
+        headerStyle: {
+          height: 60
+        }
+      }
+    }),
+    headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
+    headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
+      navData.navigation.toggleDrawer()
+    }} />
+
+  }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(ToDosScreen);

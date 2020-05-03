@@ -1,5 +1,12 @@
 import React from "react";
-import {Button} from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image
+} from "react-native";
+import { ListItem, Avatar } from 'react-native-elements';
 import {
   createAppContainer,
   createSwitchNavigator
@@ -52,16 +59,16 @@ const ArticleViewStack = createStackNavigator({
     screen: StartArticleDetailScreen,
     navigationOptions: {
       headerRight: (
-        <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
-     )
+        <AntDesign name='closecircleo' size={25} color={"#fff"} style={{ paddingRight: 10 }} onPress={() => navigation.goBack(null)} />
+      )
     }
   },
-  StartEventDetail:{
+  StartEventDetail: {
     screen: StartEventDetailScreen,
     navigationOptions: {
-    //   headerRight: (
-    //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
-    //  )
+      //   headerRight: (
+      //     <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
+      //  )
     }
   }
 });
@@ -116,37 +123,47 @@ const ContactsStack = createStackNavigator({
 
 
 const CityTabNavigator = createBottomTabNavigator({
-    Events: {screen: EventStack, navigationOptions:{
-        tabBarIcon: (tabinfo) => {
-            return <MaterialCommunityIcons name='calendar-blank' size={25} color={tabinfo.tintColor} />
-        }
-    }},
-    Todos: {screen: TodoStack, navigationOptions:{
-        tabBarIcon: (tabinfo) => {
-            return <Ionicons name='ios-checkbox-outline' size={25} color={tabinfo.tintColor} />
-        }
-    }},
-    Notes: {screen: NoteStack, navigationOptions:{
-        tabBarIcon: (tabinfo) => {
-            return <FontAwesome name='sticky-note-o' size={25} color={tabinfo.tintColor} />
-        }
-    }},
-    Contacts: {screen: ContactsStack, navigationOptions:{
-        headertitle: 'Security',
-        tabBarIcon: (tabinfo) => {
-            return <AntDesign name='contacts' size={25} color={tabinfo.tintColor} />
-        }
-    }},
-    Menu: {screen:EventsScreen, navigationOptions:{
-        tabBarLabel: 'Menu',
-        tabBarIcon: (tabinfo) => {
-            return <MaterialIcons name='menu' size={25} color={tabinfo.tintColor} />
-        }
-    }},
-},{
-    tabBarOptions:{
-        activeTintColor: "#0641A7"
+  Events: {
+    screen: EventStack, navigationOptions: {
+      tabBarIcon: (tabinfo) => {
+        return <MaterialCommunityIcons name='calendar-blank' size={25} color={tabinfo.tintColor} />
+      }
     }
+  },
+  Todos: {
+    screen: TodoStack, navigationOptions: {
+      tabBarIcon: (tabinfo) => {
+        return <Ionicons name='ios-checkbox-outline' size={25} color={tabinfo.tintColor} />
+      }
+    }
+  },
+  Notes: {
+    screen: NoteStack, navigationOptions: {
+      tabBarIcon: (tabinfo) => {
+        return <FontAwesome name='sticky-note-o' size={25} color={tabinfo.tintColor} />
+      }
+    }
+  },
+  Contacts: {
+    screen: ContactsStack, navigationOptions: {
+      headertitle: 'Security',
+      tabBarIcon: (tabinfo) => {
+        return <AntDesign name='contacts' size={25} color={tabinfo.tintColor} />
+      }
+    }
+  },
+  Menu: {
+    screen: EventsScreen, navigationOptions: {
+      tabBarLabel: 'Menu',
+      tabBarIcon: (tabinfo) => {
+        return <MaterialIcons name='menu' size={25} color={tabinfo.tintColor} />
+      }
+    }
+  },
+}, {
+  tabBarOptions: {
+    activeTintColor: "#0641A7"
+  }
 });
 
 
@@ -170,16 +187,88 @@ const ViewDetails = createStackNavigator({
     screen: StartArticleDetailScreen,
     navigationOptions: {
       headerRight: (
-        <AntDesign name='closecircleo' size={25} color={"#fff"} style={{paddingRight: 10}} onPress={() => navigation.goBack(null)} />
-     )
+        <AntDesign name='closecircleo' size={25} color={"#fff"} style={{ paddingRight: 10 }} onPress={() => navigation.goBack(null)} />
+      )
     }
   }
 });
+const listOfItems = [
+  {
+    title: 'Appointments',
+    icon: 'av-timer'
+  },
+  {
+    title: 'Trips',
+    icon: 'flight-takeoff'
+  },
+  {
+    title: 'Appointments',
+    icon: 'av-timer'
+  },
+  {
+    title: 'Trips',
+    icon: 'flight-takeoff'
+  },
+  {
+    title: 'Appointments',
+    icon: 'av-timer'
+  },
+  {
+    title: 'Trips',
+    icon: 'flight-takeoff'
+  },
+  {
+    title: 'Appointments',
+    icon: 'av-timer'
+  },
+  {
+    title: 'Trips',
+    icon: 'flight-takeoff'
+  },
+]
+const CustomDrawerContentComponent = (props) => (
 
+  <View>
+    <View style={{ justifyContent: 'center', marginTop: 50, alignItems: 'center' }}>
+      <Avatar
+        size="xlarge"
+        rounded
+        title="CR"
+        onPress={() => console.log("Works!")}
+        activeOpacity={0.7}
+        source={{
+          uri:
+            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+        }}
+        placeholderStyle={{ backgroundColor: '#000000' }}
+      />
+    </View>
+    {
+      listOfItems.map((item, i) => (
+        <ListItem
+          key={i}
+          title={item.title}
+          leftIcon={{ name: item.icon }}
+          bottomDivider
+          chevron
+        />
+      ))
+    }
+  </View>
+
+);
 const MainDrawer = createDrawerNavigator({
   MainTabs: CityTabNavigator,
   Settings: SettingsStack
-});
+},
+  {
+    initialRouteName: 'MainTabs',
+    drawerPosition: 'left',
+    contentComponent: CustomDrawerContentComponent,
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
+  });
 
 const AppModalStack = createStackNavigator(
   {
@@ -208,8 +297,26 @@ const App = createSwitchNavigator({
     screen: LoadingCityScreen
   },
   App: {
-    screen: CityTabNavigator
+    screen: MainDrawer
   }
 });
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  drawerHeader: {
+    height: 200,
+    backgroundColor: 'white'
+  },
+  drawerImage: {
+    height: 150,
+    width: 150,
+    borderRadius: 75
+  }
+
+})
 
 export default createAppContainer(App);
