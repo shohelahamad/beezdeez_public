@@ -4,8 +4,11 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image
+  Image,
+  AsyncStorage,
+  Dimensions
 } from "react-native";
+const { height, width } = Dimensions.get("window");
 import { ListItem, Avatar } from 'react-native-elements';
 import {
   createAppContainer,
@@ -192,44 +195,13 @@ const ViewDetails = createStackNavigator({
     }
   }
 });
-const listOfItems = [
-  {
-    title: 'Appointments',
-    icon: 'av-timer'
-  },
-  {
-    title: 'Trips',
-    icon: 'flight-takeoff'
-  },
-  {
-    title: 'Appointments',
-    icon: 'av-timer'
-  },
-  {
-    title: 'Trips',
-    icon: 'flight-takeoff'
-  },
-  {
-    title: 'Appointments',
-    icon: 'av-timer'
-  },
-  {
-    title: 'Trips',
-    icon: 'flight-takeoff'
-  },
-  {
-    title: 'Appointments',
-    icon: 'av-timer'
-  },
-  {
-    title: 'Trips',
-    icon: 'flight-takeoff'
-  },
-]
 const CustomDrawerContentComponent = (props) => (
 
   <View>
-    <View style={{ justifyContent: 'center', marginTop: 50, alignItems: 'center' }}>
+    <FontAwesome name="times-circle" style={{ color: '#000000', fontSize: 25, top: 30, position: 'absolute', right: 25  }} onPress={() => {
+      props.navigation.toggleDrawer()
+    }} />
+    <View style={{ justifyContent: 'center', marginTop: 50, alignItems: 'center'}}>
       <Avatar
         size="xlarge"
         rounded
@@ -243,17 +215,17 @@ const CustomDrawerContentComponent = (props) => (
         placeholderStyle={{ backgroundColor: '#000000' }}
       />
     </View>
-    {
-      listOfItems.map((item, i) => (
-        <ListItem
-          key={i}
-          title={item.title}
-          leftIcon={{ name: item.icon }}
-          bottomDivider
-          chevron
-        />
-      ))
-    }
+    <ListItem
+      title="logout"
+      leftIcon={{ name: 'logout', type: 'antdesign' }}
+      bottomDivider
+      chevron
+      onPress={() => (
+        AsyncStorage.removeItem("ap:auth:token"),
+        AsyncStorage.removeItem("ap:auth:userId"),
+        props.navigation.navigate({ routeName: 'AuthScreen' })
+      )}
+    />
   </View>
 
 );
@@ -268,6 +240,7 @@ const MainDrawer = createDrawerNavigator({
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle',
+    drawerWidth: width,
   });
 
 const AppModalStack = createStackNavigator(

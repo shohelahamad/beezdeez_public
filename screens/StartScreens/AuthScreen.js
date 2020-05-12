@@ -22,7 +22,8 @@ import ButtonWithBackground from "../../components/UI/ButtonWithBackground/Butto
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { connect } from "react-redux";
-import { authStoreToken,authClearStorage } from "../../store/actions/index";
+import { authStoreToken, authClearStorage } from "../../store/actions/auth";
+import { uiStartLoading, uiStopLoading } from "../../store/actions/ui";
 
 
 
@@ -80,31 +81,33 @@ class AuthScreen extends Component {
   };
 
   loginUser() {
+    this.props.onStartingLoading();
     // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.authMode );
     const authData = {
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
     };
     this.setState({ error: '', loading: true });
-    let url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
-    if(this.state.authMode === 'signup'){
-      url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
+    let url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
+    if (this.state.authMode === 'signup') {
+      url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
     }
     axios.post(url, authData)
-    .then(response => {
+      .then(response => {
         console.log(response);
         response.data.idToken ?
-        this.props.onAuthSetToken(response.data.idToken,response.data.localId): false
-        response.data.idToken ?        
-        this.props.navigation.navigate('StartArticleList'): false
-        
+          this.props.onAuthSetToken(response.data.idToken, response.data.localId) : false
+        response.data.idToken ?
+          this.props.navigation.navigate('StartArticleList') : false
+
         // dispatch(authSuccess(response.data.idToken, response.data.localId));
         // dispatch(checkAuthTimeout(response.data.expiresIn));
-    })
-    .catch(err => {
-      alert("Something went wrong");
-      // console.log(err.response.data.error);
-    });
+      })
+      .catch(err => {
+        alert("Please check your logain detail and try again");
+        // console.log(err.response.data.error);
+      });
+      this.props.onStopLoading();
   }
   onLoginFail() {
     this.setState({
@@ -181,7 +184,9 @@ class AuthScreen extends Component {
       </ButtonWithBackground>
     );
     if (this.props.isLoading) {
-      submitButton = <ActivityIndicator />;
+      submitButton = <View style={styles.button}>
+        <ActivityIndicator color={"#ffffff"} />
+      </View>
     }
     if (this.state.authMode === "login") {
       forgotPasswordControl = (
@@ -295,6 +300,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
   },
+  button: {
+    width: "100%",
+    backgroundColor: "#0641A7",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: "center",
+  },
   buttonText: {
     color: '#ffffff',
   },
@@ -356,7 +372,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAuthSetToken: (token, userId)=> dispatch(authStoreToken( token,userId) )
+    onStartingLoading: () => dispatch(uiStartLoading()),
+    onStopLoading: () => dispatch(uiStopLoading()),
+    onAuthSetToken: (token, userId) => dispatch(authStoreToken(token, userId))
   };
 };
 
