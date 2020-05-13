@@ -22,7 +22,7 @@ import ButtonWithBackground from "../../components/UI/ButtonWithBackground/Butto
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { connect } from "react-redux";
-import { authStoreToken, authClearStorage } from "../../store/actions/auth";
+import { tryAuth } from "../../store/actions/auth";
 import { uiStartLoading, uiStopLoading } from "../../store/actions/ui";
 
 
@@ -81,33 +81,12 @@ class AuthScreen extends Component {
   };
 
   loginUser() {
-    this.props.onStartingLoading();
     // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.authMode );
     const authData = {
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
     };
-    this.setState({ error: '', loading: true });
-    let url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
-    if (this.state.authMode === 'signup') {
-      url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
-    }
-    axios.post(url, authData)
-      .then(response => {
-        console.log(response);
-        response.data.idToken ?
-          this.props.onAuthSetToken(response.data.idToken, response.data.localId) : false
-        response.data.idToken ?
-          this.props.navigation.navigate('StartArticleList') : false
-
-        // dispatch(authSuccess(response.data.idToken, response.data.localId));
-        // dispatch(checkAuthTimeout(response.data.expiresIn));
-      })
-      .catch(err => {
-        alert("Please check your logain detail and try again");
-        // console.log(err.response.data.error);
-      });
-      this.props.onStopLoading();
+    this.props.onAuth( authData, this.state.authMode );
   }
   onLoginFail() {
     this.setState({
@@ -373,7 +352,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onStartingLoading: () => dispatch(uiStartLoading()),
-    onStopLoading: () => dispatch(uiStopLoading()),
+    onAuth: (authData, authDatas) => dispatch(tryAuth(authData,authDatas )),
     onAuthSetToken: (token, userId) => dispatch(authStoreToken(token, userId))
   };
 };

@@ -25,6 +25,8 @@ import labelsReducer from "./store/reducers/labels";
 import contactReducer from "./store/reducers/userContacts";
 import { Button, ThemeProvider } from 'react-native-elements';
 import themstyle from './assets/style/theme';
+import NavigatorService from "./components/UI/NavStart/NavigatorService";
+
 const rootReducer = combineReducers({
   products: productsReducer,
   startContent: startContentReducer,
@@ -61,7 +63,9 @@ export default function App() {
   return (
     <ThemeProvider theme={themstyle}>
       <Provider store={store}>
-        <AppNavigator />
+        <AppNavigator ref={navigatorRef => {
+          NavigatorService.setContainer(navigatorRef);
+        }}/>
       </Provider>
     </ThemeProvider>
   );
