@@ -8,7 +8,7 @@ const ArticleList = props => {
           <FlatList
             onViewDetail={() => {
               console.log(props)
-              // props.navigation.navigate({ routeName: 'ProductDetail'});
+              // props.navigation.navigate({ routeName: 'ProductDetail example chaged '});
                 props.navigation.navigate('ProductDetail',{ 
                   productId: itemdata.item.id,
                   productTitle: itemdata.item.title
