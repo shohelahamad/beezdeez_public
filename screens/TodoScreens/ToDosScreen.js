@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar, Platform, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, StatusBar, Platform, Button, Text, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
@@ -46,6 +46,22 @@ class ToDosScreen extends Component {
     }, {
       value: 'Less Important'
     }];
+    let listToView =(
+      <TodoList
+          todos={this.props.todos}
+          onItemSelected={this.itemSelectedHandler}
+          onDoneSelected={this.doneSelectedHandler}
+        />
+    );
+    if(this.props.todos==[])
+    {
+      listToView = (
+        <View><Text>There is no conten Please add one</Text></View>
+      );
+    }
+    if(this.props.isLoading){
+      listToView = <ActivityIndicator/>
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -63,11 +79,7 @@ class ToDosScreen extends Component {
           />
           <Icon style={{ marginTop: 5, marginRight: 5 }} name={"caret-down"} color={"#000000"} size={30} />
         </View>
-        <TodoList
-          todos={this.props.todos}
-          onItemSelected={this.itemSelectedHandler}
-          onDoneSelected={this.doneSelectedHandler}
-        />
+        {listToView}
 
         <LinearGradient
           colors={['#0637a5', '#0fadd5']}
@@ -116,6 +128,7 @@ const mapStateToProps = state => {
     todos: state.todos.todos,
     userId: state.auth.userId,
     token: state.auth.token,
+    isLoading: state.ui.isLoading
 
   };
 };

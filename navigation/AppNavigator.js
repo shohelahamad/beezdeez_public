@@ -210,7 +210,7 @@ const CustomDrawerContentComponent = (props) => (
         activeOpacity={0.7}
         source={{
           uri:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+            '../assets/avatar-default-icon.png',
         }}
         placeholderStyle={{ backgroundColor: '#000000' }}
       />
@@ -243,19 +243,6 @@ const MainDrawer = createDrawerNavigator({
     drawerWidth: width,
   });
 
-const AppModalStack = createStackNavigator(
-  {
-    App: MainDrawer,
-    Promotion1: {
-      screen: Example
-    }
-  },
-  {
-    mode: "modal",
-    headerMode: "none"
-  }
-);
-
 const App = createSwitchNavigator({
   Loading: {
     screen: LoadingAppScreen
@@ -273,23 +260,5 @@ const App = createSwitchNavigator({
     screen: MainDrawer
   }
 });
-const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  drawerHeader: {
-    height: 200,
-    backgroundColor: 'white'
-  },
-  drawerImage: {
-    height: 150,
-    width: 150,
-    borderRadius: 75
-  }
-
-})
 
 export default createAppContainer(App);

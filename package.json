@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "btoa": "^1.2.1",
     "expo": "^35.0.0",
+    "expo-camera": "~7.0.0",
     "expo-contacts": "~7.0.0",
     "expo-font": "^7.0.0",
     "expo-linear-gradient": "~7.0.0",
