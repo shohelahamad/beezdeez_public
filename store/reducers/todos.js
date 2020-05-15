@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) =>{
         return {
             ...state,
             todos: state.todos.map(todo =>{
-                return todo.key === action.todoKey?{...todo,isDone : !todo.isDone} : todo
+                return todo.key === action.todoKey?{...todo,isDone : action.isDone} : todo
             }),
             selectedTodo: null
         };

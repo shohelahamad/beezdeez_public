@@ -27,8 +27,9 @@ class ShowToDoScreen extends Component {
     this.props.navigator.pop();
   };
   doneSelectedHandler = () => {
-    this.props.onDdoneTodo(this.props.userId,this.selTodo.key,this.selTodo.isDone);
-    this.selTodo.isDone = !this.selTodo.isDone;
+    altDone= !this.selTodo.isDone
+    this.props.onDdoneTodo(this.props.userId,this.selTodo.key,altDone);
+    this.selTodo.isDone = !this.selTodo.isDone
   };
   updateToDoDueDate = (newDueDate) => {
     this.props.onNewDate(this.selTodo.key, newDueDate);

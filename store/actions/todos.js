@@ -74,7 +74,7 @@ export const doneTodo = (userId,todoKey,isDone) =>{
             .then(res => res.json())
             .then(parsedRes => {
                 console.log(parsedRes);
-                dispatch(setDoenTodo(todoKey));
+                dispatch(setDoenTodo(todoKey,isDone));
                 dispatch(uiStopLoading());
             });
         // dispatch(uiStartLoading());
@@ -99,10 +99,11 @@ export const doneTodo = (userId,todoKey,isDone) =>{
 
     };
 };
-export const setDoenTodo = (key) =>{
+export const setDoenTodo = (key, isDone) =>{
     return {
         type: DONE_TODO,
-        todoKey: key
+        todoKey: key,
+        isDone: isDone
     };
 };
 export const updateDueDate = (key,newDueDate) =>{
