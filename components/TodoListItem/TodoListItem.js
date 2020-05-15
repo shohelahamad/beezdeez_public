@@ -30,8 +30,9 @@ const TodoListItem = (props) => (
                 </View>
                 <View style={{ width: "50%", flexDirection: "row", marginTop: 5 }}>
                     <Icon style={{ marginRight: 5, marginLeft: 5 }} name={"calendar"} color={"#969696"} size={15} />
-
-                    <Text style={{ color: "#969696"}} >{props.eventId}</Text>
+                    {props.eventId ?
+                    <Text style={{ color: "#969696"}} >{props.eventId}</Text> : <Text style={{ color: "#969696"}} >No event linked.</Text> 
+                    }
                 </View>
 
             </View>
