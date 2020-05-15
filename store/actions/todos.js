@@ -58,7 +58,48 @@ export const setTodos = todos => {
         todos: todos
     };
 };
-export const doneTodo = (key) =>{
+export const doneTodo = (userId,todoKey,isDone) =>{
+    return dispatch => {
+        fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/"+todoKey+".json?", {
+            method: 'PATCH',
+            body: JSON.stringify({
+            isDone: isDone
+            }),
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Something went wrong, please try again!");
+                dispatch(uiStopLoading());
+            })
+            .then(res => res.json())
+            .then(parsedRes => {
+                console.log(parsedRes);
+                dispatch(setDoenTodo(todoKey));
+                dispatch(uiStopLoading());
+            });
+        // dispatch(uiStartLoading());
+        // // fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?auth="+ token)
+        // fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?")
+        // .catch(err => {
+        //     alert("Something went wrong, sorry :/");
+        //     console.log(err);
+        // })
+        // .then(res => res.json())
+        // .then(parsedRes => {
+        //     const todos = [];
+        //     for (let key in parsedRes) {
+        //         todos.push({
+        //             ...parsedRes[key],
+        //             key: key
+        //         });
+        //     }
+        //     dispatch(setDoenTodo(key));
+        //     dispatch(uiStopLoading());
+        // });
+
+    };
+};
+export const setDoenTodo = (key) =>{
     return {
         type: DONE_TODO,
         todoKey: key

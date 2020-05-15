@@ -27,7 +27,7 @@ class ShowToDoScreen extends Component {
     this.props.navigator.pop();
   };
   doneSelectedHandler = () => {
-    this.props.onDdoneTodo(this.selTodo.key);
+    this.props.onDdoneTodo(this.props.userId,this.selTodo.key,this.selTodo.isDone);
     this.selTodo.isDone = !this.selTodo.isDone;
   };
   updateToDoDueDate = (newDueDate) => {
@@ -205,12 +205,13 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-    todos: state.todos.todos
+    todos: state.todos.todos,
+    userId: state.auth.userId
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onDdoneTodo: key => dispatch(doneTodo(key)),
+    onDdoneTodo: (userId,key,isDone) => dispatch(doneTodo(userId,key, isDone)),
     onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
     onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
   };
