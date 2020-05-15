@@ -14,6 +14,8 @@ import Iconfa from "react-native-vector-icons/FontAwesome5";
 import { doneTodo } from "../../store/actions/index";
 import { updateDueDate } from "../../store/actions/index";
 import { updatePriority } from "../../store/actions/index";
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 class ShowToDoScreen extends Component {
   itemKey = this.props.navigation.getParam('itemKey');
@@ -33,7 +35,7 @@ class ShowToDoScreen extends Component {
     this.selTodo.dueDate = newDueDate;
   };
   updateToDoPriority = (newPriority) => {
-    this.props.onNewPriority(this.selTodo.key, newPriority);    
+    this.props.onNewPriority(this.selTodo.key, newPriority);
   };
   _handleDatePicked = (date) => {
     this.setState({
@@ -41,17 +43,17 @@ class ShowToDoScreen extends Component {
       dueDate: moment(date).format('MMMM Do YYYY, HH:mm')
     })
   };
-//   lapsList() {
+  //   lapsList() {
 
-//     return this.state.selectedPlace.priority.map(() => {
-//       return (
-//         <View style={{ width: 35, marginRight: 8 }}>
-//             <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
-//           </View>
-//       )
-//     })
+  //     return this.state.selectedPlace.priority.map(() => {
+  //       return (
+  //         <View style={{ width: 35, marginRight: 8 }}>
+  //             <Icon style={{ marginTop: 10 }} size={25} name={this.selTodo.priority === "Less Important" ? "arrow-down" : "arrow-up"} color={this.selTodo.priority === "Less Important" ? "green" : this.selTodo.priority === "Medium" ? "#ffc107" : "red"} />
+  //           </View>
+  //       )
+  //     })
 
-// }
+  // }
   render() {
     // let priorityIcon = (
     //  this.state.selectedPlace.priority.map(() => {
@@ -106,8 +108,8 @@ class ShowToDoScreen extends Component {
             <Iconfa style={{ marginTop: 10 }} size={30} name="calendar" color="red" />
             <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "red", fontSize: 20 }}>{this.selTodo.dueDate}</Text>
           </View>
-          <TouchableOpacity onPress={ () => {this.selTodo.dueDate != "" ? this.updateToDoDueDate("") : null }} style={{ width: "7%" }} >
-              <Icon style={{ marginTop: 10 }} size={25} name="times" color="#969696" />
+          <TouchableOpacity onPress={() => { this.selTodo.dueDate != "" ? this.updateToDoDueDate("") : null }} style={{ width: "7%" }} >
+            <Icon style={{ marginTop: 10 }} size={25} name="times" color="#969696" />
           </TouchableOpacity>
 
         </View>
@@ -215,10 +217,6 @@ const mapDispatchToProps = dispatch => {
 };
 ShowToDoScreen.navigationOptions = navData => {
   return {
-    // headerTitle: navData.navigation.getParam('productTitle')
-  };
-};
-ShowToDoScreen.navigationOptions ={
     // headerTitle: (
     //     <Image
     //       style={{
@@ -230,11 +228,19 @@ ShowToDoScreen.navigationOptions ={
     //       source={require('../../assets/DEU_Memmelsdorf.png')}
     //     />
     // ),
-    headerStyle: {
-        backgroundColor: 'darkgreen',
-    },
-    headerTintColor: '#fff',
-    stateBar: '#ffffff'
+    // headerStyle: {
+    //     backgroundColor: 'darkgreen',
+    // },
+    // headerTintColor: '#fff',
+    // stateBar: '#ffffff',
+    headerRight: <MaterialIcons name="edit" style={{ color: '#0637a5', fontSize: 25, paddingRight: 10 }} onPress={() => {
+      navData.navigation.navigate('InputToDo',
+        {
+          toDoId: navData.navigation.getParam('itemKey')
+        }
+      );
+    }} />
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowToDoScreen);

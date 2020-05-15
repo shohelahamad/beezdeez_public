@@ -11,19 +11,33 @@ import { connect } from 'react-redux';
 import { addTodo } from '../../store/actions/index';
 
 class InputToDoScreen extends Component {
+  
   todoAddedHandler = (todoTitle,todoDescribtion,priority,dueDate,eventId,isDone)=> {
       this.props.onAddTodo(todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,this.props.userId);
       // Navigation.pop(this.props.componentId);
   }
 
   render () {
-      return (
-          <View>
-              <TodoInput
-              events={this.props.events}
-              onTodoAdded={this.todoAddedHandler}/>
-          </View>
-      );
+    itemKey = this.props.navigation.getParam('toDoId');
+    console.log(itemKey);
+    selTodo={}
+    if(itemKey){
+      selTodo = this.props.todos.find(todo => {
+        return todo.key === itemKey;
+      });
+      console.log(selTodo);
+    }
+    return (
+        <View>
+          {selTodo ? <TodoInput
+            events={this.props.events}
+            editTodo={selTodo}
+            onTodoAdded={this.todoAddedHandler}/> :
+            <TodoInput
+            events={this.props.events}
+            onTodoAdded={this.todoAddedHandler}/>}
+        </View>
+    );
   }
 }
 
@@ -37,7 +51,8 @@ const mapStateToProps = state => {
   return {
     events: state.events.events,
     userId: state.auth.userId,
-    token: state.auth.token
+    token: state.auth.token,
+    todos: state.todos.todos
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(InputToDoScreen);

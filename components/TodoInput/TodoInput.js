@@ -15,6 +15,19 @@ class TodoInput extends Component {
     dueDate: '',
     eventId: [],
   }
+  componentDidMount(){
+    if (this.props.editTodo) {
+      console.log(this.props.editTodo)
+      this.setState({
+        isDone: this.props.editTodo.isDone,
+        todoTitle: this.props.editTodo.todoTitle,
+        todoDescribtion: this.props.editTodo.todoDescribtion,
+        priority: this.props.editTodo.priority,
+        dueDate: this.props.editTodo.dueDate,
+        eventId: this.props.editTodo.eventId,
+      });
+    }
+  }
   onSelectedEventChange = eventId => {
     this.setState({ eventId });
   };
@@ -71,6 +84,7 @@ class TodoInput extends Component {
         <Icon name={"check-square"} color={"#000000"} size={30} style={{ marginBottom: -30 }} />
         <TextInput value={this.state.todoTitle}
           onChangeText={this.titleCahgnehandelar}
+          // value={this.props.editTodo.title ? this.props.editTodo.title: null }
           style={styles.titleText} placeholder={"New ToDo"} />
 
         <Text>Description</Text>
@@ -120,6 +134,7 @@ class TodoInput extends Component {
         <Dropdown
           placeholder='Prioritize your ToDo'
           data={priorityData}
+          value={this.state.priority}
           onChangeText={this.priorityDataHandelar}
         />
         <Text>From</Text>
@@ -152,7 +167,8 @@ class TodoInput extends Component {
         <View>
           <TouchableOpacity onPress={(this.todoSubmithandelar)}>
             <View style={styles.loginButton}>
-              <Text style={styles.buttonText}> Add </Text>
+            {this.props.editTodo ?
+              <Text style={styles.buttonText}> Save </Text> : <Text style={styles.buttonText}> Add </Text>  }
             </View>
           </TouchableOpacity>
         </View>
