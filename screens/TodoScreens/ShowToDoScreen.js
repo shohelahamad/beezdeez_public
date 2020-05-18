@@ -4,13 +4,16 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native'
 import CheckBox from 'react-native-check-box';
 import { connect } from "react-redux";
 import { Dropdown } from 'react-native-material-dropdown';
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { doneTodo } from "../../store/actions/index";
 import { updateDueDate } from "../../store/actions/index";
 import { updatePriority } from "../../store/actions/index";
@@ -18,6 +21,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 class ShowToDoScreen extends Component {
+  componentDidMount() {
+    this.props.navigation.setParams({ deleteConfirm: this.deleteConfirm});
+  }
   // componentDidMount() {
   //   itemKey = this.props.navigation.getParam('itemKey');
   //   selTodo = this.props.todos.find(todo => {
@@ -25,9 +31,26 @@ class ShowToDoScreen extends Component {
   //   });
   // }
   itemKey = this.props.navigation.getParam('itemKey');
-    selTodo = this.props.todos.find(todo => {
-      return todo.key === this.itemKey;
-    });
+  selTodo = this.props.todos.find(todo => {
+    return todo.key === this.itemKey;
+  });
+  deleteConfirm = () => {
+    Alert.alert(
+      "Detete Todo",
+      "Are you sure you want to delete this todo?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => (
+          this.props.navigation.navigate('StartArticleList')
+        ) }
+      ],
+      { cancelable: false }
+    );
+  };
   placeDeletedHandler = () => {
     this.props.onDeletePlace(this.selTodo.key);
     this.props.navigator.pop();
@@ -241,13 +264,19 @@ ShowToDoScreen.navigationOptions = navData => {
     // },
     // headerTintColor: '#fff',
     // stateBar: '#ffffff',
-    headerRight: <MaterialIcons name="edit" style={{ color: '#0637a5', fontSize: 25, paddingRight: 10 }} onPress={() => {
-      navData.navigation.navigate('InputToDo',
-        {
-          toDoId: navData.navigation.getParam('itemKey')
-        }
-      );
-    }} />
+    headerRight: (
+
+      <View style={{ flexDirection: "row" }}>
+        <MaterialIcons name="delete" style={{ color: 'red', fontSize: 25, paddingRight: 10 }} onPress={navData.navigation.getParam('deleteConfirm')} />
+        <Feather name="edit" style={{ color: '#0637a5', fontSize: 25, paddingRight: 10 }} onPress={() => {
+          navData.navigation.navigate('InputToDo',
+            {
+              toDoId: navData.navigation.getParam('itemKey')
+            }
+          );
+        }} />
+      </View>
+    )
   }
 };
 
