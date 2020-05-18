@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import NoteInput from '../../components/NoteInput/NoteInput';
 import { connect } from 'react-redux';
-import { addNote } from '../../store/actions/index';
+import { addNote } from '../../store/actions/notes';
 
 class InputNote extends Component {
   noteAddedHandler = (noteHeading, noteDescribtion, catagory,eventId)=> {

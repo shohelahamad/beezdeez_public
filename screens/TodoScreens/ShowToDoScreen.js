@@ -18,17 +18,23 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 class ShowToDoScreen extends Component {
+  // componentDidMount() {
+  //   itemKey = this.props.navigation.getParam('itemKey');
+  //   selTodo = this.props.todos.find(todo => {
+  //     return todo.key === this.itemKey;
+  //   });
+  // }
   itemKey = this.props.navigation.getParam('itemKey');
-  selTodo = this.props.todos.find(todo => {
-    return todo.key === this.itemKey;
-  });
+    selTodo = this.props.todos.find(todo => {
+      return todo.key === this.itemKey;
+    });
   placeDeletedHandler = () => {
     this.props.onDeletePlace(this.selTodo.key);
     this.props.navigator.pop();
   };
   doneSelectedHandler = () => {
-    altDone= !this.selTodo.isDone
-    this.props.onDdoneTodo(this.props.userId,this.selTodo.key,altDone);
+    altDone = !this.selTodo.isDone
+    this.props.onDdoneTodo(this.props.userId, this.selTodo.key, altDone);
     this.selTodo.isDone = !this.selTodo.isDone
   };
   updateToDoDueDate = (newDueDate) => {
@@ -212,7 +218,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onDdoneTodo: (userId,key,isDone) => dispatch(doneTodo(userId,key, isDone)),
+    onDdoneTodo: (userId, key, isDone) => dispatch(doneTodo(userId, key, isDone)),
     onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
     onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
   };

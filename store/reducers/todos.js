@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY, SET_TODOS } from '../actions/actionTypes'
+import { ADD_TODO, SET_UPDATES_TODO, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY, SET_TODOS } from '../actions/actionTypes'
 const initialState ={
     todos: [],
 };
@@ -36,6 +36,19 @@ const reducer = (state = initialState, action) =>{
             ...state,
             todos: state.todos.map(todo =>{
                 return todo.key === action.todoKey?{...todo,isDone : action.isDone} : todo
+            }),
+            selectedTodo: null
+        };
+        case SET_UPDATES_TODO:
+        return {
+            ...state,
+            todos: state.todos.map(todo =>{
+                return todo.key === action.todoKey?{...todo,isDone : action.isDone, todoTitle: action.todoTitle,
+                    todoDescribtion: action.todoDescribtion,
+                    priority: action.priority,
+                    dueDate: action.dueDate,
+                    eventId: action.eventId,
+                    isDone: action.isDone} : todo
             }),
             selectedTodo: null
         };
