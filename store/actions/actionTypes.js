@@ -30,6 +30,7 @@ export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const DONE_TODO = 'DONE_TODO';
 export const SET_UPDATES_TODO = 'SET_UPDATES_TODO';
+export const SET_DELETE_TODO = 'SET_DELETE_TODO';
 export const UPDATE_TODO_DUEDATE = 'UPDATE_TODO_DUEDATE'; 
 export const UPDATE_TODO_PRIORITY = 'UPDATE_TODO_PRIORITY'; 
 

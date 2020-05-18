@@ -1,4 +1,4 @@
-import { ADD_TODO, SET_UPDATES_TODO, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY, SET_TODOS } from '../actions/actionTypes'
+import { ADD_TODO,SET_DELETE_TODO, SET_UPDATES_TODO, DELETE_TODO, DONE_TODO, UPDATE_TODO_DUEDATE, UPDATE_TODO_PRIORITY, SET_TODOS } from '../actions/actionTypes'
 const initialState ={
     todos: [],
 };
@@ -23,11 +23,11 @@ const reducer = (state = initialState, action) =>{
         ...state,
         todos: action.todos
         };
-        case DELETE_TODO:
+        case SET_DELETE_TODO:
             return {
                 ...state,
                 todos: state.todos.filter(todo => {
-                return todo.key !== state.selectedTodo.key;
+                return todo.key !== action.todoKey;
                 }),
                 selectedTodo: null
             };

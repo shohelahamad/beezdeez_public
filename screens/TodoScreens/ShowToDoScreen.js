@@ -14,9 +14,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import { doneTodo } from "../../store/actions/index";
-import { updateDueDate } from "../../store/actions/index";
-import { updatePriority } from "../../store/actions/index";
+import { doneTodo, updateDueDate, updatePriority, deleteTodo } from "../../store/actions/todos";
 import { MaterialIcons } from '@expo/vector-icons';
 
 
@@ -45,6 +43,7 @@ class ShowToDoScreen extends Component {
           style: "cancel"
         },
         { text: "Delete", onPress: () => (
+          this.props.onDeleteTodo(this.props.userId,this.itemKey),
           this.props.navigation.navigate('StartArticleList')
         ) }
       ],
@@ -242,6 +241,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDdoneTodo: (userId, key, isDone) => dispatch(doneTodo(userId, key, isDone)),
+    onDeleteTodo: (userId, key) => dispatch(deleteTodo(userId, key)),
     onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
     onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
   };
