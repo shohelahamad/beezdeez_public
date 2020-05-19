@@ -43,8 +43,8 @@ import LoadingCityScreen from '../screens/StartScreens/LoadingCityScreen';
 import SelectCityScreen from '../screens/StartScreens/SelectCityScreen';
 import HelpTourScreen from '../screens/StartScreens/HelpTourScreen';
 import LoadingAppScreen from '../screens/StartScreens/LoadingAppScreen';
-import DiscoverScreen from '../screens/DiscoverScreen';
-import EventsScreen from '../screens/EventsScreen';
+import InputEventScreen from '../screens/EventScreens/InputEventScreen';
+import EventsScreen from '../screens/EventScreens/EventsScreen';
 
 import Example from "../screens/Example";
 import WelcomeScreen from "../screens/StartScreens/WelcomeScreen";
@@ -77,18 +77,16 @@ const ArticleViewStack = createStackNavigator({
 });
 
 const EventStack = createStackNavigator({
-  eventList: {
+  EventsScreen: {
     screen: EventsScreen
   },
   InputEvent: {
-    screen: InputToDoScreen
+    screen: InputEventScreen
   },
   EventDetailsScreen: {
     screen: ShowToDoScreen
   },
-  EventsScreen: {
-    screen: EventsScreen
-  }
+  
 });
 
 const TodoStack = createStackNavigator({

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Iconfa from 'react-native-vector-icons/FontAwesome';
-import CheckBox from 'react-native-check-box'
+import CheckBox from 'react-native-check-box';
 
 const TodoListItem = (props) => (
     <TouchableOpacity onPress={props.onItemPressed} style={{textDecorationLine: props.isDone ? 'line-through' : 'none'}}>
