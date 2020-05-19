@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#E5EBE7"
   },
   headerContainer: {
     width: "95%",
@@ -155,14 +155,14 @@ ToDosScreen.navigationOptions = navData => {
     ...Platform.select({
       android: {
         headerForceInset: { top: 'never', bottom: 'never' },
-        headerStyle: {
-          height: 90
-        },
+        // headerStyle: {
+        //   height: 90
+        // },
       },
       ios: {
-        headerStyle: {
-          height: 60
-        }
+        // headerStyle: {
+        //   height: 60
+        // }
       }
     }),
     headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },

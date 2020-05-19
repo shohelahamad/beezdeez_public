@@ -60,10 +60,11 @@ const styles = StyleSheet.create({
         shadowColor: '#b2b2b2',
         marginTop: 10,
         shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.7,
         shadowRadius: 5,
+        
     },
-    // listItem: {
+    // 
     //     width: "95%",
     //     backgroundColor: "#fff",
     //     padding: 10,

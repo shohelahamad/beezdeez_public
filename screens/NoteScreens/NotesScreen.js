@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import NoteList from '../../components/NoteList/NoteList';
 import { connect } from 'react-redux';
 import { getNotes } from "../../store/actions/index"
+import { Ionicons } from '@expo/vector-icons';
+
 
 import { Header } from 'react-navigation-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -79,6 +81,38 @@ class Notes extends Component {
         </LinearGradient>
       </View>
     );
+  }
+}
+Notes.navigationOptions = navData => {
+  return {
+    headerTitle: "Notes",
+    headerTintColor: 'white',
+    headerBackground: (
+      <LinearGradient
+        colors={['#0637a5', '#0fadd5']}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+      />
+    ),
+    ...Platform.select({
+      android: {
+        headerForceInset: { top: 'never', bottom: 'never' },
+        // headerStyle: {
+        //   height: 90
+        // },
+      },
+      ios: {
+        // headerStyle: {
+        //   height: 60
+        // }
+      }
+    }),
+    headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
+    headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
+      navData.navigation.toggleDrawer()
+    }} />
+
   }
 }
 const styles = StyleSheet.create({

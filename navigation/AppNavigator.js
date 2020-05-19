@@ -154,15 +154,7 @@ const CityTabNavigator = createBottomTabNavigator({
         return <AntDesign name='contacts' size={25} color={tabinfo.tintColor} />
       }
     }
-  },
-  Menu: {
-    screen: EventsScreen, navigationOptions: {
-      tabBarLabel: 'Menu',
-      tabBarIcon: (tabinfo) => {
-        return <MaterialIcons name='menu' size={25} color={tabinfo.tintColor} />
-      }
-    }
-  },
+  }
 }, {
   tabBarOptions: {
     activeTintColor: "#0641A7"

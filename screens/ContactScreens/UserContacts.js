@@ -1,46 +1,15 @@
-// import React, { useEffect } from 'react';
-// import { View, Text } from 'react-native';
-// import * as Contacts from 'expo-contacts';
-// import * as Permissions from "expo-permissions";
-
-// export default function UserContacts() {
-//   useEffect(() => {
-//     (async () => {
-//       const { status } = await Permissions.askAsync(Permissions.CONTACTS);
-//       if (status === 'granted') {
-//         const { data } = await Contacts.getContactsAsync({
-//           fields: [Contacts.Fields.Emails],
-//         });
-
-//         if (data.length > 0) {
-//           const contact = data[0];
-//           console.log(contact);
-//         }
-//       }
-//     })();
-//   }, []);
-
-//   return (
-//     <View
-//       style={{
-//         flex: 1,
-//         backgroundColor: '#fff',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//       }}>
-//       <Text>Contacts Module Example</Text>
-//     </View>
-//   );
-// }
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Button, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, TouchableOpacity, Dimensions, Platform } from 'react-native';
 const { height, width } = Dimensions.get("window");
+import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as Contacts from 'expo-contacts';
 import * as Permissions from "expo-permissions";
 import ContactList from '../../components/ContactList/ContactList';
 import { setUserContact } from '../../store/actions/userContacts';
+import { Ionicons } from '@expo/vector-icons';
+
 
 
 
@@ -118,6 +87,38 @@ class UserContacts extends Component {
         />
       </View>
     );
+  }
+}
+UserContacts.navigationOptions = navData => {
+  return {
+    headerTitle: "Notes",
+    headerTintColor: 'white',
+    headerBackground: (
+      <LinearGradient
+        colors={['#0637a5', '#0fadd5']}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+      />
+    ),
+    ...Platform.select({
+      android: {
+        headerForceInset: { top: 'never', bottom: 'never' },
+        // headerStyle: {
+        //   height: 90
+        // },
+      },
+      ios: {
+        // headerStyle: {
+        //   height: 60
+        // }
+      }
+    }),
+    headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
+    headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
+      navData.navigation.toggleDrawer()
+    }} />
+
   }
 }
 const styles = StyleSheet.create({
