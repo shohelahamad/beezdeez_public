@@ -5,7 +5,7 @@ export const addNote = (noteHeading, noteDescribtion, catagory, eventId,userId) 
 
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://beezdeez-791a4.firebaseio.com/notes/" + userId + ".json?", {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/notes.json?", {
             method: 'POST',
             body: JSON.stringify({
                 noteHeading: noteHeading,
@@ -37,7 +37,7 @@ export const deleteNote = () => {
 export const getNotes = (userId) => {
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://beezdeez-791a4.firebaseio.com/notes/" + userId + "/.json?")
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/notes/.json?")
             .catch(err => {
                 alert("Something went wrong, sorry :/");
                 console.log(err);

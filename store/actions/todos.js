@@ -5,7 +5,7 @@ export const addTodo = (todoTitle, todoDescribtion, priority, dueDate, eventId, 
 
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/" + userId + ".json?", {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos.json?", {
             method: 'POST',
             body: JSON.stringify({
                 todoTitle: todoTitle,
@@ -33,7 +33,7 @@ export const getTodos = (userId) => {
     return dispatch => {
         dispatch(uiStartLoading());
         // fetch("https://beezdeez-791a4.firebaseio.com/todos/"+userId+"/.json?auth="+ token)
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/" + userId + "/.json?")
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos/.json?")
             .catch(err => {
                 alert("Something went wrong, sorry :/");
                 console.log(err);
@@ -60,7 +60,7 @@ export const setTodos = todos => {
 };
 export const doneTodo = (userId, todoKey, isDone) => {
     return dispatch => {
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/" + userId + "/" + todoKey + ".json?", {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos/" + todoKey + ".json?", {
             method: 'PATCH',
             body: JSON.stringify({
                 isDone: isDone
@@ -101,7 +101,7 @@ export const doneTodo = (userId, todoKey, isDone) => {
 };
 export const updateTodo = (userId, todoKey, todoTitle, todoDescribtion, priority, dueDate, eventId, isDone) => {
     return dispatch => {
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/" + userId + "/" + todoKey + ".json?", {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos/" + todoKey + ".json?", {
             method: 'PATCH',
             body: JSON.stringify({
                 todoTitle: todoTitle,
@@ -160,7 +160,7 @@ export const updatePriority = (key, newPriority) => {
 };
 export const deleteTodo = (userId,todoKey) => {
     return dispatch => {
-        fetch("https://beezdeez-791a4.firebaseio.com/todos/" + userId + "/" + todoKey + ".json?", {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos/" + todoKey + ".json?", {
             method: 'DELETE'
         })
             .catch(err => {

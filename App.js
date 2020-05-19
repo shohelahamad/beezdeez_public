@@ -69,7 +69,6 @@ export default function App() {
     if (Platform.OS === 'android') {
       return true;
     }
-
     await Permissions.askAsync(Permissions.REMINDERS);
   };
   if (!fontLoaded) {
