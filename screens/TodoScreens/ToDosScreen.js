@@ -53,7 +53,7 @@ class ToDosScreen extends Component {
           onDoneSelected={this.doneSelectedHandler}
         />
     );
-    if(this.props.todos==[])
+    if(this.props.todos.length === 0)
     {
       listToView = (
         <View><Text>There is no conten Please add one</Text></View>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, Button } from 'react-native';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';

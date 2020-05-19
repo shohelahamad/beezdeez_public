@@ -29,7 +29,7 @@ class LoadingAppScreen extends Component {
       console.log('user: ', userId)
       if (userId&&userToken) {
         this.props.onAuthSetToken(userToken,userId);
-        this.props.navigation.navigate('EventsScreen');
+        this.props.navigation.navigate('notetList');
       } else {
         // goToAuth()
         this.props.navigation.navigate('AuthScreen');

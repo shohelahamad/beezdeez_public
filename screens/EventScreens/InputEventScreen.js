@@ -11,18 +11,20 @@ import {
   Switch,
   StyleSheet,
   Alert,
+  Platform
 } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
 import moment from 'moment';
 import * as Calendar from 'expo-calendar';
 import * as Localization from 'expo-localization';
 import Constants from 'expo-constants';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePicker from 'react-native-datepicker';
 import uuid from 'uuid';
 import { Context } from '../../data/Context';
 
 const { width: vw } = Dimensions.get('window');
 // moment().format('YYYY/MM/DD')
+// https://www.youtube.com/watch?v=cXvFcI8FxdA
 
 class InputEventScreen extends Component {
   state = {
@@ -179,10 +181,10 @@ class InputEventScreen extends Component {
         ],
       },
     };
-
+    console.log("The value in Create Todo: "+creatTodo)
     await value.updateTodo(creatTodo);
     await updateCurrentTask(currentDate);
-    navigation.navigate('Home');
+    this.props.navigation.navigate('EventsScreen');
   };
 
   _handleDatePicked = date => {
@@ -235,7 +237,7 @@ class InputEventScreen extends Component {
               >
                 <ScrollView
                   contentContainerStyle={{
-                    paddingBottom: 100,
+                    paddingBottom: 400,
                   }}
                 >
                   <View style={styles.backButton}>

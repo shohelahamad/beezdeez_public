@@ -11,8 +11,8 @@ import { addNote } from '../../store/actions/notes';
 
 class InputNote extends Component {
   noteAddedHandler = (noteHeading, noteDescribtion, catagory,eventId)=> {
-    this.props.onAddNote(noteHeading, noteDescribtion, catagory,eventId);
-    Navigation.pop(this.props.componentId);
+    this.props.onAddNote(noteHeading, noteDescribtion, catagory,eventId, this.props.userId);
+    this.props.navigation.navigate('notetList');
   }
   goToSettings = ()=> {
     Navigation.push(this.props.componentId, {
@@ -55,11 +55,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
+const mapStateToProps = state => {
+  return {
+    userId: state.auth.userId
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
-      onAddNote: (noteHeading, noteDescribtion, catagory,eventId) => 
-      dispatch(addNote(noteHeading, noteDescribtion, catagory,eventId))
+      onAddNote: (noteHeading, noteDescribtion, catagory,eventId,userId) => 
+      dispatch(addNote(noteHeading, noteDescribtion, catagory,eventId, userId))
   };
 };
 
-export default connect(null, mapDispatchToProps)(InputNote);
+export default connect(mapStateToProps, mapDispatchToProps)(InputNote);
