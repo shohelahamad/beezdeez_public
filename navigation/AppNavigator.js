@@ -44,7 +44,7 @@ import SelectCityScreen from '../screens/StartScreens/SelectCityScreen';
 import HelpTourScreen from '../screens/StartScreens/HelpTourScreen';
 import LoadingAppScreen from '../screens/StartScreens/LoadingAppScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
-import EventsScreen from '../screens/DiscoverScreen';
+import EventsScreen from '../screens/EventsScreen';
 
 import Example from "../screens/Example";
 import WelcomeScreen from "../screens/StartScreens/WelcomeScreen";
@@ -85,6 +85,9 @@ const EventStack = createStackNavigator({
   },
   EventDetailsScreen: {
     screen: ShowToDoScreen
+  },
+  EventsScreen: {
+    screen: EventsScreen
   }
 });
 

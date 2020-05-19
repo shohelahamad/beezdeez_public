@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -26,6 +26,7 @@ import contactReducer from "./store/reducers/userContacts";
 import { Button, ThemeProvider } from 'react-native-elements';
 import themstyle from './assets/style/theme';
 import NavigatorService from "./components/UI/NavStart/NavigatorService";
+import * as Permissions from 'expo-permissions';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -53,7 +54,24 @@ const fetchFonts = () => {
 };
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+  async function askForPermission() {
+    await this._askForCalendarPermissions();
+    await this._askForReminderPermissions();
+  }
+  useEffect(() => {
+    askForPermission();
+  }, []);
+  _askForCalendarPermissions = async () => {
+    await Permissions.askAsync(Permissions.CALENDAR);
+  };
 
+  _askForReminderPermissions = async () => {
+    if (Platform.OS === 'android') {
+      return true;
+    }
+
+    await Permissions.askAsync(Permissions.REMINDERS);
+  };
   if (!fontLoaded) {
     return <AppLoading
       startAsync={fetchFonts}
