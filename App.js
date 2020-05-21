@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
@@ -36,7 +36,7 @@ const rootReducer = combineReducers({
   events: eventsReducer,
   todos: todosReducer,
   notes: notesReducer,
-  // labels: labelsReducer,
+  labels: labelsReducer,
   userContacts: contactReducer
 });
 

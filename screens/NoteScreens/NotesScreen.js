@@ -22,31 +22,9 @@ class Notes extends Component {
     const selNote = this.props.notes.find(note => {
       return note.key === key;
     });
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'ShowNote',
-        passProps: {
-          selectedPlace: selNote
-        },
-        options: {
-          statusBar: {
-            style: 'dark'
-          },
-          topBar: {
-            
-            title: {
-              text: "Details",
-              color: '#000000'
-            },
-            background: {
-              color: '#ffffff',
-              translucent: false
-            }
-          },
-          bottomTabs: { visible: false, drawBehind: true, animate: true },
-          
-        }
-      }
+    this.props.navigation.navigate('NoteDetailsScreen', {
+      itemKey: selNote.key,
+      selectedPlace: selNote
     });
   };
   render() {

@@ -34,6 +34,10 @@ import NotesScreen from '../screens/NoteScreens/NotesScreen';
 
 import ContactsScreen from '../screens/ContactScreens/UserContacts';
 
+import InputLabelScreen from '../screens/LabelSettings/InputLabel';
+import LabelSettingScreen from '../screens/LabelSettings/LabelSetting';
+
+
 
 import MenueScreen from '../screens/Menu';
 import AuthScreen from '../screens/StartScreens/AuthScreen';
@@ -109,6 +113,15 @@ const NoteStack = createStackNavigator({
     screen: InputNoteScreen
   },
   NoteDetailsScreen: {
+    screen: ShowNoteScreen
+  },
+  LabelScreen: {
+    screen: LabelSettingScreen
+  },
+  InputLabelScreen: {
+    screen: InputLabelScreen
+  },
+  labelDetailsScreen: {
     screen: ShowNoteScreen
   }
 });
@@ -219,12 +232,23 @@ const CustomDrawerContentComponent = (props) => (
         props.navigation.navigate({ routeName: 'AuthScreen' })
       )}
     />
+    <ListItem
+      title="Label Setting"
+      leftIcon={{ name: 'logout', type: 'antdesign' }}
+      bottomDivider
+      chevron
+      onPress={() => (
+        AsyncStorage.removeItem("ap:auth:token"),
+        AsyncStorage.removeItem("ap:auth:userId"),
+        props.navigation.navigate({ routeName: 'LabelScreen' })
+      )}
+    />
   </View>
 
 );
 const MainDrawer = createDrawerNavigator({
   MainTabs: CityTabNavigator,
-  Settings: SettingsStack
+  Settings: SettingsStack,
 },
   {
     initialRouteName: 'MainTabs',

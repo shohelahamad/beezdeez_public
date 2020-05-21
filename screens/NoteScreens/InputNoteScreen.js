@@ -15,30 +15,7 @@ class InputNote extends Component {
     this.props.navigation.navigate('notetList');
   }
   goToSettings = ()=> {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'LabelSetting',
-        options: {
-          statusBar: {
-            style: 'dark'
-          },
-          topBar: {
-            
-            title: {
-              text: 'Label Setting',
-              color: '#000000'
-            },
-            background: {
-              color: '#ffffff',
-              translucent: false
-            }
-          },
-          bottomTabs: { visible: false, drawBehind: true, animate: true },
-          
-        }
-      }
-    });
-    // alert("hi");
+    this.props.navigation.navigate('InputLabelScreen');
   }
   render() {
     return (
