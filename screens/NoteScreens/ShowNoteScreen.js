@@ -13,20 +13,27 @@ import Iconfa from "react-native-vector-icons/FontAwesome5";
 
 
 class ShowNote extends Component {
-  placeDeletedHandler = () => {
-    this.props.onDeletePlace(this.props.selectedPlace.key);
-    this.props.navigator.pop();
-  };
-  doneSelectedHandler = () => {
-    this.props.onDdoneTodo(this.props.selectedPlace.key);
-    this.props.selectedPlace.isDone = !this.props.selectedPlace.isDone;
-  };
-  updateToDoDueDate = (newDueDate) => {
-    this.props.onNewDate(this.props.selectedPlace.key, newDueDate);
-    this.props.selectedPlace.dueDate = newDueDate;
-  };
-  updateToDoPriority = (newPriority) => {
-    this.props.onNewPriority(this.props.selectedPlace.key, newPriority);
+  itemKey = this.props.navigation.getParam('itemKey');
+  selNote = this.props.notes.find(note => {
+    return note.key === this.itemKey;
+  });
+  deleteConfirm = () => {
+    Alert.alert(
+      "Detete Todo",
+      "Are you sure you want to delete this todo?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => (
+          this.props.onDeleteTodo(this.props.userId,this.itemKey),
+          this.props.navigation.navigate('StartArticleList')
+        ) }
+      ],
+      { cancelable: false }
+    );
   };
   _handleDatePicked = (date) => {
     this.setState({
@@ -39,7 +46,7 @@ class ShowNote extends Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.noteHeading}>{this.props.selectedPlace.noteHeading}</Text>
+          <Text style={styles.noteHeading}>{this.selNote.noteHeading}</Text>
         </View>
         <View
           style={{
@@ -52,7 +59,7 @@ class ShowNote extends Component {
 
         <View style={{ maxHeight: "40%" }}>
           <ScrollView style={{ flexGrow: 0 }}>
-            <Text style={{}}>{this.props.selectedPlace.noteDescribtion}</Text>
+            <Text style={{}}>{this.selNote.noteDescribtion}</Text>
           </ScrollView>
         </View>
 
@@ -67,7 +74,7 @@ class ShowNote extends Component {
         <Text style={{ marginTop: 10, marginBottom: 5, color: "#969696", fontSize: 15 }}>Catagory</Text>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ width: 35, marginRight: 8 }}>
-            <Icon style={{ marginTop: 10, color: this.props.selectedPlace.catagory.labelColor }} size={25}
+            <Icon style={{ marginTop: 10, color: this.selNote.catagory.labelColor }} size={25}
               name={"square"} />
           </View>
           <View style={{ flex: 1, marginTop: -15 }}>
@@ -77,7 +84,7 @@ class ShowNote extends Component {
               valueExtractor={({key})=> key}
               style={{ paddingBottom: 10, height: 30 }}
               value={this.props.labels.find(label => {
-                return label.key === this.props.selectedPlace.catagory.key;
+                return label.key === this.selNote.catagory.key;
               }).labelTitle}
               // onChangeText={this.updateToDoPriority}
               data={this.props.labels}
@@ -99,7 +106,7 @@ class ShowNote extends Component {
 
             <Iconfa style={{ marginTop: 10 }} size={30} name="calendar" color="#0641A7" />
 
-            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "#000000", fontSize: 20 }}>{this.props.selectedPlace.eventId}</Text>
+            <Text style={{ marginTop: 15, marginLeft: 15, marginBottom: 5, color: "#000000", fontSize: 20 }}>{this.selNote.eventId}</Text>
           </View>
           <View style={{ width: "7%" }}>
             <Icon style={{ marginTop: 10 }} size={25} name="times" color="#969696" />

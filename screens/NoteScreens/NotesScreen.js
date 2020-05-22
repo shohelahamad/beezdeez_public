@@ -23,8 +23,7 @@ class Notes extends Component {
       return note.key === key;
     });
     this.props.navigation.navigate('NoteDetailsScreen', {
-      itemKey: selNote.key,
-      selectedPlace: selNote
+      itemKey: selNote.key
     });
   };
   render() {

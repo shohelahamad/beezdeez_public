@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-    // labels: state.labels.labels,
+    labels: state.labels.labels,
     events: state.events.events
   };
 };

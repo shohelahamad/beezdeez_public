@@ -10,8 +10,7 @@ const NoteListItem = (props) => (
             <View style={styles.row}>
 
                 <View style={{ width: "10%" }}>
-                    {/* <Iconfa style={{color: props.catagory.labelColor}} size={25} name={"square"} /> */}
-                    <Iconfa style={{color: 'red'}} size={25} name={"square"} />
+                    <Iconfa style={{color: props.catagory.labelColor}} size={25} name={"square"} />
                 </View>
                 <View style={{ width: "90%", flexDirection: "column" }}>
                     <View style={styles.row}>
@@ -28,8 +27,7 @@ const NoteListItem = (props) => (
                 </View>
                 <View style={{ width: "90%", flexDirection: "row", marginTop: 10 }}>
                     <View style={{ width: "82%", flexDirection: "row" }}>
-                        <Text style={{ color: "#969696" }}> Reading </Text>
-                        {/* <Text style={{ color: "#969696" }}>{props.catagory.labelTitle} </Text> */}
+                        <Text style={{ color: "#969696" }}>{props.catagory.labelTitle} </Text>
                         <Icon style={{ marginRight: 5, marginLeft: 5 }} name={"calendar"} color={"#969696"} size={15} />
                         <Text numberOfLines={1} style={{ color: "#969696" }}>{props.eventId} </Text>
                     </View>
