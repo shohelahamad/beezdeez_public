@@ -1,10 +1,10 @@
 import {ADD_LABEL,SET_LABELS} from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
-export const addLabel = (labelTitle, labelColor) =>{
+export const addLabel = (userId,labelTitle, labelColor) =>{
    
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://beezdeez-791a4.firebaseio.com/labels.json", {
+        fetch("https://beezdeez-791a4.firebaseio.com/"+userId+"/labels.json", {
             method: 'POST',
             body: JSON.stringify({ 
             labelTitle: labelTitle,
@@ -24,9 +24,9 @@ export const addLabel = (labelTitle, labelColor) =>{
             });
         };
 };
-export const getLabels = () => {
+export const getLabels = (userId) => {
     return dispatch => {
-        fetch("https://beezdeez-791a4.firebaseio.com/labels/.json")
+        fetch("https://beezdeez-791a4.firebaseio.com/"+userId+"/labels/.json")
         .catch(err => {
             alert("Something went wrong, sorry :/");
             console.log(err);

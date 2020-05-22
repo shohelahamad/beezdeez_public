@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -7,28 +7,32 @@ import {
 } from 'react-native'
 import LabelInput from '../../components/LabelInput/LabelInput';
 import { connect } from 'react-redux';
-import { addLabel } from '../../store/actions/index';
+import { addLabel } from '../../store/actions/labels';
+import { ColorPicker } from 'react-native-color-picker'
 
 class InputLabel extends Component {
-  labelAddedHandler = (labelTitle, labelColor)=> {
-      this.props.onAddLabel(labelTitle, labelColor);
-      Navigation.pop(this.props.componentId);
+  labelAddedHandler = (labelTitle, labelColor) => {
+    this.props.onAddLabel(this.props.userId,labelTitle, labelColor);
   }
 
-  render () {
-      return (
-          <View>
-              <LabelInput onLabelAdded={this.labelAddedHandler}/>
-          </View>
-      );
+  render() {
+    return (
+      <View>
+        <LabelInput onLabelAdded={this.labelAddedHandler} />
+      </View>
+    );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    userId: state.auth.userId
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
-      onAddLabel: (labelTitle, labelColor) => 
-      dispatch(addLabel(labelTitle, labelColor))
+    onAddLabel: (userId,labelTitle, labelColor) =>
+      dispatch(addLabel(userId,labelTitle, labelColor))
   };
 };
 
-export default connect(null, mapDispatchToProps)(InputLabel);
+export default connect(mapStateToProps, mapDispatchToProps)(InputLabel);

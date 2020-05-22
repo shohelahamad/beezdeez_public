@@ -7,10 +7,9 @@ import { connect } from 'react-redux';
 import { getLabels } from '../../store/actions/labels';
 
 
-
 class LabelSetting extends Component {
   componentDidMount(){
-    this.props.onLoadLabels();
+    this.props.onLoadLabels(this.props.userId);
   }
   itemSelectedHandler = key => {
     const selTodo = this.props.labels.find(label => {
@@ -71,12 +70,13 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-    labels: state.labels.labels
+    labels: state.labels.labels,
+    userId: state.auth.userId
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onLoadLabels: () => dispatch(getLabels())
+    onLoadLabels: (userId) => dispatch(getLabels(userId))
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(LabelSetting);
