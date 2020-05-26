@@ -1,4 +1,4 @@
-import { ADD_TODO, SET_LABELS } from '../actions/actionTypes'
+import { SET_LABELS, SET_DELETE_LABEL } from '../actions/actionTypes'
 const initialState ={
     labels: [],
 };
@@ -9,6 +9,13 @@ const reducer = (state = initialState, action) =>{
         ...state,
         labels: action.labels
         };
+        case SET_DELETE_LABEL:
+            return {
+                ...state,
+                labels: state.labels.filter(label => {
+                return label.key !== action.labelKey;
+                })
+            };
         default:
             return state;
     }

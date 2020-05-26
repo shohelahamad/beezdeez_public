@@ -13,6 +13,8 @@ const labelList = props => {
         labelTitle={info.item.labelTitle}
         labelColor={info.item.labelColor}
         onItemPressed={() => props.onItemSelected(info.item.key)}
+        onDeletePress={() => props.onDeleteLabel(info.item.key)}
+        onEditPress={() => props.onEditLabel(info.item.key)}
         />
       )}
     />

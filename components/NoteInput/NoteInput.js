@@ -50,7 +50,12 @@ class NoteInput extends Component {
   };
 
   noteSubmithandelar = () => {
+    console.log(this.state.noteHeading);
     if (this.state.noteHeading.trim() === "") {
+      return;
+    }
+    if (!this.state.catagory) {
+      alert("Please select a Category")
       return;
     }
     this.props.onNoteAdded(
@@ -88,15 +93,23 @@ class NoteInput extends Component {
           </TouchableOpacity>
 
         </View>
-
-        <Dropdown
+        { this.state.catagory ? <Dropdown
           placeholder='Choose a catagory'
           data={this.props.labels}
           labelExtractor={({ labelTitle }) => labelTitle}
           valueExtractor={({ key }) => key}
           value={this.state.catagory.labelTitle}
           onChangeText={(key, index, labels) => { this.catagoryDataHandelar(key, index, labels) }}
-        />
+        />:
+        <Dropdown
+          placeholder='Choose a catagory'
+          data={this.props.labels}
+          labelExtractor={({ labelTitle }) => labelTitle}
+          valueExtractor={({ key }) => key}
+          onChangeText={(key, index, labels) => { this.catagoryDataHandelar(key, index, labels) }}
+        /> 
+        }
+        
         <Text>From</Text>
         <MultiSelect
           hideTags

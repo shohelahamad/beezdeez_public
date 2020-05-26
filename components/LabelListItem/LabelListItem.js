@@ -2,28 +2,34 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Iconfa from 'react-native-vector-icons/FontAwesome';
-import CheckBox from 'react-native-check-box'
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 const LabelListItem = (props) => (
-    <TouchableOpacity onPress={props.onItemPressed} style={{}}>
+    <View style={{}}>
         <View style={styles.listItem}>
             <View style={styles.row}>
 
                 <View style={{ width: "10%" }}>
                     <Iconfa style={{ color: props.labelColor }} size={25} name={"square"} />
                 </View>
-                <View style={{ width: "82%", flexDirection: "column" }}>
+                <View style={{ width: "75%", flexDirection: "column" }}>
                     <View style={styles.row}>
                         <Text numberOfLines={1} style={{ marginTop: 5 }}>{props.labelTitle} </Text>
                     </View>
                 </View>
-                <View style={{ width: "8%", flexDirection: "column", marginTop: 5 }}>
-                    <Icon style={{color: "#969696"}} size={15} name={"pen"} />
+                <View style={{ width: "15%", flexDirection: "row" }}>
+                    <TouchableOpacity onPress={props.onDeletePress}>
+                        <MaterialIcons name="delete" style={{ color: 'red', marginRight: 10, fontSize: 25 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={props.onEditPress}>
+                        <Icon style={{ color: "#969696", marginTop: 5 }} size={15} name={"pen"} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
         </View>
-    </TouchableOpacity>
+    </View>
 );
 const styles = StyleSheet.create({
     listItem: {

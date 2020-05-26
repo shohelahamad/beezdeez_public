@@ -13,12 +13,13 @@ import { ColorPicker } from 'react-native-color-picker'
 class InputLabel extends Component {
   labelAddedHandler = (labelTitle, labelColor) => {
     this.props.onAddLabel(this.props.userId,labelTitle, labelColor);
+    this.props.navigation.goBack();
   }
 
   render() {
     return (
       <View>
-        <LabelInput onLabelAdded={this.labelAddedHandler} />
+        <LabelInput onLabelAdded={this.labelAddedHandler}/>
       </View>
     );
   }

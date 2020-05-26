@@ -4,12 +4,35 @@ import deviceStorage from '../../services/deviceStorage';
 import LabelList from '../../components/LabelList/LabelList';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getLabels } from '../../store/actions/labels';
+import { getLabels,deleteLabel } from '../../store/actions/labels';
 
 
 class LabelSetting extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.onLoadLabels(this.props.userId);
+  }
+  labelDeleteHandler = (labelKey) => {
+    Alert.alert(
+      "Detete Label",
+      "Are you sure you want to delete this Label?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"+labelKey),
+          style: "cancel"
+        },
+        {
+          text: "Delete", onPress: () => (
+            this.props.onDeleteLabel(this.props.userId, labelKey)
+          )
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+  labelEditHandler = (labelTitle, labelColor) => {
+    console.log("Edit")
+    alert("Edit Clicked")
   }
   itemSelectedHandler = key => {
     const selTodo = this.props.labels.find(label => {
@@ -26,7 +49,7 @@ class LabelSetting extends Component {
             style: 'dark'
           },
           topBar: {
-            
+
             title: {
               text: "Details",
               color: '#000000'
@@ -37,7 +60,7 @@ class LabelSetting extends Component {
             }
           },
           bottomTabs: { visible: false, drawBehind: true, animate: true },
-          
+
         }
       }
     });
@@ -45,19 +68,29 @@ class LabelSetting extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <LabelList 
-        labels={this.props.labels}
-        onItemSelected={this.itemSelectedHandler}/>
+        <LabelList
+          labels={this.props.labels}
+          onItemSelected={this.itemSelectedHandler} onDeleteLabel={this.labelDeleteHandler} onEditLabel={this.labelEditHandler} />
       </View>
     );
   }
 }
+LabelSetting.navigationOptions = navData => {
+  return {
+    headerTitle: "Labels",
+    headerRight: (
+      <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => { navData.navigation.navigate('InputLabelScreen') }} >
+        <Text style={{ paddingRight: 15 }}> new </Text>
+      </TouchableOpacity>
+    )
+  }
+};
 const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     justifyContent: "space-between",
   },
-  container:{
+  container: {
     flex: 1,
     backgroundColor: "#ffffff"
   },
@@ -65,7 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10
-    
+
   }
 });
 const mapStateToProps = state => {
@@ -76,8 +109,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onLoadLabels: (userId) => dispatch(getLabels(userId))
+    onLoadLabels: (userId) => dispatch(getLabels(userId)),
+    onDeleteLabel: (userId,labelKey) => dispatch(deleteLabel(userId,labelKey))
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(LabelSetting);
+export default connect(mapStateToProps, mapDispatchToProps)(LabelSetting);
 
