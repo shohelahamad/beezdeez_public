@@ -41,6 +41,7 @@ export const LOAD_CONTACTS = 'LOAD_CONTACTS';
 export const ADD_LABEL = 'ADD_LABEL';
 export const SET_LABELS = 'SET_LABELS';
 export const SET_DELETE_LABEL = 'SET_DELETE_LABEL';
+export const SET_UPDATES_LABEL = 'SET_UPDATES_LABEL';
 
 export const ADD_NOTE = 'ADD_NOTE';
 export const SET_NOTES = 'SET_NOTES';

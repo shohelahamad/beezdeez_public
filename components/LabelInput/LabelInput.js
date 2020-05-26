@@ -14,7 +14,6 @@ class LabelInput extends Component {
       selectedCheckbox: {},
       labelTitle: '',
       labelColor: '',
-      chec: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B"],
       checkboxValue: [
         {
           label: "Option1",
@@ -118,6 +117,15 @@ class LabelInput extends Component {
         }
       ]
     };
+  }
+  componentDidMount() {
+    if (this.props.editLabel) {
+      this.setState({
+        labelTitle: this.props.editLabel.labelTitle,
+        labelColor: this.props.editLabel.labelColor,
+        selectedCheckbox: { label: "Option26", value: this.props.editLabel.labelColor}
+      });
+    }
   }
   labelSubmithandelar = () => {
     if (this.state.labelTitle.trim() === "") {

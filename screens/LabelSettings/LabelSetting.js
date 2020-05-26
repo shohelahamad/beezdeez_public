@@ -30,9 +30,12 @@ class LabelSetting extends Component {
       { cancelable: false }
     );
   }
-  labelEditHandler = (labelTitle, labelColor) => {
-    console.log("Edit")
-    alert("Edit Clicked")
+  labelEditHandler = (labelKey) => {
+    this.props.navigation.navigate('InputLabelScreen', {
+      labelId: labelKey
+    }
+    )
+
   }
   itemSelectedHandler = key => {
     const selTodo = this.props.labels.find(label => {

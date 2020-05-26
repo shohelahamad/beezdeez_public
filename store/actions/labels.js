@@ -1,4 +1,4 @@
-import { SET_DELETE_LABEL, SET_LABELS } from './actionTypes';
+import { SET_UPDATES_LABEL,SET_DELETE_LABEL, SET_LABELS } from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
 export const addLabel = (userId, labelTitle, labelColor) => {
 
@@ -45,6 +45,27 @@ export const getLabels = (userId) => {
             });
     };
 };
+export const updateLabel = (userId, labelKey, labelTitle, labelColor) => {
+    return dispatch => {
+        fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/labels/" + labelKey + ".json?", {
+            method: 'PATCH',
+            body: JSON.stringify({
+                labelColor: labelColor,
+                labelTitle: labelTitle,
+            }),
+        })
+            .catch(err => {
+                // console.log(err);
+                alert("Something went wrong, please try again!");
+                dispatch(uiStopLoading());
+            })
+            .then(res => res.json())
+            .then(parsedRes => {
+                dispatch(setUpdatedLabel(labelKey, labelTitle, labelColor));
+                dispatch(uiStopLoading());
+            });
+    };
+};
 export const deleteLabel = (userId, labelKey) => {
     return dispatch => {
         fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/labels/" + labelKey + ".json?", {
@@ -60,6 +81,14 @@ export const deleteLabel = (userId, labelKey) => {
                 dispatch(setDeleteLabel(labelKey));
                 dispatch(uiStopLoading());
             });
+    };
+};
+export const setUpdatedLabel = (labelKey, labelTitle, labelColor) => {
+    return {
+        type: SET_UPDATES_LABEL,
+        labelKey: labelKey,
+        labelTitle: labelTitle,
+        labelColor: labelColor,
     };
 };
 export const setDeleteLabel = (labelKey) => {
