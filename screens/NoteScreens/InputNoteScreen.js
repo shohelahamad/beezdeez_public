@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -7,27 +7,27 @@ import {
 } from 'react-native';
 import NoteInput from '../../components/NoteInput/NoteInput';
 import { connect } from 'react-redux';
-import { addNote,updateNote} from '../../store/actions/notes';
+import { addNote, updateNote } from '../../store/actions/notes';
 
 class InputNote extends Component {
-  noteAddedHandler = (noteHeading, noteDescribtion, catagory,eventId)=> {
+  noteAddedHandler = (noteHeading, noteDescribtion, catagory, eventId) => {
     itemKey = this.props.navigation.getParam('noteId');
-    if(itemKey){
-      this.props.onUpdateNote(this.props.userId,itemKey,noteHeading, noteDescribtion, catagory,eventId);
+    if (itemKey) {
+      this.props.onUpdateNote(this.props.userId, itemKey, noteHeading, noteDescribtion, catagory, eventId);
       this.props.navigation.goBack();
-    }else{
-      this.props.onAddNote(noteHeading, noteDescribtion, catagory,eventId, this.props.userId);
+    } else {
+      this.props.onAddNote(noteHeading, noteDescribtion, catagory, eventId, this.props.userId);
       this.props.navigation.navigate('notetList');
     }
   }
-  goToSettings = ()=> {
+  goToSettings = () => {
     this.props.navigation.navigate('InputLabelScreen');
   }
   render() {
     itemKey = this.props.navigation.getParam('noteId');
     console.log(itemKey);
-    selNote={}
-    if(itemKey){
+    selNote = {}
+    if (itemKey) {
       selNote = this.props.notes.find(note => {
         return note.key === itemKey;
       });
@@ -35,7 +35,7 @@ class InputNote extends Component {
     }
     return (
       <View style={styles.container}>
-        {selNote ? <NoteInput editNote={selNote} onNoteAdded={this.noteAddedHandler} onGotoSetting={this.goToSettings}/> : <NoteInput onNoteAdded={this.noteAddedHandler} onGotoSetting={this.goToSettings}/>}        
+        {selNote ? <NoteInput editNote={selNote} onNoteAdded={this.noteAddedHandler} onGotoSetting={this.goToSettings} /> : <NoteInput onNoteAdded={this.noteAddedHandler} onGotoSetting={this.goToSettings} />}
       </View>
     )
   }
@@ -55,10 +55,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-      onAddNote: (noteHeading, noteDescribtion, catagory,eventId,userId) => 
-      dispatch(addNote(noteHeading, noteDescribtion, catagory,eventId, userId)),
-      onUpdateNote: (userId,itemKey,noteHeading, noteDescribtion, catagory,eventId) => 
-      dispatch(updateNote(userId,itemKey,noteHeading, noteDescribtion, catagory,eventId))
+    onAddNote: (noteHeading, noteDescribtion, catagory, eventId, userId) =>
+      dispatch(addNote(noteHeading, noteDescribtion, catagory, eventId, userId)),
+    onUpdateNote: (userId, itemKey, noteHeading, noteDescribtion, catagory, eventId) =>
+      dispatch(updateNote(userId, itemKey, noteHeading, noteDescribtion, catagory, eventId))
   };
 };
 

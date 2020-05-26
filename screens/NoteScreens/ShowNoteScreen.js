@@ -4,35 +4,42 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { connect } from "react-redux";
 import { Dropdown } from 'react-native-material-dropdown';
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
 import { MaterialIcons, Feather } from '@expo/vector-icons';
+import { deleteNote } from "../../store/actions/notes";
 
 
 
 class ShowNote extends Component {
+  componentDidMount() {
+    this.props.navigation.setParams({ deleteConfirm: this.deleteConfirm });
+  }
   itemKey = this.props.navigation.getParam('itemKey');
   selNote = this.props.notes.find(note => {
     return note.key === this.itemKey;
   });
   deleteConfirm = () => {
     Alert.alert(
-      "Detete Todo",
-      "Are you sure you want to delete this todo?",
+      "Detete Note",
+      "Are you sure you want to delete this Note?",
       [
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "Delete", onPress: () => (
-          this.props.onDeleteTodo(this.props.userId,this.itemKey),
-          this.props.navigation.navigate('StartArticleList')
-        ) }
+        {
+          text: "Delete", onPress: () => (
+            this.props.onDeleteNote(this.props.userId, this.itemKey),
+            this.props.navigation.navigate('notetList')
+          )
+        }
       ],
       { cancelable: false }
     );
@@ -64,8 +71,6 @@ class ShowNote extends Component {
             <Text style={{}}>{this.selNote.noteDescribtion}</Text>
           </ScrollView>
         </View>
-
-
         <View
           style={{
             borderBottomColor: '#efefef',
@@ -82,8 +87,8 @@ class ShowNote extends Component {
           <View style={{ flex: 1, marginTop: -15 }}>
             <Dropdown
               fontSize={20}
-              labelExtractor={({labelTitle})=> labelTitle}
-              valueExtractor={({key})=> key}
+              labelExtractor={({ labelTitle }) => labelTitle}
+              valueExtractor={({ key }) => key}
               style={{ paddingBottom: 10, height: 30 }}
               value={this.props.labels.find(label => {
                 return label.key === this.selNote.catagory.key;
@@ -121,18 +126,6 @@ class ShowNote extends Component {
             marginTop: 20
           }}
         />
-        {/* <View>
-          <TouchableOpacity onPress={this.placeDeletedHandler}>
-            <View style={styles.deleteButton}>
-              <Icon size={30} name="trash" color="red" />
-            </View>
-          </TouchableOpacity>
-        </View> */}
-        {/* <Text style={styles.placeName}>{this.props.selectedPlace.todoTitle}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.todoDescribtion}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.priority}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.dueDate}</Text>
-          <Text style={styles.placeName}>{this.props.selectedPlace.eventId}</Text> */}
       </ScrollView>
     );
   }
@@ -182,6 +175,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     notes: state.notes.notes,
+    userId: state.auth.userId,
     labels: state.labels.labels
   };
 };
@@ -190,6 +184,7 @@ const mapDispatchToProps = dispatch => {
     onDdoneTodo: key => dispatch(doneTodo(key)),
     onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
     onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
+    onDeleteNote: (userId, key) => dispatch(deleteNote(userId, key))
   };
 };
 

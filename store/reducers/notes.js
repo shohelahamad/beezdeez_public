@@ -1,4 +1,4 @@
-import { ADD_NOTE, DELETE_NOTE, SET_NOTES, SET_UPDATES_NOTE } from '../actions/actionTypes';
+import { SET_DELETE_NOTE, DELETE_NOTE, SET_NOTES, SET_UPDATES_NOTE } from '../actions/actionTypes';
 
 const initialState = {
     notes: [],
@@ -26,9 +26,15 @@ const reducer = (state = initialState, action) => {
                         ...note, noteHeading: action.noteHeading, noteDescribtion: action.noteDescribtion,
                         eventId: action.eventId
                     } : note
-                }),
-                selectedTodo: null
+                })
             };
+            case SET_DELETE_NOTE:
+                return {
+                    ...state,
+                    notes: state.notes.filter(note => {
+                    return note.key !== action.noteKey;
+                    })
+                };
         default:
             return state;
     }

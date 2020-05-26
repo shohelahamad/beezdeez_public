@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, StatusBar, TextInput, Button, Text, TouchableOpacity, Dimensions, Platform, ActivityIndicator} from 'react-native';
+import { StyleSheet, View, StatusBar, TextInput, Button, Text, TouchableOpacity, Dimensions, Platform, ActivityIndicator } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
@@ -17,7 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const { height, width } = Dimensions.get("window");
 class Notes extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.onLoadNotes(this.props.userId, this.props.token);
     this.props.onLoadLabels(this.props.userId);
   }
@@ -38,21 +38,20 @@ class Notes extends Component {
     }, {
       value: 'Less Important'
     }];
-    let listToView =(
+    let listToView = (
       <NoteList
-          notes={this.props.notes}
-          onItemSelected={this.itemSelectedHandler}
-          onDoneSelected={this.doneSelectedHandler}
-        />
+        notes={this.props.notes}
+        onItemSelected={this.itemSelectedHandler}
+        onDoneSelected={this.doneSelectedHandler}
+      />
     );
-    if(this.props.notes.length === 0)
-    {
+    if (this.props.notes.length === 0) {
       listToView = (
-        <View><Text style={{ color: 'red'}}>There is no content Please add one</Text></View>
+        <View><Text style={{ color: 'red' }}>There is no content Please add one</Text></View>
       );
     }
-    if(this.props.isLoading){
-      listToView = <ActivityIndicator/>
+    if (this.props.isLoading) {
+      listToView = <ActivityIndicator />
     }
     return (
       <View style={styles.container}>
@@ -161,4 +160,4 @@ const mapDispatchToProps = dispatch => {
     onLoadLabels: (userId) => dispatch(getLabels(userId)),
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Notes);
+export default connect(mapStateToProps, mapDispatchToProps)(Notes);

@@ -47,6 +47,7 @@ export const SET_TODOS = 'SET_TODOS';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const UPDATE_NOTE_PRIORITY = 'UPDATE_NOTE_PRIORITY';
 export const SET_UPDATES_NOTE = 'SET_UPDATES_NOTE';
+export const SET_DELETE_NOTE = 'SET_DELETE_NOTE';
 
 export const TRY_AUTH = "TRY_AUTH";
 
