@@ -17,7 +17,7 @@ export const addTodo = (todoTitle, todoDescribtion, priority, dueDate, eventId, 
             }),
         })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 alert("Something went wrong, please try again!");
                 dispatch(uiStopLoading());
             })
@@ -36,7 +36,7 @@ export const getTodos = (userId) => {
         fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/todos/.json?")
             .catch(err => {
                 alert("Something went wrong, sorry :/");
-                console.log(err);
+                // console.log(err);
             })
             .then(res => res.json())
             .then(parsedRes => {
@@ -170,7 +170,7 @@ export const deleteTodo = (userId,todoKey) => {
             })
             .then(res => res.json())
             .then(parsedRes => {
-                console.log(parsedRes);
+                // console.log(parsedRes);
                 dispatch(setDeleteTodo(todoKey));
                 dispatch(uiStopLoading());
             });

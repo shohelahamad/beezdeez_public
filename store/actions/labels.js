@@ -18,7 +18,7 @@ export const addLabel = (userId, labelTitle, labelColor) => {
             })
             .then(res => res.json())
             .then(parsedRes => {
-                console.log(parsedRes);
+                // console.log(parsedRes);
                 dispatch(getLabels(userId));
                 dispatch(uiStopLoading());
             });
@@ -30,7 +30,7 @@ export const getLabels = (userId) => {
         fetch("https://beezdeez-791a4.firebaseio.com/" + userId + "/labels/.json")
             .catch(err => {
                 alert("Something went wrong, sorry :/");
-                console.log(err);
+                // console.log(err);
             })
             .then(res => res.json())
             .then(parsedRes => {
@@ -77,7 +77,7 @@ export const deleteLabel = (userId, labelKey) => {
             })
             .then(res => res.json())
             .then(parsedRes => {
-                console.log(parsedRes);
+                // console.log(parsedRes);
                 dispatch(setDeleteLabel(labelKey));
                 dispatch(uiStopLoading());
             });

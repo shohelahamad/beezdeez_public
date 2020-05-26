@@ -25,13 +25,13 @@ export const tryAuth = (authData, authMode) => {
     }
     axios.post(url, authData)
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         alert("Authentication failed, please try again!!!!!!");
         dispatch(uiStopLoading());
       })
       .then(parsedRes => {
         dispatch(uiStopLoading());
-        console.log(parsedRes);
+        // console.log(parsedRes);
         if (!parsedRes.data.idToken) {
           alert("Authentication failed, please try again!");
         } else {

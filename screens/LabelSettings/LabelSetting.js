@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput, Button, Alert, Text, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Alert, Text, TouchableOpacity, AsyncStorage, ActivityIndicator } from 'react-native';
 import deviceStorage from '../../services/deviceStorage';
 import LabelList from '../../components/LabelList/LabelList';
 import axios from 'axios';
@@ -74,6 +74,7 @@ class LabelSetting extends Component {
         <LabelList
           labels={this.props.labels}
           onItemSelected={this.itemSelectedHandler} onDeleteLabel={this.labelDeleteHandler} onEditLabel={this.labelEditHandler} />
+          {this.props.isLoading? <ActivityIndicator/>: false}
       </View>
     );
   }
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     labels: state.labels.labels,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    isLoading: state.ui.isLoading
   };
 };
 const mapDispatchToProps = dispatch => {
