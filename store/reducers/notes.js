@@ -1,22 +1,33 @@
-import { ADD_NOTE, DELETE_NOTE, SET_NOTES} from '../actions/actionTypes';
+import { ADD_NOTE, DELETE_NOTE, SET_NOTES, SET_UPDATES_NOTE } from '../actions/actionTypes';
 
-const initialState ={
+const initialState = {
     notes: [],
 };
 
-const reducer = (state = initialState, action) =>{
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_NOTES:
-        return {
-        ...state,
-        notes: action.notes
-        };
+            return {
+                ...state,
+                notes: action.notes
+            };
         case DELETE_NOTE:
             return {
                 ...state,
                 notes: state.notes.filter(note => {
-                return note.key !== state.selectedNote.key;
+                    return note.key !== state.selectedNote.key;
                 })
+            };
+        case SET_UPDATES_NOTE:
+            return {
+                ...state,
+                notes: state.notes.map(note => {
+                    return note.key === action.noteKey ? {
+                        ...note, noteHeading: action.noteHeading, noteDescribtion: action.noteDescribtion,
+                        eventId: action.eventId
+                    } : note
+                }),
+                selectedTodo: null
             };
         default:
             return state;

@@ -20,9 +20,8 @@ class InputToDoScreen extends Component {
     }else{
       this.props.onAddTodo(todoTitle,todoDescribtion,priority,dueDate,eventId,isDone,this.props.userId);
       this.props.navigation.navigate('StartArticleList')
-    }
-      
-      // Navigation.pop(this.props.componentId);
+    }      
+    // Navigation.pop(this.props.componentId);
   }
 
   render () {

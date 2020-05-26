@@ -8,6 +8,8 @@ import NoteList from '../../components/NoteList/NoteList';
 import { connect } from 'react-redux';
 import { getNotes } from "../../store/actions/notes"
 import { Ionicons } from '@expo/vector-icons';
+import { getLabels } from '../../store/actions/labels';
+
 
 
 import { Header } from 'react-navigation-stack';
@@ -17,13 +19,15 @@ const { height, width } = Dimensions.get("window");
 class Notes extends Component {
   componentDidMount(){
     this.props.onLoadNotes(this.props.userId, this.props.token);
+    this.props.onLoadLabels(this.props.userId);
   }
   itemSelectedHandler = key => {
     const selNote = this.props.notes.find(note => {
       return note.key === key;
     });
     this.props.navigation.navigate('NoteDetailsScreen', {
-      itemKey: selNote.key
+      itemKey: selNote.key,
+      selectedPlace: selNote
     });
   };
   render() {
@@ -154,6 +158,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLoadNotes: (userId, token) => dispatch(getNotes(userId, token)),
+    onLoadLabels: (userId) => dispatch(getLabels(userId)),
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Notes);

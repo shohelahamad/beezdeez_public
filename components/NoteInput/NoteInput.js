@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment';
 import { FontAwesome } from '@expo/vector-icons';
@@ -15,6 +15,17 @@ class NoteInput extends Component {
     catagory: {},
     eventId: []
   }
+  componentDidMount() {
+    if (this.props.editNote) {
+      console.log(this.props.editNote)
+      this.setState({
+        noteHeading: this.props.editNote.noteHeading,
+        noteDescribtion: this.props.editNote.noteDescribtion,
+        catagory: this.props.editNote.catagory,
+        eventId: this.props.editNote.eventId,
+      });
+    }
+  }
   onSelectedEventChange = eventId => {
     this.setState({ eventId });
   };
@@ -28,8 +39,8 @@ class NoteInput extends Component {
       noteDescribtion: val
     });
   };
-  catagoryDataHandelar = (key,index,va2) => {
-    var selected = this.props.labels.find(function(element) {
+  catagoryDataHandelar = (key, index, va2) => {
+    var selected = this.props.labels.find(function (element) {
       return element.key === key;
     });
     this.setState({
@@ -43,11 +54,11 @@ class NoteInput extends Component {
       return;
     }
     this.props.onNoteAdded(
-      this.state.noteHeading, 
-      this.state.noteDescribtion, 
+      this.state.noteHeading,
+      this.state.noteDescribtion,
       this.state.catagory,
       this.state.eventId
-      )
+    )
   };
   goTosettings = () => {
     this.props.onGotoSetting()
@@ -71,19 +82,20 @@ class NoteInput extends Component {
 
 
         <View style={styles.row}>
-            <Text style={{ marginBottom: -25 }}>Category</Text>
+          <Text style={{ marginBottom: -25 }}>Category</Text>
           <TouchableOpacity onPress={(this.goTosettings)}>
             <Text style={styles.linkColor}>Label Setting</Text>
           </TouchableOpacity>
-            
+
         </View>
-        
+
         <Dropdown
           placeholder='Choose a catagory'
           data={this.props.labels}
-          labelExtractor={({labelTitle})=> labelTitle}
-          valueExtractor={({key})=> key}
-          onChangeText={(key,index,labels)=>{this.catagoryDataHandelar(key,index,labels)}}
+          labelExtractor={({ labelTitle }) => labelTitle}
+          valueExtractor={({ key }) => key}
+          value={this.state.catagory.labelTitle}
+          onChangeText={(key, index, labels) => { this.catagoryDataHandelar(key, index, labels) }}
         />
         <Text>From</Text>
         <MultiSelect
@@ -96,7 +108,7 @@ class NoteInput extends Component {
           selectedItems={eventId}
           selectText="Link to an event"
           searchInputPlaceholderText="Search Event..."
-          onChangeInput={ (text)=> console.log(text)}
+          onChangeInput={(text) => console.log(text)}
           tagRemoveIconColor="#0641A7"
           tagBorderColor="#0641A7"
           tagTextColor="#0641A7"
@@ -109,8 +121,8 @@ class NoteInput extends Component {
           submitButtonText="Done Select"
         />
         <View>
-            {/* { this.multiselect ? this.multiSelect.getSelectedItemsExt(selectedItems): null } */}
-            {this.multiSelectEvent && this.multiSelectEvent.getSelectedItemsExt(eventId)}
+          {/* { this.multiselect ? this.multiSelect.getSelectedItemsExt(selectedItems): null } */}
+          {this.multiSelectEvent && this.multiSelectEvent.getSelectedItemsExt(eventId)}
         </View>
         <View>
           <TouchableOpacity onPress={(this.noteSubmithandelar)}>
@@ -131,7 +143,7 @@ const styles = StyleSheet.create({
     width: "35%"
   },
   inputContainer: {
-      flex:1,
+    flex: 1,
     width: "100%",
     padding: 20,
     flexDirection: "column"
@@ -208,5 +220,5 @@ const mapStateToProps = state => {
     events: state.events.events
   };
 };
-export default connect(mapStateToProps,null)(NoteInput);
+export default connect(mapStateToProps, null)(NoteInput);
 

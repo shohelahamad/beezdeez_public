@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { Dropdown } from 'react-native-material-dropdown';
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
+import { MaterialIcons, Feather } from '@expo/vector-icons';
+
 
 
 class ShowNote extends Component {
@@ -135,7 +137,24 @@ class ShowNote extends Component {
     );
   }
 }
+ShowNote.navigationOptions = navData => {
+  return {
+    headerTitle: "Details",
+    headerRight: (
 
+      <View style={{ flexDirection: "row" }}>
+        <MaterialIcons name="delete" style={{ color: 'red', fontSize: 25, paddingRight: 10 }} onPress={navData.navigation.getParam('deleteConfirm')} />
+        <Feather name="edit" style={{ color: '#0637a5', fontSize: 25, paddingRight: 10 }} onPress={() => {
+          navData.navigation.navigate('InputNote',
+            {
+              noteId: navData.navigation.getParam('itemKey')
+            }
+          );
+        }} />
+      </View>
+    )
+  }
+};
 const styles = StyleSheet.create({
   container: {
     marginTop: 22,

@@ -248,6 +248,7 @@ const mapDispatchToProps = dispatch => {
 };
 ShowToDoScreen.navigationOptions = navData => {
   return {
+    headerTitle: "Details",
     // headerTitle: (
     //     <Image
     //       style={{
