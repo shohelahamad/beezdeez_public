@@ -9,7 +9,9 @@ import * as Permissions from "expo-permissions";
 import ContactList from '../../components/ContactList/ContactList';
 import { setUserContact } from '../../store/actions/userContacts';
 import { Ionicons } from '@expo/vector-icons';
-import { ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements';
+import { AntDesign } from '@expo/vector-icons';
+
 
 
 
@@ -106,7 +108,7 @@ class UserContacts extends Component {
 }
 UserContacts.navigationOptions = navData => {
   return {
-    headerTitle: "Notes",
+    headerTitle: "Contacts",
     headerTintColor: 'white',
     headerBackground: (
       <LinearGradient
@@ -132,7 +134,15 @@ UserContacts.navigationOptions = navData => {
     headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
     headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
       navData.navigation.toggleDrawer()
-    }} />
+    }} />,
+    headerRight: (
+
+      <View style={{ flexDirection: "row" }}>
+        <AntDesign name="adduser" style={{ color: '#ffffff', fontSize: 25, paddingRight: 10 }} onPress={() => {
+          navData.navigation.navigate('InputContact');
+        }} />
+      </View>
+    )
 
   }
 }

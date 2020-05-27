@@ -33,6 +33,7 @@ import ShowNoteScreen from '../screens/NoteScreens/ShowNoteScreen';
 import NotesScreen from '../screens/NoteScreens/NotesScreen';
 
 import ContactsScreen from '../screens/ContactScreens/UserContacts';
+import InputContractScreen from '../screens/ContactScreens/InputUserContact';
 
 import InputLabelScreen from '../screens/LabelSettings/InputLabel';
 import LabelSettingScreen from '../screens/LabelSettings/LabelSetting';
@@ -130,7 +131,7 @@ const ContactsStack = createStackNavigator({
     screen: ContactsScreen
   },
   InputContact: {
-    screen: InputNoteScreen
+    screen: InputContractScreen
   },
   ContactDetailsScreen: {
     screen: ShowNoteScreen

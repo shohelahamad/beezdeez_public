@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet,ScrollView, View, TextInput, Text, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, ScrollView, View, TextInput, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Iconfa from 'react-native-vector-icons/FontAwesome';
@@ -43,7 +43,7 @@ class ContactInput extends Component {
   //     email: val
   //   });
   // };
- 
+
 
 
   contactSubmithandelar = () => {
@@ -51,33 +51,50 @@ class ContactInput extends Component {
       return;
     }
     this.props.onContactAdded(
-      this.state.firstName, 
-      this.state.lastName, 
+      this.state.firstName,
+      this.state.lastName,
       // this.state.companyName,
       this.state.phoneNumber,
       // this.state.email,
       // this.state.address
-      )
+    )
   };
-  
+
   render() {
     return (
       <ScrollView style={styles.inputContainer}>
-        <View style={{ height: 150}}>
-        <TouchableOpacity style={{ width: 120, 
-            height: 120, 
-            position: "absolute", 
-            left: width / 2 - 150/2, 
-            top: 0, 
-            backgroundColor: "#efefef",
-            borderRadius: 120/2
-            }} 
+        <View style={{ height: 150 }}>
+          {!this.props.imageThum ?
+            <TouchableOpacity onPress={this.props.onImageUpload} style={{
+              width: 120,
+              height: 120,
+              position: "absolute",
+              left: width / 2 - 150 / 2,
+              top: 0,
+              backgroundColor: "#efefef",
+              borderRadius: 120 / 2
+            }}
             >
-            <Iconfa style={{marginTop: 20, marginLeft: 35}}name={"plus"} color={"#000000"} size={20}/>
-            <Iconfa style={{marginTop: -5, marginLeft: 35}}name={"camera"} color={"#000000"} size={50}/>
-          </TouchableOpacity>
+              <Iconfa style={{ marginTop: 20, marginLeft: 35 }} name={"plus"} color={"#000000"} size={20} />
+              <Iconfa style={{ marginTop: -5, marginLeft: 35 }} name={"camera"} color={"#000000"} size={50} />
+            </TouchableOpacity> : <TouchableOpacity onPress={this.props.onImageUpload} style={{
+              width: 120,
+              height: 120,
+              position: "absolute",
+              left: width / 2 - 150 / 2,
+              top: 0,
+              backgroundColor: "#efefef",
+              borderRadius: 120 / 2
+            }}>
+              <Image
+                style={{height: 120, width: 120, borderRadius: 120 / 2}}
+                source={{
+                  uri: this.props.imageThum,
+                }}
+              />
+            </TouchableOpacity>}
         </View>
-        
+
 
         <Text>First Name</Text>
         <TextInput value={this.state.eventId}
