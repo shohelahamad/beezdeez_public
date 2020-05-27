@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import * as firebase from 'firebase';
 
 import CityNavigator from './navigation/CityNavigator';
 import StartNavigator from './navigation/StartNavigator';
@@ -54,12 +55,23 @@ const fetchFonts = () => {
 };
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const firebaseConfig = {
+    apiKey: "AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM",
+    authDomain: "beezdeez-791a4.firebaseapp.com",
+    databaseURL: "https://beezdeez-791a4.firebaseio.com",
+    projectId: "beezdeez-791a4",
+    storageBucket: "beezdeez-791a4.appspot.com",
+    // messagingSenderId: "sender-id",
+    // appId: "app-id",
+    // measurementId: "G-measurement-id"
+  };
   async function askForPermission() {
     await this._askForCalendarPermissions();
     await this._askForReminderPermissions();
   }
   useEffect(() => {
     askForPermission();
+    firebase.initializeApp(firebaseConfig);
   }, []);
   _askForCalendarPermissions = async () => {
     await Permissions.askAsync(Permissions.CALENDAR);

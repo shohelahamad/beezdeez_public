@@ -12,6 +12,7 @@ import * as Contacts from 'expo-contacts';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import * as firebase from 'firebase';
 
 
 class InputUserContact extends Component {
@@ -63,8 +64,15 @@ class InputUserContact extends Component {
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
+            this.uploadImageToFirebase(result.uri);
         }
     };
+    uploadImageToFirebase = async(uri) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        var ref = firebase.storage().ref().child(this.props.userId).child(uri.split('/')[(uri.split('/').length)-1]);
+        return ref.put(blob);
+      }
 
     render() {
         return (
@@ -74,11 +82,15 @@ class InputUserContact extends Component {
         );
     }
 }
-
+const mapStateToProps = state => {
+    return {
+      userId: state.auth.userId
+    };
+  };
 const mapDispatchToProps = dispatch => {
     return {
         addContact: (first, last, phone) => dispatch(addContact(first, last, phone)),
     };
 };
 
-export default connect(null, mapDispatchToProps)(InputUserContact);
+export default connect(mapStateToProps, mapDispatchToProps)(InputUserContact);
