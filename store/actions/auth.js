@@ -4,6 +4,8 @@ import NavigatorService from "../../components/UI/NavStart/NavigatorService";
 // import App from "../../../App";
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
+import firebase from 'firebase';
+
 
 // const API_KEY = "AIzaSyCnX8rTPN4YtEZiX5FMYkqQtXJNLu80GPU";
 
@@ -19,31 +21,37 @@ import { AsyncStorage } from 'react-native';
 export const tryAuth = (authData, authMode) => {
   return dispatch => {
     dispatch(uiStartLoading());
-    let url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
     if (authMode === 'signup') {
-      url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAH0r6YSDdKK198ubG1WGsL2XmG6K7ykFM";
-    }
-    axios.post(url, authData)
-      .catch(err => {
-        // console.log(err);
-        alert("Authentication failed, please try again!!!!!!");
-        dispatch(uiStopLoading());
-      })
-      .then(parsedRes => {
-        dispatch(uiStopLoading());
-        // console.log(parsedRes);
-        if (!parsedRes.data.idToken) {
-          alert("Authentication failed, please try again!");
-        } else {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(authData.email, authData.password)
+        .then(() => {
           dispatch(
             authStoreToken(
-              parsedRes.data.idToken,
-              parsedRes.data.localId
+              'userToken',
+              firebase.auth().currentUser.uid
             )
           );
-          NavigatorService.navigate('Loading');
-        }
-      });
+          dispatch(uiStopLoading());
+          console.log(firebase.auth().currentUser);
+        })
+        .catch(error => console.log(error));
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(authData.email, authData.password)
+        .then(parsedRes => {
+          dispatch(
+            authStoreToken(
+              'userToken',
+              firebase.auth().currentUser.uid
+            )
+          );
+          dispatch(uiStopLoading());
+          console.log(firebase.auth().currentUser);
+        })
+        .catch(error => console.log(error));
+    }
   };
 };
 

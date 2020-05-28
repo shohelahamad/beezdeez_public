@@ -58,6 +58,9 @@ import ProductOverviewScreen from "../screens/Extra/ProductOverviewScreen";
 import StartArticleListScreen from "../screens/StartArticleScreens/StartArticleListScreen";
 import StartArticleDetailScreen from "../screens/StartArticleScreens/StartArticleDetailScreen";
 import StartEventDetailScreen from "../screens/StartArticleScreens/StartEventDetailScreen";
+import firebase from 'firebase';
+
+
 
 const ArticleViewStack = createStackNavigator({
   StartArticleList: {
@@ -230,6 +233,7 @@ const CustomDrawerContentComponent = (props) => (
       onPress={() => (
         AsyncStorage.removeItem("ap:auth:token"),
         AsyncStorage.removeItem("ap:auth:userId"),
+        firebase.auth().signOut(),
         props.navigation.navigate({ routeName: 'AuthScreen' })
       )}
     />

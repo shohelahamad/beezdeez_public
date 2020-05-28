@@ -12,6 +12,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { connect } from "react-redux";
 import { LinearGradient } from 'expo-linear-gradient';
 import { authStoreToken,authClearStorage } from "../../store/actions/index";
+import firebase from 'firebase';
 
 
 class LoadingAppScreen extends Component {
@@ -22,27 +23,33 @@ class LoadingAppScreen extends Component {
       data: 'Jordan Belfort'
     }
   }
-  async componentDidMount() {
-    try {
-      const userToken = await AsyncStorage.getItem("ap:auth:token");
-      const userId = await AsyncStorage.getItem("ap:auth:userId");
-      console.log('user: ', userId)
-      if (userId&&userToken) {
-        this.props.onAuthSetToken(userToken,userId);
+  // async componentDidMount() {
+  //   try {
+  //     const userToken = await AsyncStorage.getItem("ap:auth:token");
+  //     const userId = await AsyncStorage.getItem("ap:auth:userId");
+  //     console.log('user: ', userId)
+  //     if (userId&&userToken) {
+  //       this.props.onAuthSetToken(userToken,userId);
+  //       this.props.navigation.navigate('notetList');
+  //     } else {
+  //       // goToAuth()
+  //       this.props.navigation.navigate('AuthScreen');
+  //     }
+  //   } catch (err) {
+  //     console.log('error: ', err)
+  //     this.props.navigation.navigate('AuthScreen');
+  //   }
+  // }
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+        this.props.onAuthSetToken('userToken',firebase.auth().currentUser.uid)
         this.props.navigation.navigate('notetList');
-      } else {
-        // goToAuth()
+      }else{
         this.props.navigation.navigate('AuthScreen');
       }
-    } catch (err) {
-      console.log('error: ', err)
-      this.props.navigation.navigate('AuthScreen');
-    }
+    });
   }
-  // componentDidMount(){
-  //   setTimeout(() => {this.props.navigation.navigate('AuthScreen')}, 1000)
-  //   console.log("mounted")
-  // }
 
   render() {
     return(
