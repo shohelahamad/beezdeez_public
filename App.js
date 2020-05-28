@@ -68,6 +68,7 @@ export default function App() {
   async function askForPermission() {
     await this._askForCalendarPermissions();
     await this._askForReminderPermissions();
+    await this._askForCameraPermissions();
   }
   useEffect(() => {
     askForPermission();
@@ -75,6 +76,10 @@ export default function App() {
   }, []);
   _askForCalendarPermissions = async () => {
     await Permissions.askAsync(Permissions.CALENDAR);
+  };
+  _askForCameraPermissions = async () => {
+    await Permissions.askAsync(Permissions.CAMERA);
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
   };
 
   _askForReminderPermissions = async () => {
