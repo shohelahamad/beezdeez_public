@@ -33,9 +33,11 @@ export const tryAuth = (authData, authMode) => {
             )
           );
           dispatch(uiStopLoading());
-          console.log(firebase.auth().currentUser);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          alert(error);
+          dispatch(uiStopLoading());
+        });
     } else {
       firebase
         .auth()
@@ -50,7 +52,10 @@ export const tryAuth = (authData, authMode) => {
           dispatch(uiStopLoading());
           console.log(firebase.auth().currentUser);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          alert(error);
+          dispatch(uiStopLoading());
+        });
     }
   };
 };
