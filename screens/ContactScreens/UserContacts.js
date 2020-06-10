@@ -31,7 +31,7 @@ class UserContacts extends Component {
     const { status } = await Permissions.askAsync(Permissions.CONTACTS);
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Emails,Contacts.Fields.PhoneNumbers],
+        fields: [Contacts.Fields.Emails,Contacts.Fields.PhoneNumbers,Contacts.Fields.Image],
       });
 
       if (data.length > 0) {
@@ -63,7 +63,9 @@ class UserContacts extends Component {
     <ListItem
       title={item.name}
       subtitle={item.subtitle}
-      leftAvatar={{ source: { uri: item.avatar_url } }}
+      leftAvatar={item.imageAvailable ? { source: {uri: item.image.uri}} : { title: name[0],
+        source:require('../../assets/avatar-default-icon.png') }}
+      // leftAvatar={item.imageAvailable ? { source: {uri: item.image.uri}} : {source: {uri: item.name}}}
       bottomDivider
       chevron
       onPress={() =>this.itemSelectedHandler(item.id)}
