@@ -31,7 +31,7 @@ class UserContacts extends Component {
     const { status } = await Permissions.askAsync(Permissions.CONTACTS);
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Emails],
+        fields: [Contacts.Fields.Emails,Contacts.Fields.PhoneNumbers],
       });
 
       if (data.length > 0) {
@@ -49,34 +49,13 @@ class UserContacts extends Component {
     });
   };
   itemSelectedHandler = key => {
-    const selContact = this.props.userContacts.find(userContact => {
-      return userContact.key === key;
+    console.log(key);
+
+    const selContact = this.state.userContacts.find(userContact => {
+      return userContact.id === key;
     });
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'ShowContact',
-        passProps: {
-          selectedPlace: selContact
-        },
-        options: {
-          statusBar: {
-            style: 'dark'
-          },
-          topBar: {
-
-            title: {
-              text: "Details",
-              color: '#000000'
-            },
-            background: {
-              color: '#ffffff',
-              translucent: false
-            }
-          },
-          bottomTabs: { visible: false, drawBehind: true, animate: true },
-
-        }
-      }
+    this.props.navigation.navigate('ContactDetailsScreen', {
+      itemKey: selContact.id
     });
   };
   keyExtractor = (item, index) => index.toString()
@@ -87,6 +66,7 @@ class UserContacts extends Component {
       leftAvatar={{ source: { uri: item.avatar_url } }}
       bottomDivider
       chevron
+      onPress={() =>this.itemSelectedHandler(item.id)}
     />
   )
   render() {
@@ -186,7 +166,7 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   return {
-    userContacts: state.userContacts.contacts,
+    contacts: state.userContacts.contacts,
     userId: state.auth.userId,
   };
 };
