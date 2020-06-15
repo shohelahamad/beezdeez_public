@@ -24,7 +24,8 @@ class UserContacts extends Component {
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      userContacts: []
+      userContacts: [],
+      searchedContacts: []
     };
   }
   async componentWillMount() {
@@ -38,7 +39,8 @@ class UserContacts extends Component {
         this.props.setContacts(data, this.props.userId);
         console.log(data);
         this.setState({
-          userContacts: data
+          userContacts: data,
+          searchedContacts: data
         });
       }
     }
@@ -58,13 +60,25 @@ class UserContacts extends Component {
       itemKey: selContact.id
     });
   };
+  searchFilterFunction = text => {    
+    const newData = this.state.userContacts.filter(item => {      
+      const itemData = `${item.name.toUpperCase()}   
+      ${item.firstName.toUpperCase()} ${item.lastName.toUpperCase()}`;
+      
+       const textData = text.toUpperCase();
+        
+       return itemData.indexOf(textData) > -1;    
+    });
+    text == "" ? this.setState({ searchedContacts: this.state.userContacts }):
+    this.setState({ searchedContacts: newData });  
+  };
   keyExtractor = (item, index) => index.toString()
   renderItem = ({ item }) => (
     <ListItem
       title={item.name}
       subtitle={item.subtitle}
-      leftAvatar={item.imageAvailable ? { source: {uri: item.image.uri}} : { title: name[0],
-        source:require('../../assets/avatar-default-icon.png') }}
+      leftAvatar={item.imageAvailable ? { source: {uri: item.image.uri}} : {
+        source:require('../../assets/person-male.png') }}
       // leftAvatar={item.imageAvailable ? { source: {uri: item.image.uri}} : {source: {uri: item.name}}}
       bottomDivider
       chevron
@@ -76,12 +90,12 @@ class UserContacts extends Component {
       <View style={styles.container}>
         <FontAwesome style={styles.searchIcon} name="search" size={20} color="#969696" />
         <TextInput value={this.state.searchItem}
-          onChangeText={this.searchItemCahgnehandelar}
+          onChangeText={text => this.searchFilterFunction(text)}
           style={styles.searchInputField}
           placeholder={"Search For your Contact"} />
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={this.state.userContacts}
+          data={this.state.searchedContacts}
           renderItem={this.renderItem}
         />
       </View>
