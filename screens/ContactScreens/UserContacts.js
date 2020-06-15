@@ -32,9 +32,8 @@ class UserContacts extends Component {
     const { status } = await Permissions.askAsync(Permissions.CONTACTS);
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Emails,Contacts.Fields.PhoneNumbers,Contacts.Fields.Image],
+        fields: [Contacts.Fields.Emails,Contacts.Fields.PhoneNumbers,Contacts.Fields.Image,Contacts.Fields.Addresses],
       });
-
       if (data.length > 0) {
         this.props.setContacts(data, this.props.userId);
         console.log(data);

@@ -7,13 +7,13 @@ import {
     TouchableOpacity,
     Linking,
     Alert,
-    Dimensions
+    Dimensions,
+    Image
 } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import { connect } from "react-redux";
 import { Dropdown } from 'react-native-material-dropdown';
-import Icon from "react-native-vector-icons/FontAwesome";
-import Iconfa from "react-native-vector-icons/FontAwesome5";
+import * as Contacts from 'expo-contacts';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { deleteNote } from "../../store/actions/notes";
 
@@ -22,6 +22,10 @@ import { deleteNote } from "../../store/actions/notes";
 class ShowUserContact extends Component {
     componentDidMount() {
         this.props.navigation.setParams({ deleteConfirm: this.deleteConfirm });
+    }
+    async _onDeleteContact(ID){
+        await Contacts.removeContactAsync(ID);
+        this.props.navigation.navigate('contacstList')
     }
     itemKey = this.props.navigation.getParam('itemKey');
     selContact = this.props.userContacts.find(userContact => {
@@ -39,8 +43,7 @@ class ShowUserContact extends Component {
                 },
                 {
                     text: "Delete", onPress: () => (
-                        this.props.onDeleteNote(this.props.userId, this.itemKey),
-                        this.props.navigation.navigate('notetList')
+                        this._onDeleteContact(this.itemKey)
                     )
                 }
             ],
@@ -72,8 +75,12 @@ class ShowUserContact extends Component {
                     borderRadius: 120 / 2
                 }}
                 >
-                    <Iconfa style={{ marginTop: 20, marginLeft: 35 }} name={"plus"} color={"#000000"} size={20} />
-                    <Iconfa style={{ marginTop: -5, marginLeft: 35 }} name={"camera"} color={"#000000"} size={50} />
+                    <Image
+                        style={{ height: 120, width: 120, borderRadius: 120 / 2 }}
+                        source={
+                            this.selContact.imageAvailable ? { uri: this.selContact.image.uri } : require('../../assets/person-male.png')
+                        }
+                    />
                 </View>
                 <View style={styles.row, { marginBottom: height * 0.03 }}>
                     <Text style={styles.noteHeading}>{this.selContact.name}</Text>
@@ -102,6 +109,58 @@ class ShowUserContact extends Component {
                     >
                         {this.selContact.emails ? <MaterialIcons name="mail" style={{ color: '#ffffff', fontSize: 25, marginTop: 12, marginLeft: 12 }} onPress={() => this._handleEmail(this.selContact.emails[0].email)} /> : <MaterialIcons name="mail" style={{ color: '#969696', fontSize: 25, marginTop: 12, marginLeft: 12 }} />}
                     </TouchableOpacity>
+                </View>
+                <View
+                    style={{
+                        borderBottomColor: '#969696',
+                        borderBottomWidth: 1,
+                        width: width * 0.95,
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}
+                />
+                <View style={styles.row, { marginBottom: height * 0.03 }}>
+                    <Text style={{ color: '#969696' }}>Mobile</Text>
+                    <Text style={{ color: 'blue' }}>{this.selContact.phoneNumbers ? this.selContact.phoneNumbers[0].number: "No Phone number added"}</Text>
+                </View>
+                <View
+                    style={{
+                        borderBottomColor: '#969696',
+                        borderBottomWidth: 1,
+                        width: width * 0.95,
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}
+                />
+                <View style={styles.row, { marginBottom: height * 0.03 }}>
+                    <Text style={{ color: '#969696' }}>E-mail</Text>
+                    <Text style={{ color: 'blue' }}>{this.selContact.emails ? this.selContact.emails[0].email : "E-mail address not added"}</Text>
+                </View>
+                <View
+                    style={{
+                        borderBottomColor: '#969696',
+                        borderBottomWidth: 1,
+                        width: width * 0.95,
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}
+                />
+                <View style={styles.row, { marginBottom: height * 0.03 }}>
+                    <Text style={{ color: '#969696' }}>Address</Text>
+                    <Text style={{ color: 'blue' }}>{this.selContact.addresses ? this.selContact.addresses[0].street + " , " + this.selContact.addresses[0].postalCode+ " , "+ this.selContact.addresses[0].region  : "Address not added"}</Text>
+                </View>
+                <View
+                    style={{
+                        borderBottomColor: '#969696',
+                        borderBottomWidth: 1,
+                        width: width * 0.95,
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}
+                />
+                <View style={styles.row, { marginBottom: height * 0.03 }}>
+                    <Text style={{ color: '#969696' }}>Company</Text>
+                    <Text style={{ color: 'blue' }}>{this.selContact.company ? this.selContact.company  : "Company name not added"}</Text>
                 </View>
             </ScrollView>
         );
