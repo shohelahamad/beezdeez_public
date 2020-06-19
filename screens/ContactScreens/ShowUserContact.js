@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import { Dropdown } from 'react-native-material-dropdown';
 import * as Contacts from 'expo-contacts';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
-import { deleteNote } from "../../store/actions/notes";
+import { setDeleteContact } from "../../store/actions/userContacts";
 
 
 
@@ -25,6 +25,7 @@ class ShowUserContact extends Component {
     }
     async _onDeleteContact(ID){
         await Contacts.removeContactAsync(ID);
+        this.props.onDeleteContact(ID);
         this.props.navigation.navigate('contacstList')
     }
     itemKey = this.props.navigation.getParam('itemKey');
@@ -219,10 +220,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onDdoneTodo: key => dispatch(doneTodo(key)),
-        onNewDate: (key, newDueDate) => dispatch(updateDueDate(key, newDueDate)),
-        onNewPriority: (key, newDueDate) => dispatch(updatePriority(key, newDueDate)),
-        onDeleteNote: (userId, key) => dispatch(deleteNote(userId, key))
+        onDeleteContact: (key) => dispatch(setDeleteContact(key))
     };
 };
 

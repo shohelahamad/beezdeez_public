@@ -21,7 +21,6 @@ class InputUserContact extends Component {
       };
     componentDidMount() {
         this.getPermissionAsync();
-        console.log('hi');
     }
 
     contactAddedHandler = (firstName, lastName, phoneNumber) => {
@@ -34,7 +33,7 @@ class InputUserContact extends Component {
                 [Contacts.Fields.PHONE_NUMBERS]: phoneNumber,
                 [Contacts.Fields.EMAILS]: 'shohelahamad@gmail.com',
                 [Contacts.Fields.ADDRESSES]: 'Am alten hospital 9',
-                [Contacts.Fields.IMAGE]: 'IT',
+                [Contacts.Fields.Image]: this.state.image,
             };
             Contacts.addContactAsync(contact);
             // this.props.addContact(firstName, lastName, phoneNumber);
@@ -42,7 +41,7 @@ class InputUserContact extends Component {
             // this._textInput2.setNativeProps({text: ''});
             // this._textInput3.setNativeProps({text: ''});
         }
-        //   Navigation.pop(this.props.componentId);
+        this.props.navigation.navigate('contacstList');
     }
     getPermissionAsync = async () => {
         if (Constants.platform.ios) {

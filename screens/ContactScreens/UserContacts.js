@@ -28,6 +28,13 @@ class UserContacts extends Component {
       searchedContacts: []
     };
   }
+  componentDidMount() {
+    this.props.setContacts(this.state.userContacts, this.props.userId);
+    this.setState({
+      userContacts: this.props.userContacts,
+      searchedContacts: this.props.userContacts
+    });
+  }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CONTACTS);
     if (status === 'granted') {
@@ -36,10 +43,10 @@ class UserContacts extends Component {
       });
       if (data.length > 0) {
         this.props.setContacts(data, this.props.userId);
-        console.log(data);
+        // console.log(data);
         this.setState({
-          userContacts: data,
-          searchedContacts: data
+          userContacts: this.props.userContacts,
+          searchedContacts: this.props.userContacts
         });
       }
     }
@@ -68,7 +75,7 @@ class UserContacts extends Component {
         
        return itemData.indexOf(textData) > -1;    
     });
-    text == "" ? this.setState({ searchedContacts: this.state.userContacts }):
+    text == "" ? this.setState({ searchedContacts: this.props.userContacts }):
     this.setState({ searchedContacts: newData });  
   };
   keyExtractor = (item, index) => index.toString()
@@ -181,7 +188,7 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   return {
-    contacts: state.userContacts.contacts,
+    userContacts: state.userContacts.userContacts,
     userId: state.auth.userId,
   };
 };

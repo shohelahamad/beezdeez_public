@@ -1,4 +1,4 @@
-import { LOAD_CONTACTS } from '../actions/actionTypes'
+import { LOAD_CONTACTS, DELETE_CONTACT } from '../actions/actionTypes'
 const initialState ={
     userContacts: [],
 };
@@ -9,6 +9,13 @@ const reducer = (state = initialState, action) =>{
         ...state,
         userContacts: action.userContacts
         };
+        case DELETE_CONTACT:
+            return {
+                ...state,
+                userContacts: state.userContacts.filter(userContact => {
+                    return userContact.id !== action.contactKey;
+                })
+            };
         default:
             return state;
     }

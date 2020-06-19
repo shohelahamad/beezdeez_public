@@ -1,4 +1,4 @@
-import {LOAD_CONTACTS} from './actionTypes';
+import {LOAD_CONTACTS, DELETE_CONTACT} from './actionTypes';
 
 
 export const setUserContact = (userContacts,userId) =>{
@@ -29,5 +29,11 @@ export const loadContacts = userContacts => {
   return {
       type: LOAD_CONTACTS,
       userContacts: userContacts
+  };
+};
+export const setDeleteContact = (contactKey) => {
+  return {
+      type: DELETE_CONTACT,
+      contactKey: contactKey
   };
 };
