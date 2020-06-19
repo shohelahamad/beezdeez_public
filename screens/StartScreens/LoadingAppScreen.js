@@ -44,7 +44,7 @@ class LoadingAppScreen extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if(user){
         this.props.onAuthSetToken('userToken',firebase.auth().currentUser.uid)
-        this.props.navigation.navigate('notetList');
+        this.props.navigation.navigate('EventsScreen');
       }else{
         this.props.navigation.navigate('AuthScreen');
       }
