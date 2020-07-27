@@ -13,21 +13,139 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-const { height, width } = Dimensions.get("window");
 import moment from 'moment';
 import * as Calendar from 'expo-calendar';
 import * as Localization from 'expo-localization';
 import Constants from 'expo-constants';
-import { LinearGradient } from 'expo-linear-gradient';
+
 import CalendarStrip from 'react-native-calendar-strip';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Context } from '../../data/Context';
 import { Task } from '../../components/UI/Task/Task';
-import { Ionicons } from '@expo/vector-icons';
 
+const styles = StyleSheet.create({
+  taskListContent: {
+    height: 100,
+    width: 327,
+    alignSelf: 'center',
+    borderRadius: 10,
+    shadowColor: '#2E66E7',
+    backgroundColor: '#ffffff',
+    marginTop: 10,
+    marginBottom: 10,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowRadius: 5,
+    shadowOpacity: 0.2,
+    elevation: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  viewTask: {
+    position: 'absolute',
+    bottom: 40,
+    right: 17,
+    height: 60,
+    width: 60,
+    backgroundColor: '#2E66E7',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#2E66E7',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowRadius: 30,
+    shadowOpacity: 0.5,
+    elevation: 5,
+    zIndex: 999,
+  },
+  deleteButton: {
+    backgroundColor: '#ff6347',
+    width: 100,
+    height: 38,
+    alignSelf: 'center',
+    marginTop: 40,
+    borderRadius: 5,
+    justifyContent: 'center',
+  },
+  updateButton: {
+    backgroundColor: '#2E66E7',
+    width: 100,
+    height: 38,
+    alignSelf: 'center',
+    marginTop: 40,
+    borderRadius: 5,
+    justifyContent: 'center',
+    marginRight: 20,
+  },
+  sepeerator: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: '#979797',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  notesContent: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: '#979797',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  learn: {
+    height: 23,
+    width: 51,
+    backgroundColor: '#F8D557',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  design: {
+    height: 23,
+    width: 59,
+    backgroundColor: '#62CCFB',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginRight: 7,
+  },
+  readBook: {
+    height: 23,
+    width: 83,
+    backgroundColor: '#4CD565',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginRight: 7,
+  },
+  title: {
+    height: 25,
+    borderColor: '#5DD976',
+    borderLeftWidth: 1,
+    paddingLeft: 8,
+    fontSize: 19,
+  },
+  taskContainer: {
+    height: 475,
+    width: 327,
+    alignSelf: 'center',
+    borderRadius: 20,
+    shadowColor: '#2E66E7',
+    backgroundColor: '#ffffff',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowRadius: 20,
+    shadowOpacity: 0.2,
+    elevation: 5,
+    padding: 22,
+  },
+});
 
-
-class EventsScreen extends Component {
+export default class Home extends Component {
   state = {
     datesWhitelist: [
       {
@@ -523,9 +641,9 @@ class EventsScreen extends Component {
                 disabledDateNameStyle={{ color: 'grey' }}
                 disabledDateNumberStyle={{ color: 'grey', paddingTop: 10 }}
                 datesWhitelist={datesWhitelist}
-                iconLeft={require('../../assets/left-arrow.png')}
-                iconRight={require('../../assets/right-arrow.png')}
-                iconContainer={{ flex: 0.1 }}
+                // iconLeft={require('../assets/left-arrow.png')}
+                // iconRight={require('../assets/right-arrow.png')}
+                // iconContainer={{ flex: 0.1 }}
                 markedDates={markedDate}
                 onDateSelected={date => {
                   const selectedDate = `${moment(date).format('YYYY')}-${moment(
@@ -539,7 +657,7 @@ class EventsScreen extends Component {
               />
               <TouchableOpacity
                 onPress={() =>
-                    this.props.navigation.navigate('InputEvent', {
+                  navigation.navigate('CreateTask', {
                     updateCurrentTask: this._updateCurrentTask,
                     currentDate,
                     createNewCalendar: this._createNewCalendar,
@@ -547,13 +665,13 @@ class EventsScreen extends Component {
                 }
                 style={styles.viewTask}
               >
-                <Image
-                  source={require('../../assets/plus.png')}
+                {/* <Image
+                  source={require('../assets/plus.png')}
                   style={{
                     height: 30,
                     width: 30,
                   }}
-                />
+                /> */}
               </TouchableOpacity>
               <View
                 style={{
@@ -660,157 +778,3 @@ class EventsScreen extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-    taskListContent: {
-      height: 100,
-      width: 327,
-      alignSelf: 'center',
-      borderRadius: 10,
-      shadowColor: '#2E66E7',
-      backgroundColor: '#ffffff',
-      marginTop: 10,
-      marginBottom: 10,
-      shadowOffset: {
-        width: 3,
-        height: 3,
-      },
-      shadowRadius: 5,
-      shadowOpacity: 0.2,
-      elevation: 3,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    viewTask: {
-      position: 'absolute',
-      bottom: 40,
-      right: 17,
-      height: 60,
-      width: 60,
-      backgroundColor: '#2E66E7',
-      borderRadius: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      shadowColor: '#2E66E7',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowRadius: 30,
-      shadowOpacity: 0.5,
-      elevation: 5,
-      zIndex: 999,
-    },
-    deleteButton: {
-      backgroundColor: '#ff6347',
-      width: 100,
-      height: 38,
-      alignSelf: 'center',
-      marginTop: 40,
-      borderRadius: 5,
-      justifyContent: 'center',
-    },
-    updateButton: {
-      backgroundColor: '#2E66E7',
-      width: 100,
-      height: 38,
-      alignSelf: 'center',
-      marginTop: 40,
-      borderRadius: 5,
-      justifyContent: 'center',
-      marginRight: 20,
-    },
-    sepeerator: {
-      height: 0.5,
-      width: '100%',
-      backgroundColor: '#979797',
-      alignSelf: 'center',
-      marginVertical: 20,
-    },
-    notesContent: {
-      height: 0.5,
-      width: '100%',
-      backgroundColor: '#979797',
-      alignSelf: 'center',
-      marginVertical: 20,
-    },
-    learn: {
-      height: 23,
-      width: 51,
-      backgroundColor: '#F8D557',
-      justifyContent: 'center',
-      borderRadius: 5,
-    },
-    design: {
-      height: 23,
-      width: 59,
-      backgroundColor: '#62CCFB',
-      justifyContent: 'center',
-      borderRadius: 5,
-      marginRight: 7,
-    },
-    readBook: {
-      height: 23,
-      width: 83,
-      backgroundColor: '#4CD565',
-      justifyContent: 'center',
-      borderRadius: 5,
-      marginRight: 7,
-    },
-    title: {
-      height: 25,
-      borderColor: '#5DD976',
-      borderLeftWidth: 1,
-      paddingLeft: 8,
-      fontSize: 19,
-    },
-    taskContainer: {
-      height: 475,
-      width: 327,
-      alignSelf: 'center',
-      borderRadius: 20,
-      shadowColor: '#2E66E7',
-      backgroundColor: '#ffffff',
-      shadowOffset: {
-        width: 3,
-        height: 3,
-      },
-      shadowRadius: 20,
-      shadowOpacity: 0.2,
-      elevation: 5,
-      padding: 22,
-    },
-  });
-  EventsScreen.navigationOptions = navData => {
-    return {
-      headerTitle: moment().format('LL'),
-      headerTintColor: 'white',
-      headerBackground: (
-        <LinearGradient
-          colors={['#0637a5', '#0fadd5']}
-          style={{ flex: 1 }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      ),
-      ...Platform.select({
-        android: {
-          headerForceInset: { top: 'never', bottom: 'never' },
-          // headerStyle: {
-          //   height: 90
-          // },
-        },
-        ios: {
-          // headerStyle: {
-          //   height: 60
-          // }
-        }
-      }),
-      headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
-      headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
-        navData.navigation.toggleDrawer()
-      }} />
-  
-    }
-  }
-export default EventsScreen;

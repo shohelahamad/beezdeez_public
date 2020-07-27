@@ -222,12 +222,6 @@ class InputEventScreen extends Component {
       <Context.Consumer>
         {value => (
           <>
-            <DateTimePicker
-              isVisible={isDateTimePickerVisible}
-              onConfirm={this._handleDatePicked}
-              onCancel={this._hideDateTimePicker}
-              mode="time"
-            />
 
             <View style={styles.container}>
               <View
@@ -240,20 +234,6 @@ class InputEventScreen extends Component {
                     paddingBottom: 400,
                   }}
                 >
-                  <View style={styles.backButton}>
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate('Home')}
-                      style={{ marginRight: vw / 2 - 120, marginLeft: 20 }}
-                    >
-                      <Image
-                        style={{ height: 25, width: 40 }}
-                        source={require('../../assets/back.png')}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-
-                    <Text style={styles.newTask}>New Task</Text>
-                  </View>
                   <View style={styles.calenderContainer}>
                     <CalendarList
                       style={{
@@ -359,9 +339,12 @@ class InputEventScreen extends Component {
                           marginTop: 3,
                         }}
                       >
-                        <Text style={{ fontSize: 19 }}>
-                          {moment(alarmTime).format('h:mm A')}
-                        </Text>
+                        <DateTimePicker
+                          isVisible={isDateTimePickerVisible}
+                          onConfirm={this._handleDatePicked}
+                          onCancel={this._hideDateTimePicker}
+                          mode="time"
+                        />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.seperator} />
