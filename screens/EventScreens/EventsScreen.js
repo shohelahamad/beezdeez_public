@@ -1,340 +1,268 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
+  Platform,
+  Alert,
+  StyleSheet,
   View,
   Text,
-  Button,
-  StyleSheet,
   TouchableOpacity,
-  Dimensions,
-  ScrollView
-} from 'react-native'
-import { connect } from 'react-redux';
-import { addLabel, updateLabel } from '../../store/actions/labels';
-import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
-import { LinearGradient } from 'expo-linear-gradient';
-const { height, width } = Dimensions.get("window");
-import Icon from 'react-native-vector-icons/FontAwesome';
-import * as Permissions from "expo-permissions";
-import * as Calendar from 'expo-calendar';
+  Button
+} from 'react-native';
+import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar } from 'react-native-calendars';
+
+const testIDs = {
+  menu: {
+    CONTAINER: 'menu',
+    CALENDARS: 'calendars_btn',
+    CALENDAR_LIST: 'calendar_list_btn',
+    HORIZONTAL_LIST: 'horizontal_list_btn',
+    AGENDA: 'agenda_btn',
+    EXPANDABLE_CALENDAR: 'expandable_calendar_btn',
+    WEEK_CALENDAR: 'week_calendar_btn'
+  },
+  calendars: {
+    CONTAINER: 'calendars',
+    FIRST: 'first_calendar',
+    LAST: 'last_calendar'
+  },
+  calendarList: { CONTAINER: 'calendarList' },
+  horizontalList: { CONTAINER: 'horizontalList' },
+  agenda: {
+    CONTAINER: 'agenda',
+    ITEM: 'item'
+  },
+  expandableCalendar: { CONTAINER: 'expandableCalendar' },
+  weekCalendar: { CONTAINER: 'weekCalendar' }
+}
 
 
+const today = new Date().toISOString().split('T')[0];
+const fastDate = getPastDate(3);
+const futureDates = getFutureDates(9);
+const dates = [fastDate, today].concat(futureDates);
+const themeColor = '#00AAAF';
+const lightThemeColor = '#EBF9F9';
 
-class EventsScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // For adding a contact
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      userEvents: []
-    };
+function getFutureDates(days) {
+  const array = [];
+  for (let index = 1; index <= days; index++) {
+    const date = new Date(Date.now() + (864e5 * index)); // 864e5 == 86400000 == 24*60*60*1000
+    const dateString = date.toISOString().split('T')[0];
+    array.push(dateString);
   }
-  componentDidMount() {
+  return array;
+}
 
+function getPastDate(days) {
+  return new Date(Date.now() - (864e5 * days)).toISOString().split('T')[0];
+}
+
+const ITEMS = [
+  { title: dates[0], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] },
+  { title: dates[1], data: [{ hour: '4pm', duration: '1h', title: 'Pilates ABC' }, { hour: '5pm', duration: '1h', title: 'Vinyasa Yoga' }] },
+  { title: dates[2], data: [{ hour: '1pm', duration: '1h', title: 'Ashtanga Yoga' }, { hour: '2pm', duration: '1h', title: 'Deep Streches' }, { hour: '3pm', duration: '1h', title: 'Private Yoga' }] },
+  { title: dates[3], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] },
+  { title: dates[4], data: [{}] },
+  { title: dates[5], data: [{ hour: '9pm', duration: '1h', title: 'Pilates Reformer' }, { hour: '10pm', duration: '1h', title: 'Ashtanga' }, { hour: '11pm', duration: '1h', title: 'TRX' }, { hour: '12pm', duration: '1h', title: 'Running Group' }] },
+  { title: dates[6], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] },
+  { title: dates[7], data: [{}] },
+  { title: dates[8], data: [{ hour: '9pm', duration: '1h', title: 'Pilates Reformer' }, { hour: '10pm', duration: '1h', title: 'Ashtanga' }, { hour: '11pm', duration: '1h', title: 'TRX' }, { hour: '12pm', duration: '1h', title: 'Running Group' }] },
+  { title: dates[9], data: [{ hour: '1pm', duration: '1h', title: 'Ashtanga Yoga' }, { hour: '2pm', duration: '1h', title: 'Deep Streches' }, { hour: '3pm', duration: '1h', title: 'Private Yoga' }] },
+  { title: dates[10], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] }
+];
+
+export default class EventsScreen extends Component {
+
+  onDateChanged = (/* date, updateSource */) => {
+    // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
+    // fetch and set data for date + week ahead
   }
-  async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CALENDAR);
-    if (status === 'granted') {
-      const calendars = await Calendar.getCalendarsAsync();
-      console.log('Here are all your calendars:');
-      console.log({ calendars });
-      this.setState({
-        userEvents: calendars
-      })
-    }
+
+  onMonthChange = (/* month, updateSource */) => {
+    // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
   }
-  keyExtractor = (item, index) => index.toString()
-  render() {
-    let datesWhitelist = [{
-      start: moment(),
-      end: moment().add(365, 'days'), // total 4 days enabled
-    }];
-    let datesBlacklist = [moment().add(1, 'days')]; // 1 day disabled
+
+  buttonPressed() {
+    Alert.alert('show more');
+  }
+
+  itemPressed(id) {
+    Alert.alert(id);
+  }
+
+  renderEmptyItem() {
     return (
-      <View style={styles.container}>
-        <CalendarStrip
-          calendarAnimation={{ type: 'sequence', duration: 30 }}
-          daySelectionAnimation={{ type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white' }}
-          style={{ height: 100, paddingTop: 20, paddingBottom: 10 }}
-          calendarHeaderStyle={{ color: 'white' }}
-          calendarColor={'#0637a5'}
-          dateNumberStyle={{ color: 'white' }}
-          dateNameStyle={{ color: 'white' }}
-          highlightDateNumberStyle={{ color: 'yellow' }}
-          highlightDateNameStyle={{ color: 'yellow' }}
-          disabledDateNameStyle={{ color: 'grey' }}
-          disabledDateNumberStyle={{ color: 'grey' }}
-          datesWhitelist={datesWhitelist}
-          // iconLeft={require('./img/left-arrow.png')}
-          // iconRight={require('./img/right-arrow.png')}
-          iconContainer={{ flex: 0.1 }}
-        />
-        <ScrollView
-          contentContainerStyle={{
-            paddingBottom: 20,
-          }}
-        >
-          {this.state.userEvents.map(item => (
-            <TouchableOpacity
-              onPress={() => {
-                this.setState(
-                  {
-                    selectedTask: item,
-                    isModalVisible: true,
-                  },
-                  () => {
-                    this._getEvent();
-                  }
-                );
-              }}
-              key={item.id}
-              style={styles.taskListContent}
-            >
-              <View
-                style={{
-                  marginLeft: 13,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      height: 12,
-                      width: 12,
-                      borderRadius: 6,
-                      backgroundColor: item.color,
-                      marginRight: 8,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: '#554A4C',
-                      fontSize: 20,
-                      fontWeight: '700',
-                    }}
-                  >
-                    {item.title}
-                  </Text>
-                </View>
-                <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginLeft: 20,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: '#BBBBBB',
-                        fontSize: 14,
-                        marginRight: 5,
-                      }}
-                    > Time </Text>
-                    <Text
-                      style={{
-                        color: '#BBBBBB',
-                        fontSize: 14,
-                      }}
-                    >
-                      {item.notes}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  height: 80,
-                  width: 5,
-                  backgroundColor: item.color,
-                  borderRadius: 5,
-                }}
-              />
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-        <LinearGradient
-          colors={['#0637a5', '#0fadd5']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={{
-            width: 120,
-            height: 120,
-            position: "absolute",
-            left: width / 2 - 120 / 2,
-            bottom: -60,
-            backgroundColor: "#0641A7",
-            borderRadius: 120 / 2
-          }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('InputEvent', {
-                updateCurrentTask: this._updateCurrentTask,
-                createNewCalendar: this._createNewCalendar,
-              })
-            }
-          >
-
-            <Icon style={{ marginTop: 20, marginLeft: 46 }} name={"plus"} color={"#ffffff"} size={30} />
-          </TouchableOpacity>
-        </LinearGradient>
-        {/* <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('InputEvent', {
-              updateCurrentTask: this._updateCurrentTask,
-              createNewCalendar: this._createNewCalendar,
-            })
-          }
-          style={styles.viewTask}
-        ></TouchableOpacity> */}
+      <View style={styles.emptyItem}>
+        <Text style={styles.emptyItemText}>No Events Planned</Text>
       </View>
     );
   }
-}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E5EBE7"
-  },
-  taskListContent: {
-    height: 100,
-    width: 327,
-    alignSelf: 'center',
-    borderRadius: 10,
-    shadowColor: '#2E66E7',
-    backgroundColor: '#ffffff',
-    marginTop: 10,
-    marginBottom: 10,
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    shadowRadius: 5,
-    shadowOpacity: 0.2,
-    elevation: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  viewTask: {
-    position: 'absolute',
-    bottom: 40,
-    right: 17,
-    height: 60,
-    width: 60,
-    backgroundColor: '#2E66E7',
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#2E66E7',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowRadius: 30,
-    shadowOpacity: 0.5,
-    elevation: 5,
-    zIndex: 999,
-  },
-  deleteButton: {
-    backgroundColor: '#ff6347',
-    width: 100,
-    height: 38,
-    alignSelf: 'center',
-    marginTop: 40,
-    borderRadius: 5,
-    justifyContent: 'center',
-  },
-  updateButton: {
-    backgroundColor: '#2E66E7',
-    width: 100,
-    height: 38,
-    alignSelf: 'center',
-    marginTop: 40,
-    borderRadius: 5,
-    justifyContent: 'center',
-    marginRight: 20,
-  },
-  sepeerator: {
-    height: 0.5,
-    width: '100%',
-    backgroundColor: '#979797',
-    alignSelf: 'center',
-    marginVertical: 20,
-  },
-  notesContent: {
-    height: 0.5,
-    width: '100%',
-    backgroundColor: '#979797',
-    alignSelf: 'center',
-    marginVertical: 20,
-  },
-  learn: {
-    height: 23,
-    width: 51,
-    backgroundColor: '#F8D557',
-    justifyContent: 'center',
-    borderRadius: 5,
-  },
-  design: {
-    height: 23,
-    width: 59,
-    backgroundColor: '#62CCFB',
-    justifyContent: 'center',
-    borderRadius: 5,
-    marginRight: 7,
-  },
-  readBook: {
-    height: 23,
-    width: 83,
-    backgroundColor: '#4CD565',
-    justifyContent: 'center',
-    borderRadius: 5,
-    marginRight: 7,
-  },
-  title: {
-    height: 25,
-    borderColor: '#5DD976',
-    borderLeftWidth: 1,
-    paddingLeft: 8,
-    fontSize: 19,
-  },
-  taskContainer: {
-    height: 475,
-    width: 327,
-    alignSelf: 'center',
-    borderRadius: 20,
-    shadowColor: '#2E66E7',
-    backgroundColor: '#ffffff',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    shadowRadius: 20,
-    shadowOpacity: 0.2,
-    elevation: 5,
-    padding: 22,
-  },
-});
-const mapStateToProps = state => {
-  return {
-    userId: state.auth.userId,
-    labels: state.labels.labels
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddLabel: (userId, labelTitle, labelColor) =>
-      dispatch(addLabel(userId, labelTitle, labelColor)),
-    onUpdateLabel: (userId, labelKey, labelTitle, labelColor) =>
-      dispatch(updateLabel(userId, labelKey, labelTitle, labelColor))
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventsScreen);
+  renderItem = ({ item }) => {
+    if (_.isEmpty(item)) {
+      return this.renderEmptyItem();
+    }
+
+    return (
+      <TouchableOpacity
+        onPress={() => this.itemPressed(item.title)}
+        style={styles.item}
+      >
+        <View>
+          <Text style={styles.itemHourText}>{item.hour}</Text>
+          <Text style={styles.itemDurationText}>{item.duration}</Text>
+        </View>
+        <Text style={styles.itemTitleText}>{item.title}</Text>
+        <View style={styles.itemButtonContainer}>
+          <Button color={'grey'} title={'Info'} onPress={this.buttonPressed} />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  getMarkedDates = () => {
+    const marked = {};
+    ITEMS.forEach(item => {
+      // NOTE: only mark dates with data
+      if (item.data && item.data.length > 0 && !_.isEmpty(item.data[0])) {
+        marked[item.title] = { marked: true };
+      } else {
+        marked[item.title] = { disabled: true };
+      }
+    });
+    return marked;
+  }
+
+  getTheme = () => {
+    const disabledColor = 'grey';
+
+    return {
+      // arrows
+      arrowColor: 'black',
+      arrowStyle: { padding: 0 },
+      // month
+      monthTextColor: 'black',
+      textMonthFontSize: 16,
+      textMonthFontFamily: 'HelveticaNeue',
+      textMonthFontWeight: 'bold',
+      // day names
+      textSectionTitleColor: 'black',
+      textDayHeaderFontSize: 12,
+      textDayHeaderFontFamily: 'HelveticaNeue',
+      textDayHeaderFontWeight: 'normal',
+      // dates
+      dayTextColor: themeColor,
+      textDayFontSize: 18,
+      textDayFontFamily: 'HelveticaNeue',
+      textDayFontWeight: '500',
+      textDayStyle: { marginTop: Platform.OS === 'android' ? 2 : 4 },
+      // selected date
+      selectedDayBackgroundColor: themeColor,
+      selectedDayTextColor: 'white',
+      // disabled date
+      textDisabledColor: disabledColor,
+      // dot (marked date)
+      dotColor: themeColor,
+      selectedDotColor: 'white',
+      disabledDotColor: disabledColor,
+      dotStyle: { marginTop: -2 }
+    };
+  }
+
+  render() {
+    return (
+      <CalendarProvider
+        date={ITEMS[0].title}
+        onDateChanged={this.onDateChanged}
+        onMonthChange={this.onMonthChange}
+        showTodayButton
+        disabledOpacity={0.6}
+      // theme={{
+      //   todayButtonTextColor: themeColor
+      // }}
+      // todayBottomMargin={16}
+      >
+        {this.props.weekView ?
+          <WeekCalendar
+            testID={testIDs.weekCalendar.CONTAINER}
+            firstDay={1}
+            markedDates={this.getMarkedDates()}
+          /> :
+          <ExpandableCalendar
+            testID={testIDs.expandableCalendar.CONTAINER}
+            // horizontal={false}
+            // hideArrows
+            // disablePan
+            // hideKnob
+            // initialPosition={ExpandableCalendar.positions.OPEN}
+            // calendarStyle={styles.calendar}
+            // headerStyle={styles.calendar} // for horizontal only
+            // disableWeekScroll
+            // theme={this.getTheme()}
+            disableAllTouchEventsForDisabledDays
+            firstDay={1}
+            markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
+            // leftArrowImageSource={require('../../assets/left-arrow.png')}
+            // rightArrowImageSource={require('../../assets/right-arrow')}
+          />
+        }
+        <AgendaList
+          sections={ITEMS}
+          extraData={this.state}
+          renderItem={this.renderItem}
+        // sectionStyle={styles.section}
+        />
+      </CalendarProvider>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  calendar: {
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  section: {
+    backgroundColor: lightThemeColor,
+    color: 'grey',
+    textTransform: 'capitalize'
+  },
+  item: {
+    padding: 20,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgrey',
+    flexDirection: 'row'
+  },
+  itemHourText: {
+    color: 'black'
+  },
+  itemDurationText: {
+    color: 'grey',
+    fontSize: 12,
+    marginTop: 4,
+    marginLeft: 4
+  },
+  itemTitleText: {
+    color: 'black',
+    marginLeft: 16,
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  itemButtonContainer: {
+    flex: 1,
+    alignItems: 'flex-end'
+  },
+  emptyItem: {
+    paddingLeft: 20,
+    height: 52,
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgrey'
+  },
+  emptyItemText: {
+    color: 'lightgrey',
+    fontSize: 14
+  }
+});
