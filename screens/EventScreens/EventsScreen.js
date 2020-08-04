@@ -7,8 +7,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Button
+  Button,
+  Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
+import { Header } from 'react-navigation-stack';
+import { LinearGradient } from 'expo-linear-gradient';
+const { height, width } = Dimensions.get("window");
+import { Ionicons } from '@expo/vector-icons';
 import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 
 const testIDs = {
@@ -71,8 +77,7 @@ const ITEMS = [
   { title: dates[9], data: [{ hour: '1pm', duration: '1h', title: 'Ashtanga Yoga' }, { hour: '2pm', duration: '1h', title: 'Deep Streches' }, { hour: '3pm', duration: '1h', title: 'Private Yoga' }] },
   { title: dates[10], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] }
 ];
-
-export default class EventsScreen extends Component {
+class EventsScreen extends Component{
 
   onDateChanged = (/* date, updateSource */) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -217,7 +222,38 @@ export default class EventsScreen extends Component {
     );
   }
 }
+EventsScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Notes",
+    headerTintColor: 'white',
+    headerBackground: (
+      <LinearGradient
+        colors={['#0637a5', '#0fadd5']}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+      />
+    ),
+    ...Platform.select({
+      android: {
+        headerForceInset: { top: 'never', bottom: 'never' },
+        // headerStyle: {
+        //   height: 90
+        // },
+      },
+      ios: {
+        // headerStyle: {
+        //   height: 60
+        // }
+      }
+    }),
+    headerTitleStyle: { color: '#fff', fontSize: width * 0.06, textAlign: 'center' },
+    headerLeft: <Ionicons name="ios-menu" style={{ color: '#ffffff', fontSize: 35, paddingLeft: 10 }} onPress={() => {
+      navData.navigation.toggleDrawer()
+    }} />
 
+  }
+}
 const styles = StyleSheet.create({
   calendar: {
     paddingLeft: 20,
@@ -265,4 +301,20 @@ const styles = StyleSheet.create({
     color: 'lightgrey',
     fontSize: 14
   }
-});
+
+  });
+  const mapStateToProps = state => {
+    return {
+      notes: state.notes.notes,
+      userId: state.auth.userId,
+      token: state.auth.token,
+      isLoading: state.ui.isLoading
+    };
+  };
+  const mapDispatchToProps = dispatch => {
+    return {
+      onLoadNotes: (userId, token) => dispatch(getNotes(userId, token)),
+      onLoadLabels: (userId) => dispatch(getLabels(userId)),
+    };
+  };
+export default connect(mapStateToProps, mapDispatchToProps)(EventsScreen);
