@@ -11,6 +11,7 @@ import {
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Header } from 'react-navigation-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get("window");
@@ -77,7 +78,7 @@ const ITEMS = [
   { title: dates[9], data: [{ hour: '1pm', duration: '1h', title: 'Ashtanga Yoga' }, { hour: '2pm', duration: '1h', title: 'Deep Streches' }, { hour: '3pm', duration: '1h', title: 'Private Yoga' }] },
   { title: dates[10], data: [{ hour: '12am', duration: '1h', title: 'Ashtanga Yoga' }] }
 ];
-class EventsScreen extends Component{
+class EventsScreen extends Component {
 
   onDateChanged = (/* date, updateSource */) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -140,7 +141,7 @@ class EventsScreen extends Component{
   }
 
   getTheme = () => {
-    const disabledColor = 'grey';
+    const disabledColor = '#efefef';
 
     return {
       // arrows
@@ -184,7 +185,7 @@ class EventsScreen extends Component{
         showTodayButton
         disabledOpacity={0.6}
       // theme={{
-      //   todayButtonTextColor: themeColor
+      //   todayButtonTextColor: themeColor,
       // }}
       // todayBottomMargin={16}
       >
@@ -206,10 +207,10 @@ class EventsScreen extends Component{
             // disableWeekScroll
             // theme={this.getTheme()}
             disableAllTouchEventsForDisabledDays
-            firstDay={1}
+            firstDay={4}
             markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
-            // leftArrowImageSource={require('../../assets/left-arrow.png')}
-            // rightArrowImageSource={require('../../assets/right-arrow')}
+          // leftArrowImageSource={require('../../assets/left-arrow.png')}
+          // rightArrowImageSource={require('../../assets/right-arrow')}
           />
         }
         <AgendaList
@@ -218,13 +219,34 @@ class EventsScreen extends Component{
           renderItem={this.renderItem}
         // sectionStyle={styles.section}
         />
+        <LinearGradient
+          colors={['#0637a5', '#0fadd5']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            width: 120,
+            height: 120,
+            position: "absolute",
+            left: width / 2 - 120 / 2,
+            bottom: -60,
+            backgroundColor: "#0641A7",
+            borderRadius: 120 / 2
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => { this.props.navigation.navigate('InputEvent') }}
+          >
+
+            <Icon style={{ marginTop: 20, marginLeft: 46 }} name={"plus"} color={"#ffffff"} size={30} />
+          </TouchableOpacity>
+        </LinearGradient>
       </CalendarProvider>
     );
   }
 }
 EventsScreen.navigationOptions = navData => {
   return {
-    headerTitle: "Notes",
+    headerTitle: "Events",
     headerTintColor: 'white',
     headerBackground: (
       <LinearGradient
@@ -302,19 +324,19 @@ const styles = StyleSheet.create({
     fontSize: 14
   }
 
-  });
-  const mapStateToProps = state => {
-    return {
-      notes: state.notes.notes,
-      userId: state.auth.userId,
-      token: state.auth.token,
-      isLoading: state.ui.isLoading
-    };
+});
+const mapStateToProps = state => {
+  return {
+    notes: state.notes.notes,
+    userId: state.auth.userId,
+    token: state.auth.token,
+    isLoading: state.ui.isLoading
   };
-  const mapDispatchToProps = dispatch => {
-    return {
-      onLoadNotes: (userId, token) => dispatch(getNotes(userId, token)),
-      onLoadLabels: (userId) => dispatch(getLabels(userId)),
-    };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadNotes: (userId, token) => dispatch(getNotes(userId, token)),
+    onLoadLabels: (userId) => dispatch(getLabels(userId)),
   };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(EventsScreen);
