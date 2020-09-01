@@ -12,7 +12,7 @@ export const addLabel = (userId, labelTitle, labelColor) => {
             }),
         })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 alert("Something went wrong, please try again!");
                 dispatch(uiStopLoading());
             })

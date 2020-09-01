@@ -31,13 +31,13 @@ export const addEvent = (eventTitle, eventDescription, eventMembers, eventTodos,
             }),
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 alert("Something went wrong, please try again!");
                 dispatch(uiStopLoading());
             })
             .then(res => res.json())
             .then(parsedRes => {
-                console.log(parsedRes);
+                // console.log(parsedRes);
                 dispatch(getEvents());
                 dispatch(uiStopLoading());
             });
@@ -48,7 +48,7 @@ export const getEvents = () => {
         fetch("https://beezdeez-791a4.firebaseio.com/events/.json")
         .catch(err => {
             alert("Something went wrong, sorry :/");
-            console.log(err);
+            // console.log(err);
         })
         .then(res => res.json())
         .then(parsedRes => {
