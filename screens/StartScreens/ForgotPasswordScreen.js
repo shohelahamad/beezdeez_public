@@ -22,7 +22,7 @@ import ButtonWithBackground from "../../components/UI/ButtonWithBackground/Butto
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { connect } from "react-redux";
-import { tryAuth } from "../../store/actions/auth";
+import { tryResetPassword } from "../../store/actions/auth";
 import { uiStartLoading, uiStopLoading } from "../../store/actions/ui";
 
 
@@ -38,30 +38,13 @@ class ForgotPasswordScreen extends Component {
           isEmail: true
         },
         touched: false
-      },
-      password: {
-        value: "",
-        valid: false,
-        validationRules: {
-          minLength: 6
-        },
-        touched: false
-      },
-      confirmPassword: {
-        value: "",
-        valid: false,
-        validationRules: {
-          equalTo: "password"
-        },
-        touched: false
       }
     }
   };
   constructor(props) {
     super(props);
     Dimensions.addEventListener("change", this.updateStyles);
-    this.loginUser = this.loginUser.bind(this);
-    this.onLoginFail = this.onLoginFail.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
   }
   componentWillUnmount() {
     Dimensions.removeEventListener("change", this.updateStyles);
@@ -72,19 +55,8 @@ class ForgotPasswordScreen extends Component {
     });
   };
 
-  loginUser() {
-    // this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.authMode );
-    const authData = {
-      email: this.state.controls.email.value,
-      password: this.state.controls.password.value
-    };
-    this.props.onAuth( authData, this.state.authMode );
-  }
-  onLoginFail() {
-    this.setState({
-      error: 'Login Failed',
-      loading: false
-    });
+  resetPassword() {
+    this.props.onResetPassword(this.state.controls.email.value);
   }
 
   updateInputState = (key, value) => {
@@ -107,17 +79,6 @@ class ForgotPasswordScreen extends Component {
       return {
         controls: {
           ...prevState.controls,
-          confirmPassword: {
-            ...prevState.controls.confirmPassword,
-            valid:
-              key === "password"
-                ? validate(
-                  prevState.controls.confirmPassword.value,
-                  prevState.controls.confirmPassword.validationRules,
-                  connectedValue
-                )
-                : prevState.controls.confirmPassword.valid
-          },
           [key]: {
             ...prevState.controls[key],
             value: value,
@@ -139,7 +100,7 @@ class ForgotPasswordScreen extends Component {
     let submitButton = (
       <ButtonWithBackground
         color="#0641A7"
-        onPress={this.loginUser}
+        onPress={this.resetPassword}
         disabled={
           (
           !this.state.controls.email.valid )
@@ -287,7 +248,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onStartingLoading: () => dispatch(uiStartLoading()),
-    onAuth: (authData, authDatas) => dispatch(tryAuth(authData,authDatas )),
+    onResetPassword: (email) => dispatch(tryResetPassword(email)),
     onAuthSetToken: (token, userId) => dispatch(authStoreToken(token, userId))
   };
 };

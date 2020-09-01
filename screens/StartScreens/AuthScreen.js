@@ -23,7 +23,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { connect } from "react-redux";
 import { tryAuth } from "../../store/actions/auth";
-import { uiStartLoading, uiStopLoading } from "../../store/actions/ui";
 
 
 
@@ -353,7 +352,6 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onStartingLoading: () => dispatch(uiStartLoading()),
     onAuth: (authData, authDatas) => dispatch(tryAuth(authData,authDatas )),
     onAuthSetToken: (token, userId) => dispatch(authStoreToken(token, userId))
   };

@@ -59,6 +59,20 @@ export const tryAuth = (authData, authMode) => {
     }
   };
 };
+export const tryResetPassword = (email) => {
+  return dispatch => {
+    dispatch(uiStartLoading());
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(function (user) {
+      dispatch(uiStopLoading());
+      alert('Please check your email and go back to login screen.')
+    }).catch(function (e) {
+      alert(e)
+      dispatch(uiStopLoading());
+    })
+
+  };
+};
 
 export const authStoreToken = (token, userId) => {
   return dispatch => {
