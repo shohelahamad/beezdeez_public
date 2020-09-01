@@ -43,6 +43,7 @@ import LabelSettingScreen from '../screens/LabelSettings/LabelSetting';
 
 import MenueScreen from '../screens/Menu';
 import AuthScreen from '../screens/StartScreens/AuthScreen';
+import ForgotPasswordScreen from '../screens/StartScreens/ForgotPasswordScreen';
 import CitiesScreen from '../screens/CityScreens/CitiesScreen';
 import CityDetailScreen from '../screens/CityScreens/CityDetailScreen';
 import LoadingCityScreen from '../screens/StartScreens/LoadingCityScreen';
@@ -272,6 +273,9 @@ const App = createSwitchNavigator({
   },
   AuthScreen: {
     screen: AuthScreen
+  },
+  ForgotPasswordScreen: {
+    screen: ForgotPasswordScreen
   },
   SelectCity: {
     screen: SelectCityScreen

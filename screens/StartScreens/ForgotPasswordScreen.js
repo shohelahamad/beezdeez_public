@@ -27,10 +27,9 @@ import { uiStartLoading, uiStopLoading } from "../../store/actions/ui";
 
 
 
-class AuthScreen extends Component {
+class ForgotPasswordScreen extends Component {
   state = {
     viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    authMode: "login",
     controls: {
       email: {
         value: "",
@@ -67,13 +66,6 @@ class AuthScreen extends Component {
   componentWillUnmount() {
     Dimensions.removeEventListener("change", this.updateStyles);
   }
-  switchAuthModeHandler = () => {
-    this.setState(prevState => {
-      return {
-        authMode: prevState.authMode === "login" ? "signup" : "login"
-      };
-    });
-  };
   updateStyles = dims => {
     this.setState({
       viewMode: dims.window.height > 500 ? "portrait" : "landscape"
@@ -144,22 +136,16 @@ class AuthScreen extends Component {
 
 
   render() {
-    let forgotPasswordControl = null;
-    let confirmPasswordControl = null;
     let submitButton = (
       <ButtonWithBackground
         color="#0641A7"
         onPress={this.loginUser}
         disabled={
-          (!this.state.controls.confirmPassword.valid &&
-            this.state.authMode === "signup") ||
-          !this.state.controls.email.valid ||
-          !this.state.controls.password.valid
+          (
+          !this.state.controls.email.valid )
         }
       >
-        <Text style={[this.state.controls.email.valid
-          && this.state.controls.password.valid
-          && (this.state.controls.confirmPassword.valid || this.state.authMode === "login") ? styles.buttonText : null]}>{this.state.authMode === "login" ? "Login" : "Sign Up"}</Text>
+        <Text style={[this.state.controls.email.valid ? styles.buttonText : null]}>Reset Password</Text>
       </ButtonWithBackground>
     );
     if (this.props.isLoading) {
@@ -167,45 +153,10 @@ class AuthScreen extends Component {
         <ActivityIndicator color={"#ffffff"} />
       </View>
     }
-    if (this.state.authMode === "login") {
-      forgotPasswordControl = (
-        <View style={styles.rememberMeContainer}>
-          <Text></Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
-            <Text style={styles.linkColor}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-    if (this.state.authMode === "signup") {
-      confirmPasswordControl = (
-        <View
-          style={
-            this.state.viewMode === "portrait"
-              ? styles.portraitPasswordWrapper
-              : styles.landscapePasswordWrapper
-          }
-        >
-          <Text>Confirm Password</Text>
-          <View style={styles.inputFieldaContainer}>
-            <DefaultInput
-              placeholder=""
-              style={styles.passwordField}
-              value={this.state.controls.confirmPassword.value}
-              onChangeText={val => this.updateInputState("confirmPassword", val)}
-              valid={this.state.controls.confirmPassword.valid}
-              touched={this.state.controls.confirmPassword.touched}
-              secureTextEntry
-            />
-            <MaterialIcons style={styles.inputIcon} name={"check-circle"} size={15} color={this.state.controls.confirmPassword.valid ? "green" : "#fff"} />
-          </View>
-        </View>
-      );
-    }
     return (
       <View style={styles.inputContainer}>
         <Text style={styles.titleText}>BeezDeez- Your Business Dairy</Text>
-        <Text style={styles.headerText}>Glad to see you!</Text>
+        <Text style={styles.headerText}>Reset your password</Text>
 
         <Text>Email</Text>
         <View style={styles.inputFieldaContainer}>
@@ -222,28 +173,10 @@ class AuthScreen extends Component {
           />
           <MaterialIcons style={styles.inputIcon} name={"check-circle"} size={15} color={this.state.controls.email.valid ? "green" : "#fff"} />
         </View>
-        <Text>Password</Text>
-        <View style={styles.inputFieldaContainer}>
-          <DefaultInput
-            placeholder=""
-            style={styles.passwordField}
-            value={this.state.controls.password.value}
-            onChangeText={val => this.updateInputState("password", val)}
-            valid={this.state.controls.password.valid}
-            touched={this.state.controls.password.touched}
-            secureTextEntry
-          />
-          <MaterialIcons style={styles.inputIcon} name={"check-circle"} size={15} color={this.state.controls.password.valid ? "green" : "#fff"} />
-        </View>
-        {confirmPasswordControl}
-
-        {forgotPasswordControl}
-
         {submitButton}
         <View style={styles.signUpContainer}>
-          <Text>{this.state.authMode === "login" ? "New User? " : "Already an User? "}</Text>
           <TouchableOpacity onPress={this.switchAuthModeHandler}>
-            <Text style={styles.linkColor}>{this.state.authMode === "login" ? "Sign Up" : "Login"}</Text>
+            <Text style={styles.linkColor} onPress={() => this.props.navigation.navigate('AuthScreen')}>Go back to login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -298,7 +231,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: '#000',
     fontWeight: 'bold',
-    fontSize: 40,
+    fontSize: 35,
     marginTop: 5,
     marginBottom: 25,
   },
@@ -359,5 +292,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordScreen);
 
