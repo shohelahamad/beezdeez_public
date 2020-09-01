@@ -409,7 +409,7 @@ class InputEventScreen extends Component {
                         color: '#fff',
                       }}
                     >
-                      ADD YOUR TASK
+                      Add Event
                     </Text>
                   </TouchableOpacity>
                 </ScrollView>
