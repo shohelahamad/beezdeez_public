@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   Button,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +17,9 @@ import { Header } from 'react-navigation-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get("window");
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar } from 'react-native-calendars';
+
 
 const testIDs = {
   menu: {
@@ -189,6 +192,8 @@ class EventsScreen extends Component {
       // }}
       // todayBottomMargin={16}
       >
+        <StatusBar barStyle="light-content" />
+
         {this.props.weekView ?
           <WeekCalendar
             testID={testIDs.weekCalendar.CONTAINER}
@@ -213,6 +218,10 @@ class EventsScreen extends Component {
           // rightArrowImageSource={require('../../assets/right-arrow')}
           />
         }
+        <View style={{ flexDirection: 'row', marginTop: 10}}>
+          <FontAwesome name="calendar" style={{ color: 'darkblue', fontSize: 30, paddingLeft: 10 }} />
+          <Text style={{ fontSize: 30, paddingLeft: 15, fontWeight: 'bold'}}> Next Events </Text>
+        </View>
         <AgendaList
           sections={ITEMS}
           extraData={this.state}
