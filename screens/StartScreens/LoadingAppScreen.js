@@ -60,8 +60,8 @@ class LoadingAppScreen extends Component {
           style={{ width: 100, height: 100, position: "absolute", top: '35%', right: "35%", borderRadius: 25 }}
           source={require('../../assets/icon.png')}
         />
-        <Text style={{ position: "absolute", fontWeight: 'bold', top: "48%", left: "28%", fontSize: 40, color: "#ffffff" }}>BeezDeez</Text>
-        <Text style={{ position: "absolute", top: "54%", left: "35%", fontSize: 15, color: "#ffffff" }}>Your Business Dairy</Text>
+        <Text style={{ position: "absolute", fontWeight: 'bold', top: "50%", left: "28%", fontSize: 40, color: "#ffffff" }}>BeezDeez</Text>
+        <Text style={{ position: "absolute", top: "58%", left: "35%", fontSize: 15, color: "#ffffff" }}>Your Business Dairy</Text>
       </LinearGradient>
     </View>
     )
