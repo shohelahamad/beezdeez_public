@@ -15,7 +15,7 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { getAreaList } from "../../store/actions/index";
 import { getLocationRegio, getStartArticleList } from "../../store/actions/index";
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 
 
 

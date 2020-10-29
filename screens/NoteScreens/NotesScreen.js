@@ -3,7 +3,7 @@ import { StyleSheet, View, StatusBar, TextInput, Button, Text, TouchableOpacity,
 import { FontAwesome } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import NoteList from '../../components/NoteList/NoteList';
 import { connect } from 'react-redux';
 import { getNotes } from "../../store/actions/notes"

@@ -23,7 +23,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "beezdeez.de.beezdeez"
     },
     "android": {
       "package": "beezdeez.de.beezdeez",

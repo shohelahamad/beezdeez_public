@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, ScrollView } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import DateTimePicker from "react-native-modal-datetime-picker";
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 

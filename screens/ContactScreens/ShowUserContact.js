@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import { connect } from "react-redux";
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import * as Contacts from 'expo-contacts';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { setDeleteContact } from "../../store/actions/userContacts";

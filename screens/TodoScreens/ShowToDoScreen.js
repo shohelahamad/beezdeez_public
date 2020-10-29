@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import CheckBox from 'react-native-check-box';
 import { connect } from "react-redux";
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
 import { Feather } from '@expo/vector-icons';

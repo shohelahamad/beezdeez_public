@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import moment from 'moment';
 import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';

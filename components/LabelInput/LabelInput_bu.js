@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Dropdown } from 'react-native-material-dropdown';
-import moment from 'moment';
-import Iconfa from 'react-native-vector-icons/FontAwesome5';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckBox from 'react-native-check-box';
 
 

@@ -8,7 +8,7 @@ import {
   Alert
 } from 'react-native';
 import { connect } from "react-redux";
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconfa from "react-native-vector-icons/FontAwesome5";
 import { MaterialIcons, Feather } from '@expo/vector-icons';

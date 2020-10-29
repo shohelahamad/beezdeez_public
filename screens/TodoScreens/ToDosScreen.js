@@ -4,7 +4,7 @@ const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2'
 import TodoList from '../../components/TodoList/TodoList';
 import { doneTodo } from "../../store/actions/todos";
 import { getTodos } from "../../store/actions/todos";
